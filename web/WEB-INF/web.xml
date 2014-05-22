@@ -24,17 +24,45 @@
         </param-value>
     </context-param>
 
+
+    <!--
+
+        Bootstrap listener to start up Spring's root WebApplicationContext, simply delegates to ContextLoader
+
+        The contextLoadListener performs three main tasks:
+
+            - Creates a web application context
+            - Reads bean definitions from application context xml
+            - Instantiates and initializes beans based on the bean definitions and saves the beans into the web application
+            context
+    -->
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <!-- Spring Security -->
+    <!--
+       Spring Security
+
+       Spring security employes several servlet filters to provide various aspects of security. This could mean several
+       <filter> declarations in your applications web.xml file. Below is the default, and most common filter.
+
+       DelegatingFilterProxy is a special servlet filter that, by itself doesn't do much. Instead, it delegates to an
+       implementation of javax.servlet.Filter that's registered as a <bean> in the application context.
+
+    -->
+
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>
             org.springframework.web.filter.DelegatingFilterProxy
         </filter-class>
     </filter>
+
+    <!--
+        Defines a filter chain which is capable of being matched against an HTTPServletRequest in order to decide
+        whether it applies to that request
+    -->
 
     <filter-mapping>
         <filter-name>springSecurityFilterChain</filter-name>

@@ -1,0 +1,39 @@
+body {
+    padding-top: 5%;
+}
+
+div#gymTrackerLogo {
+    background-image:url("/GymTrackerApp/resources/images/gymTrackerLogo.png");
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size: 55%;
+    height: 400px;
+    padding: 5%;
+}
+
+.submit_user_form {
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.navbar-inverse {
+    background-color: #FFAA67;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #000;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #000;
+}
+
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: #000;
+}
+
+.errorblock {
+    border: solid 1px #000;
+    background-color: #ffcccf;
+    padding: 2%;
+}

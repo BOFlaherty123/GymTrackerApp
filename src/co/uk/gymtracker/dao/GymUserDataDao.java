@@ -13,7 +13,7 @@ import java.util.List;
  * @project GymTrackerApp
  */
 @Component
-public class GymUserDataDao extends GymGenericDao{
+public class GymUserDataDao extends GymGenericDao {
 
 //        Query recordQuery = query(where("activity").is("Cycling"));
 //        List<GymLogData> recordyResult = mongoOperations.find(recordQuery, GymLogData.class);

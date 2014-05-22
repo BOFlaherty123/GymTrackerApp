@@ -1,35 +1,32 @@
 package co.uk.gymtracker.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  * Description Here
  *
  * @author Benjamin O'Flaherty
- * @date Created on: 14/04/14
+ * @date Created on: 24/04/14
  * @project GymTrackerApp
  */
-public class GymLogData {
+public class GymSessionForm {
 
+    @NotEmpty(message = "Date must not be empty")
     private String date;
+    @NotEmpty(message = "Duration must not be empty")
     private String duration;
+    @NotEmpty(message = "Activity must not be empty")
     private String activity;
+    @NotEmpty(message = "Activity Duration must not be empty")
     private String activityDuration;
+    @NotEmpty(message = "Distance must not be empty")
     private String distance;
+    @NotEmpty(message = "Level/Weight must not be empty")
     private String levelOrWeight;
+    @NotEmpty(message = "Calories must not be empty")
     private String calories;
+    @NotEmpty(message = "User Weight must not be empty")
     private String userWeight;
-
-    public GymLogData(String date, String duration, String activity, String activityDuration,
-                      String distance, String levelOrWeight, String calories, String userWeight) {
-
-        this.date = date;
-        this.duration = duration;
-        this.activity = activity;
-        this.activityDuration = activityDuration;
-        this.distance = distance;
-        this.levelOrWeight = levelOrWeight;
-        this.calories = calories;
-        this.userWeight = userWeight;
-    }
 
     public String getDate() {
         return date;
@@ -59,16 +56,16 @@ public class GymLogData {
         return activityDuration;
     }
 
+    public void setActivityDuration(String activityDuration) {
+        this.activityDuration = activityDuration;
+    }
+
     public String getDistance() {
         return distance;
     }
 
     public void setDistance(String distance) {
         this.distance = distance;
-    }
-
-    public void setActivityDuration(String activityDuration) {
-        this.activityDuration = activityDuration;
     }
 
     public String getLevelOrWeight() {
@@ -94,10 +91,4 @@ public class GymLogData {
     public void setUserWeight(String userWeight) {
         this.userWeight = userWeight;
     }
-
-    public String toString() {
-        return "Date: " + date + " Duration: " + duration + " Activity: " + activity  + " ActivityDuration: " + activityDuration
-                + "Distance: " + distance + " LevelOrWeight: " + levelOrWeight + "Calories: " + calories + "UserWeight: " + userWeight;
-    }
-
 }

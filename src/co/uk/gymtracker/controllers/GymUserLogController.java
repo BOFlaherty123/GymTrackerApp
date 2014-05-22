@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -24,17 +25,31 @@ public class GymUserLogController {
     private GymUserDataDao dao;
 
     @RequestMapping(value="/show")
-    public String displayLog(ModelMap model) {
+    public ModelAndView displayLog() {
 
-        GymLogData gymRecord = new GymLogData("01/01/1970", "1h", "Cycling", "1h", "9", "10st 10lbs");
-        dao.saveUserGymData(gymRecord);
+        // Spring Convention over Configuration
+        ModelAndView mav = new ModelAndView("userLog");
 
         List<GymLogData> gymRecords = dao.findAllUserGymData();
-        System.out.println("gymRecords.size() " + gymRecords.size());
 
-        model.addAttribute("gymRecords", gymRecords);
+        // Spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
+        mav.addObject(gymRecords);
 
-        return "userLog";
+        return mav;
+    }
+
+    @RequestMapping(value="/view")
+    public List<GymLogData> getGymLogData(ModelMap model) {
+
+        List<GymLogData> gymRecords = dao.findAllUserGymData();
+        model.addAttribute("gymData", gymRecords);
+
+        return gymRecords;
+    }
+
+    @RequestMapping(value="/admin")
+    public void displayAdminConsoleMessage() {
+        System.out.println("Admin Console Message");
     }
 
 }
