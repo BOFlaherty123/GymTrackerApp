@@ -35,6 +35,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
+                        <li><a href="/GymTrackerApp/user/userDashboard">User Dashboard</a></li>
                         <li><a href="/GymTrackerApp/user/createUser">Create a new User</a></li>
                         <li><a href="/GymTrackerApp/addGymSessionForm">Add Gym Session</a></li>
                         <li><a href="/GymTrackerApp/userLog/view.pdf">Download Results PDF</a></li>

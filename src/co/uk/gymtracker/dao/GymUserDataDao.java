@@ -1,8 +1,10 @@
 package co.uk.gymtracker.dao;
 
 import co.uk.gymtracker.model.GymLogData;
+import com.mongodb.*;
 import org.springframework.stereotype.Component;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -15,11 +17,35 @@ import java.util.List;
 @Component
 public class GymUserDataDao extends GymGenericDao {
 
-//        Query recordQuery = query(where("activity").is("Cycling"));
-//        List<GymLogData> recordyResult = mongoOperations.find(recordQuery, GymLogData.class);
-//        System.out.println("recordyResult.size() " + recordyResult.size());
+    public List<GymLogData> findAllUserGymData() throws UnknownHostException {
 
-    public List<GymLogData> findAllUserGymData() {
+        String textUri = "mongodb://admin:gymuser@ds061938.mongolab.com:61938/gymtracker";
+        MongoClientURI uri = new MongoClientURI(textUri);
+
+        MongoClient client = new MongoClient(uri);
+        DB mongoDb = client.getDB(uri.getDatabase());
+
+        System.out.println(mongoDb.getName());
+        System.out.println(mongoDb.isAuthenticated());
+
+        System.out.println("obtain the user collection");
+        DBCollection userCol = mongoDb.getCollection("user");
+
+        System.out.println("add a user to the collection");
+        BasicDBObject aUser = new BasicDBObject("firstName", "Benjamin")
+                .append("lastName", "OFlaherty")
+                .append("username", "BOFlaherty")
+                .append("age", "28")
+                .append("email", "ben@oflaherty.com");
+
+        System.out.println("insert into the collection");
+        System.out.println(aUser.toString());
+
+        // TODO - Test connection from outside of the proxy
+        //userCol.insert(aUser);
+
+        client.close();
+
         return mongoOperations.findAll(GymLogData.class);
     }
 

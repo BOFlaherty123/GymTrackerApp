@@ -44,11 +44,15 @@
         <!-- submitUser -->
         <div style="padding-left: 15%; padding-right: 15%;">
 
-            <h3>Create User Form</h3
+            <h3>Create User Form</h3>
 
             <form:form method="post" commandName="gymUser" action="/GymTrackerApp/user/submitUser">
 
                 <form role="form">
+
+                    <div class="row">
+                        <form:errors path="*" cssClass="errorblock" element="div" title="Errors"/>
+                    </div>
 
                     <fieldset>
                         <legend><h4>Personal Information</h4></legend>
@@ -88,7 +92,9 @@
 
                     </fieldset>
 
-                    <input type="submit" value="Submit"/>
+                    <div class="row">
+                        <input type="submit" value="Submit"/>
+                    </div>
 
                 </form>
 

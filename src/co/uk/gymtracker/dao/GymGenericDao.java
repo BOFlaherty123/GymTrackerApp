@@ -1,7 +1,12 @@
 package co.uk.gymtracker.dao;
 
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+
+import java.net.UnknownHostException;
 
 /**
  * Description Here
@@ -14,5 +19,6 @@ public class GymGenericDao {
 
     @Autowired
     public MongoOperations mongoOperations;
+
 
 }

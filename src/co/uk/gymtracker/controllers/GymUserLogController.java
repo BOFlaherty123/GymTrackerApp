@@ -4,10 +4,10 @@ import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.model.GymLogData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -24,13 +24,23 @@ public class GymUserLogController {
     @Autowired
     private GymUserDataDao dao;
 
+    /**
+     * Setup and displays the GymSessionLog page
+     *
+     * @return
+     */
     @RequestMapping(value="/show")
     public ModelAndView displayLog() {
 
         // Spring Convention over Configuration
         ModelAndView mav = new ModelAndView("userLog");
 
-        List<GymLogData> gymRecords = dao.findAllUserGymData();
+        List<GymLogData> gymRecords = null;
+        try {
+            gymRecords = dao.findAllUserGymData();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
 
         // Spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
         mav.addObject(gymRecords);
@@ -38,14 +48,6 @@ public class GymUserLogController {
         return mav;
     }
 
-    @RequestMapping(value="/view")
-    public List<GymLogData> getGymLogData(ModelMap model) {
-
-        List<GymLogData> gymRecords = dao.findAllUserGymData();
-        model.addAttribute("gymData", gymRecords);
-
-        return gymRecords;
-    }
 
     @RequestMapping(value="/admin")
     public void displayAdminConsoleMessage() {

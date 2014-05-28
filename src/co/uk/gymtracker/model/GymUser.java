@@ -103,4 +103,5 @@ public class GymUser implements Serializable {
     public void setUserSessions(List<GymLogData> userSessions) {
         this.userSessions = userSessions;
     }
+
 }

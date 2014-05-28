@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,11 @@ public class GymDataInputController {
     @Autowired
     private GymUserDataDao dao;
 
+    /**
+     * Displays the addGymSessionForm to the user
+     *
+     * @return
+     */
     @RequestMapping(value="/addGymSessionForm")
     public ModelAndView displayGymSessionForm() {
 
@@ -37,6 +43,14 @@ public class GymDataInputController {
         return mav;
     }
 
+    /**
+     * POST User entered Gym Session Data to the server (incl. Validation)
+     *
+     * @param gymSessionForm
+     * @param errors
+     *
+     * @return
+     */
     @RequestMapping(value="/addGymSession", method = RequestMethod.POST)
     public ModelAndView addGymSessionData(@Valid GymSessionForm gymSessionForm, Errors errors) {
 
@@ -49,6 +63,7 @@ public class GymDataInputController {
             return mav;
         } else {
 
+            // TODO Obtain the user data from the session (by ID) and add the gymSessionData to the GymUser
             GymLogData gymSessionData = new GymLogData(
                     gymSessionForm.getDate(), gymSessionForm.getDuration(), gymSessionForm.getActivity(),
                     gymSessionForm.getActivityDuration(), gymSessionForm.getDistance(), gymSessionForm.getLevelOrWeight(),
@@ -57,7 +72,11 @@ public class GymDataInputController {
 
             dao.saveUserGymData(gymSessionData);
 
-            mav.addObject(dao.findAllUserGymData());
+            try {
+                mav.addObject(dao.findAllUserGymData());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
         }
 
         return new ModelAndView("redirect:/userLog/show");

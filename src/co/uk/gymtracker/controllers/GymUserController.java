@@ -4,8 +4,7 @@ import co.uk.gymtracker.dao.GymUserDao;
 import co.uk.gymtracker.model.GymUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +25,11 @@ public class GymUserController {
     @Autowired
     public GymUserDao dao;
 
+    /**
+     * Setup and displays the createUser form
+     *
+     * @return
+     */
     @RequestMapping(value="/createUser", method = RequestMethod.GET)
     public ModelAndView displayCreateUserForm() {
 
@@ -35,31 +39,37 @@ public class GymUserController {
         return mav;
     }
 
-    @RequestMapping(value="/createUser", method = RequestMethod.GET, headers = "content-type=application/xml")
-    public ModelAndView displayCreateUserFormXML() {
-        return new ModelAndView("welcome");
-    }
-
+    /**
+     * Create a new GymUser object
+     *
+     * @param gymUser
+     * @param errors
+     * @return
+     */
     @RequestMapping(value="/submitUser", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid GymUser gymUser, BindingResult result) {
+    public ModelAndView createNewUser(@Valid GymUser gymUser, Errors errors) {
 
-        if(result.hasErrors()) {
+        ModelAndView mav = new ModelAndView();
 
-            for(FieldError error : result.getFieldErrors()) {
-                System.out.println(error.getField());
-                System.out.println(error.getDefaultMessage());
-            }
+        if(errors.hasErrors()) {
 
-            return new ModelAndView("redirect:/user/createUser");
+            mav.setViewName("/user/createUser");
+
+            return mav;
 
         } else {
             dao.saveGymUser(gymUser);
         }
 
-        return new ModelAndView("redirect:/userLog/show");
+        mav.setViewName("redirect:/userLog/show");
+
+        return mav;
 
     }
 
+    /**
+     * Deletes a GymUser object
+     */
     @RequestMapping(value="/deleteUsers")
     public void deleteUsers() {
         dao.deleteUsers();

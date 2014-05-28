@@ -29,7 +29,7 @@ public class GymUserService implements UserDetailsService {
 
         GymUser gymUser = dao.findGymUser(username);
 
-        Collection<? extends GrantedAuthority> authorities = null;
+        Collection<? extends GrantedAuthority> authorities;
 
         if(gymUser.getRole().equals("ROLE_USER")) {
             System.out.println("has ROLE_USER");
