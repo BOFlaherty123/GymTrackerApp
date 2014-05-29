@@ -3,12 +3,14 @@ package co.uk.gymtracker.controllers;
 import co.uk.gymtracker.dashboard.averages.CalculateActivityAverages;
 import co.uk.gymtracker.dashboard.targets.CalculateUserTargets;
 import co.uk.gymtracker.model.ActivityAverage;
+import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -34,11 +36,14 @@ public class GymUserDashboardController {
      * @return
      */
     @RequestMapping(value="/userDashboard")
-    public ModelAndView displayUserDashboard() {
+    public ModelAndView displayUserDashboard(HttpServletRequest request) {
 
         ModelAndView mav = new ModelAndView("user/userDashboard");
 
-        processUserAverages(mav);
+        // retrieve user from the session
+        GymUser user = (GymUser) request.getSession().getAttribute("sessionUser");
+
+        processUserAverages(mav, user);
 
         return mav;
     }
@@ -49,12 +54,16 @@ public class GymUserDashboardController {
      * @param mav
      * @return
      */
-    private ModelAndView processUserAverages(ModelAndView mav) {
+    private ModelAndView processUserAverages(ModelAndView mav, GymUser user) {
 
-        // TODO - Retrieve GymUser from Session
-        GymUser gymUser = new GymUser();
+        // TODO - remove != null processing once fixed error
+        if(user.getUserSessions() != null) {
+            for(GymLogData session : user.getUserSessions()) {
+                System.out.println(session.getDate());
+            }
+        }
 
-        List<ActivityAverage> averages = calculateAverages.calculateActivityAverages(gymUser);
+        List<ActivityAverage> averages = calculateAverages.calculateActivityAverages(user);
         mav.addObject("averages", averages);
 
         return mav;
@@ -70,6 +79,5 @@ public class GymUserDashboardController {
     public void calculateTarget() {
         targets.calculateTargetOnPercentageIncrease(10);
     }
-
 
 }

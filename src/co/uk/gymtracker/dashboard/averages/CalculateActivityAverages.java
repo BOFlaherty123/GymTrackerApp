@@ -6,6 +6,8 @@ import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.service.GymUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,21 +31,21 @@ public class CalculateActivityAverages {
      * @param gymUser
      * @return
      */
-      public List<ActivityAverage> calculateActivityAverages(GymUser gymUser) {
+    @RequestMapping(value="/calculateActivityDurationAverages", method = RequestMethod.GET)
+    public List<ActivityAverage> calculateActivityAverages(GymUser gymUser) {
 
-         // Get all gym sessions by a particular user.
-         List<GymLogData> userGymSessions = gymUser.getUserSessions();
+        // Get all gym sessions by a particular user.
+        List<GymLogData> userGymSessions = gymUser.getUserSessions();
 
-         // Filter search by 'Activity'
+        // Filter search by 'Activity'
 
+        // Calculate the total of 'Distance' and divide by the number of sessions
 
-         // Calculate the total of 'Distance' and divide by the number of sessions
+        // Add result(s) to ActivityAverages List and return to the Controller
 
+        return new ArrayList<ActivityAverage>();
 
-         // Add result(s) to ActivityAverages List and return to the Controller
-
-          return new ArrayList<ActivityAverage>();
-      }
+    }
 
 
 }

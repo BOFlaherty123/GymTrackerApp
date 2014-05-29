@@ -1,8 +1,10 @@
 package co.uk.gymtracker.controllers;
 
+import co.uk.gymtracker.dao.GymUserDao;
 import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymSessionForm;
+import co.uk.gymtracker.model.GymUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class GymDataInputController {
 
     @Autowired
     private GymUserDataDao dao;
+
+    @Autowired
+    private GymUserDao gymUserDao;
 
     /**
      * Displays the addGymSessionForm to the user
@@ -52,7 +58,7 @@ public class GymDataInputController {
      * @return
      */
     @RequestMapping(value="/addGymSession", method = RequestMethod.POST)
-    public ModelAndView addGymSessionData(@Valid GymSessionForm gymSessionForm, Errors errors) {
+    public ModelAndView addGymSessionData(HttpServletRequest request, @Valid GymSessionForm gymSessionForm, Errors errors) {
 
         ModelAndView mav = new ModelAndView();
 
@@ -63,14 +69,28 @@ public class GymDataInputController {
             return mav;
         } else {
 
-            // TODO Obtain the user data from the session (by ID) and add the gymSessionData to the GymUser
+            // extract the GymUser from the session
+            GymUser gymUser = (GymUser) request.getSession().getAttribute("sessionUser");
+
             GymLogData gymSessionData = new GymLogData(
                     gymSessionForm.getDate(), gymSessionForm.getDuration(), gymSessionForm.getActivity(),
                     gymSessionForm.getActivityDuration(), gymSessionForm.getDistance(), gymSessionForm.getLevelOrWeight(),
                     gymSessionForm.getCalories(), gymSessionForm.getUserWeight()
             );
 
+            System.out.println(gymSessionData.toString());
+
+            // build and update the list of GymSessions for a user.
+            List<GymLogData> gymSessions = new ArrayList<GymLogData>();
+            gymSessions.add(gymSessionData);
+
+            gymUser.setUserSessions(gymSessions);
+
+            // TODO - remove this command when no longer needed, saving directly to the user object
             dao.saveUserGymData(gymSessionData);
+
+            // Update the GymUser document
+            gymUserDao.updateGymUser(gymUser);
 
             try {
                 mav.addObject(dao.findAllUserGymData());

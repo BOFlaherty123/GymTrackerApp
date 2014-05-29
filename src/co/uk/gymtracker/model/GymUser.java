@@ -104,4 +104,9 @@ public class GymUser implements Serializable {
         this.userSessions = userSessions;
     }
 
+    public String toString() {
+        return "firstName: " + firstName + " lastName: " + lastName + " age: " + age  + " email: " + email
+                + "role: " + role + " sessions: " + userSessions.toString();
+    }
+
 }

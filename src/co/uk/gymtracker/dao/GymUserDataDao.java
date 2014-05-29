@@ -1,7 +1,6 @@
 package co.uk.gymtracker.dao;
 
 import co.uk.gymtracker.model.GymLogData;
-import com.mongodb.*;
 import org.springframework.stereotype.Component;
 
 import java.net.UnknownHostException;
@@ -17,9 +16,9 @@ import java.util.List;
 @Component
 public class GymUserDataDao extends GymGenericDao {
 
-    public List<GymLogData> findAllUserGymData() throws UnknownHostException {
-
+    /*
         String textUri = "mongodb://admin:gymuser@ds061938.mongolab.com:61938/gymtracker";
+
         MongoClientURI uri = new MongoClientURI(textUri);
 
         MongoClient client = new MongoClient(uri);
@@ -27,6 +26,7 @@ public class GymUserDataDao extends GymGenericDao {
 
         System.out.println(mongoDb.getName());
         System.out.println(mongoDb.isAuthenticated());
+        System.out.println(mongoDb.getMongo().getWriteConcern());
 
         System.out.println("obtain the user collection");
         DBCollection userCol = mongoDb.getCollection("user");
@@ -46,6 +46,9 @@ public class GymUserDataDao extends GymGenericDao {
 
         client.close();
 
+     */
+
+    public List<GymLogData> findAllUserGymData() throws UnknownHostException {
         return mongoOperations.findAll(GymLogData.class);
     }
 

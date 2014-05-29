@@ -37,3 +37,9 @@ div#gymTrackerLogo {
     background-color: #ffcccf;
     padding: 2%;
 }
+
+/* User Dashboard */
+.user_detail {
+    width: 100%;
+    padding: 2%;
+}

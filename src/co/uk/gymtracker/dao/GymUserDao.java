@@ -27,6 +27,10 @@ public class GymUserDao extends GymGenericDao {
         mongoOperations.insert(gymUser);
     }
 
+    public void updateGymUser(GymUser gymUser) {
+        mongoOperations.save(gymUser);
+    }
+
     public void deleteUsers() {
         mongoOperations.dropCollection(GymUser.class);
     }

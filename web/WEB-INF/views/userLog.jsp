@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
 
     <head>
@@ -17,6 +18,27 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <script>
+
+            $(function () {
+
+                $('#hiddenUsername').hide();
+
+                var username = $('#hiddenUsername').text().replace(/\s+/, "");
+
+                $.ajax({
+                    type: "POST",
+                    data: username,
+                    url: "/GymTrackerApp/userLog/session/" + username,
+                    success: function(data){
+                        alert("Success");
+                    }
+                });
+
+            });
+
+        </script>
 
     </head>
 
@@ -42,6 +64,15 @@
                         <li><a href="/GymTrackerApp/static/j_spring_security_logout">Logout</a></li>
                     </ul>
                 </div>
+            </div>
+        </div>
+
+        <div id="welcomeUserDiv">
+            <div>
+                <h4>Welcome, <sec:authentication property="principal.username" />!</h4>
+            </div>
+            <div id="hiddenUsername">
+                <sec:authentication property="principal.username"/>
             </div>
         </div>
 
