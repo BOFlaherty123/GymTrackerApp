@@ -1,5 +1,6 @@
 package co.uk.gymtracker.dashboard.averages;
 
+import co.uk.gymtracker.controllers.AbstractGymController;
 import co.uk.gymtracker.model.ActivityAverage;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
@@ -20,7 +21,10 @@ import java.util.List;
  * @project GymTrackerApp
  */
 @Component
-public class CalculateActivityAverages {
+public class CalculateActivityAverages extends AbstractGymController {
+
+    private static final String ACTIVITY_RUNNING = "Running";
+    private static final String ACTIVITY_CYCLING = "Cycling";
 
     @Autowired
     public GymUserService userService;
@@ -34,18 +38,16 @@ public class CalculateActivityAverages {
     @RequestMapping(value="/calculateActivityDurationAverages", method = RequestMethod.GET)
     public List<ActivityAverage> calculateActivityAverages(GymUser gymUser) {
 
+        List<ActivityAverage> averages = new ArrayList<>();
+
         // Get all gym sessions by a particular user.
         List<GymLogData> userGymSessions = gymUser.getUserSessions();
 
-        // Filter search by 'Activity'
-
         // Calculate the total of 'Distance' and divide by the number of sessions
+        gymDataDao.findGymUserDataByActivity(gymUser);
 
         // Add result(s) to ActivityAverages List and return to the Controller
-
         return new ArrayList<ActivityAverage>();
-
     }
-
 
 }

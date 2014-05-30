@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.Collection;
 
@@ -20,7 +19,6 @@ import java.util.Collection;
  * @date Created on: 28/04/14
  * @project GymTrackerApp
  */
-@SessionAttributes("user")
 public class GymUserService implements UserDetailsService {
 
     @Autowired

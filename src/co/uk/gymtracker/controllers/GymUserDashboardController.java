@@ -6,6 +6,8 @@ import co.uk.gymtracker.model.ActivityAverage;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/user")
-public class GymUserDashboardController {
+public class GymUserDashboardController extends AbstractGymController {
 
     @Autowired
     public CalculateUserTargets targets;
@@ -40,8 +42,8 @@ public class GymUserDashboardController {
 
         ModelAndView mav = new ModelAndView("user/userDashboard");
 
-        // retrieve user from the session
-        GymUser user = (GymUser) request.getSession().getAttribute("sessionUser");
+        SecurityContext ctx = SecurityContextHolder.getContext();
+        GymUser user = userDao.findGymUser(ctx.getAuthentication().getName());
 
         processUserAverages(mav, user);
 
@@ -56,7 +58,6 @@ public class GymUserDashboardController {
      */
     private ModelAndView processUserAverages(ModelAndView mav, GymUser user) {
 
-        // TODO - remove != null processing once fixed error
         if(user.getUserSessions() != null) {
             for(GymLogData session : user.getUserSessions()) {
                 System.out.println(session.getDate());
@@ -64,7 +65,7 @@ public class GymUserDashboardController {
         }
 
         List<ActivityAverage> averages = calculateAverages.calculateActivityAverages(user);
-        mav.addObject("averages", averages);
+        mav.addObject(averages);
 
         return mav;
     }
@@ -75,7 +76,7 @@ public class GymUserDashboardController {
         @RequestMapping(value="/target/{percentage_increase}")
         @PathVariable("percentage_increase") int percentage_increase
 
-     */
+    */
     public void calculateTarget() {
         targets.calculateTargetOnPercentageIncrease(10);
     }

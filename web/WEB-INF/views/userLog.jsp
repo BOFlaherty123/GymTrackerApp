@@ -19,27 +19,6 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script>
-
-            $(function () {
-
-                $('#hiddenUsername').hide();
-
-                var username = $('#hiddenUsername').text().replace(/\s+/, "");
-
-                $.ajax({
-                    type: "POST",
-                    data: username,
-                    url: "/GymTrackerApp/userLog/session/" + username,
-                    success: function(data){
-                        alert("Success");
-                    }
-                });
-
-            });
-
-        </script>
-
     </head>
 
     <body>
@@ -70,9 +49,6 @@
         <div id="welcomeUserDiv">
             <div>
                 <h4>Welcome, <sec:authentication property="principal.username" />!</h4>
-            </div>
-            <div id="hiddenUsername">
-                <sec:authentication property="principal.username"/>
             </div>
         </div>
 

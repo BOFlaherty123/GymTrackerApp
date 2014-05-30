@@ -1,8 +1,6 @@
 package co.uk.gymtracker.controllers;
 
-import co.uk.gymtracker.dao.GymUserDao;
 import co.uk.gymtracker.model.GymUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +18,7 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping(value="/user")
-public class GymUserController {
-
-    @Autowired
-    public GymUserDao dao;
+public class GymUserController extends AbstractGymController {
 
     /**
      * Setup and displays the createUser form
@@ -58,7 +53,7 @@ public class GymUserController {
             return mav;
 
         } else {
-            dao.saveGymUser(gymUser);
+            userDao.saveGymUser(gymUser);
         }
 
         mav.setViewName("redirect:/userLog/show");
@@ -72,7 +67,7 @@ public class GymUserController {
      */
     @RequestMapping(value="/deleteUsers")
     public void deleteUsers() {
-        dao.deleteUsers();
+        userDao.deleteUsers();
     }
 
 }

@@ -1,11 +1,8 @@
 package co.uk.gymtracker.controllers;
 
-import co.uk.gymtracker.dao.GymUserDao;
-import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymSessionForm;
 import co.uk.gymtracker.model.GymUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,13 +24,7 @@ import java.util.List;
  * @project GymTrackerApp
  */
 @Controller
-public class GymDataInputController {
-
-    @Autowired
-    private GymUserDataDao dao;
-
-    @Autowired
-    private GymUserDao gymUserDao;
+public class GymDataInputController extends AbstractGymController {
 
     /**
      * Displays the addGymSessionForm to the user
@@ -63,7 +54,6 @@ public class GymDataInputController {
         ModelAndView mav = new ModelAndView();
 
         if(errors.hasErrors()) {
-
             mav.setViewName("addGymLog");
 
             return mav;
@@ -78,22 +68,17 @@ public class GymDataInputController {
                     gymSessionForm.getCalories(), gymSessionForm.getUserWeight()
             );
 
-            System.out.println(gymSessionData.toString());
-
             // build and update the list of GymSessions for a user.
             List<GymLogData> gymSessions = new ArrayList<GymLogData>();
             gymSessions.add(gymSessionData);
 
             gymUser.setUserSessions(gymSessions);
 
-            // TODO - remove this command when no longer needed, saving directly to the user object
-            dao.saveUserGymData(gymSessionData);
-
             // Update the GymUser document
-            gymUserDao.updateGymUser(gymUser);
+            userDao.updateGymUser(gymUser);
 
             try {
-                mav.addObject(dao.findAllUserGymData());
+                mav.addObject(gymDataDao.findAllUserGymData());
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }

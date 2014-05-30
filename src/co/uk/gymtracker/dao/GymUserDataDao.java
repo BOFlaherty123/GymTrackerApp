@@ -1,6 +1,11 @@
 package co.uk.gymtracker.dao;
 
 import co.uk.gymtracker.model.GymLogData;
+import co.uk.gymtracker.model.GymUser;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import org.springframework.stereotype.Component;
 
 import java.net.UnknownHostException;
@@ -16,7 +21,7 @@ import java.util.List;
 @Component
 public class GymUserDataDao extends GymGenericDao {
 
-    /*
+    /**
         String textUri = "mongodb://admin:gymuser@ds061938.mongolab.com:61938/gymtracker";
 
         MongoClientURI uri = new MongoClientURI(textUri);
@@ -59,6 +64,26 @@ public class GymUserDataDao extends GymGenericDao {
         }
 
         mongoOperations.insert(gymLogData);
+    }
+
+    public void findGymUserDataByActivity(GymUser gymUser) {
+
+        DBCollection user = mongoOperations.getCollection("gymUser");
+
+        BasicDBObject query = new BasicDBObject("username", gymUser.getUsername());
+
+        DBCursor cursor = user.find(query);
+
+        try {
+            while(cursor.hasNext()) {
+                System.out.println(cursor.next());
+
+                DBObject object = cursor.next();
+            }
+        } finally {
+            cursor.close();
+        }
+
     }
 
 }
