@@ -32,6 +32,8 @@ public class GymUser implements Serializable {
 
     private List<GymLogData> userSessions;
 
+    private List<ActivityAverage> activityAverages;
+
     public String getId() {
         return id;
     }
@@ -102,6 +104,14 @@ public class GymUser implements Serializable {
 
     public void setUserSessions(List<GymLogData> userSessions) {
         this.userSessions = userSessions;
+    }
+
+    public List<ActivityAverage> getActivityAverages() {
+        return activityAverages;
+    }
+
+    public void setActivityAverages(List<ActivityAverage> activityAverages) {
+        this.activityAverages = activityAverages;
     }
 
     public String toString() {

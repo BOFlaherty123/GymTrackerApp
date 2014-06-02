@@ -1,5 +1,7 @@
 package co.uk.gymtracker.model;
 
+import java.io.Serializable;
+
 /**
  * Description Here
  *
@@ -7,7 +9,7 @@ package co.uk.gymtracker.model;
  * @date Created on: 14/04/14
  * @project GymTrackerApp
  */
-public class GymLogData {
+public class GymLogData implements Serializable {
 
     private String date;
     private String duration;

@@ -13,36 +13,35 @@ public class ActivityAverage {
     private String totalDistance;
     private String numberOfSessions;
     private String averageDistance;
+    private String averageDuration;
+
+    public ActivityAverage(String activity_Name, String total_Distance, String number_Of_Sessions,
+                           String average_Distance, String average_Duration) {
+
+        activity = activity_Name;
+        totalDistance = total_Distance;
+        numberOfSessions = number_Of_Sessions;
+        averageDistance = average_Distance;
+        averageDuration = average_Duration;
+    }
 
     public String getActivity() {
         return activity;
-    }
-
-    public void setActivity(String activity) {
-        this.activity = activity;
     }
 
     public String getTotalDistance() {
         return totalDistance;
     }
 
-    public void setTotalDistance(String totalDistance) {
-        this.totalDistance = totalDistance;
-    }
-
     public String getNumberOfSessions() {
         return numberOfSessions;
-    }
-
-    public void setNumberOfSessions(String numberOfSessions) {
-        this.numberOfSessions = numberOfSessions;
     }
 
     public String getAverageDistance() {
         return averageDistance;
     }
 
-    public void setAverageDistance(String averageDistance) {
-        this.averageDistance = averageDistance;
+    public String getAverageDuration() {
+        return averageDuration;
     }
 }

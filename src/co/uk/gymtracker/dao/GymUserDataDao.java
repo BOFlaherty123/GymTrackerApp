@@ -5,10 +5,9 @@ import co.uk.gymtracker.model.GymUser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
 import org.springframework.stereotype.Component;
 
-import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +52,7 @@ public class GymUserDataDao extends GymGenericDao {
 
      */
 
-    public List<GymLogData> findAllUserGymData() throws UnknownHostException {
+    public List<GymLogData> findAllUserGymData() {
         return mongoOperations.findAll(GymLogData.class);
     }
 
@@ -66,24 +65,42 @@ public class GymUserDataDao extends GymGenericDao {
         mongoOperations.insert(gymLogData);
     }
 
-    public void findGymUserDataByActivity(GymUser gymUser) {
+    public List<GymLogData> findGymUserDataByActivity(GymUser gymUser, String activity) {
 
         DBCollection user = mongoOperations.getCollection("gymUser");
 
         BasicDBObject query = new BasicDBObject("username", gymUser.getUsername());
-
         DBCursor cursor = user.find(query);
+
+        List<GymLogData> gymSessionsForUser = new ArrayList<>();
 
         try {
             while(cursor.hasNext()) {
-                System.out.println(cursor.next());
+                BasicDBObject result = (BasicDBObject) cursor.next();
 
-                DBObject object = cursor.next();
+                ArrayList<BasicDBObject> userSessions = (ArrayList<BasicDBObject>) result.get("userSessions");
+
+                for(BasicDBObject session : userSessions) {
+
+                    if(session.get("activity").equals(activity)) {
+
+                        GymLogData gymSessionData = new GymLogData(
+                                (String) session.get("date"), (String) session.get("duration"),(String) session.get("activity"),
+                                (String) session.get("activityDuration"), (String) session.get("distance"), (String) session.get("levelOrWeight"),
+                                (String) session.get("calories"), (String) session.get("userWeight")
+                        );
+
+                        gymSessionsForUser.add(gymSessionData);
+
+                    }
+
+                }
             }
         } finally {
             cursor.close();
         }
 
+        return gymSessionsForUser;
     }
 
 }

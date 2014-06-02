@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +25,6 @@ import java.util.List;
 @Component
 public class CalculateActivityAverages extends AbstractGymController {
 
-    private static final String ACTIVITY_RUNNING = "Running";
-    private static final String ACTIVITY_CYCLING = "Cycling";
-
     @Autowired
     public GymUserService userService;
 
@@ -38,16 +37,73 @@ public class CalculateActivityAverages extends AbstractGymController {
     @RequestMapping(value="/calculateActivityDurationAverages", method = RequestMethod.GET)
     public List<ActivityAverage> calculateActivityAverages(GymUser gymUser) {
 
-        List<ActivityAverage> averages = new ArrayList<>();
+        List<ActivityAverage> activityAverages = new ArrayList<>();
 
-        // Get all gym sessions by a particular user.
-        List<GymLogData> userGymSessions = gymUser.getUserSessions();
+        // TODO - Store list of Activities in the database
+        List<String> gymActivities = buildActivityList();
 
-        // Calculate the total of 'Distance' and divide by the number of sessions
-        gymDataDao.findGymUserDataByActivity(gymUser);
+        for(String activity : gymActivities) {
+
+            // Retrieve gym session data for
+            List<GymLogData> userSessionData = gymDataDao.findGymUserDataByActivity(gymUser, activity);
+
+            if(userSessionData.size() > 0) {
+                activityAverages.add(calculateAverages(userSessionData, activity));
+            }
+
+        }
 
         // Add result(s) to ActivityAverages List and return to the Controller
-        return new ArrayList<ActivityAverage>();
+        return activityAverages;
+    }
+
+    private List<String> buildActivityList() {
+        List<String> gymActivities = new ArrayList<>();
+        gymActivities.add("Running");
+        gymActivities.add("Cycling");
+        gymActivities.add("Rowing");
+
+        return gymActivities;
+    }
+
+    private ActivityAverage calculateAverages(List<GymLogData> activitySessionData, String activity) {
+
+        BigDecimal totalDistance = new BigDecimal("0");
+        BigDecimal totalDuration = new BigDecimal("0");
+
+        // Calculate total distance
+        for(GymLogData gymLogData : activitySessionData)  {
+            totalDistance = addDistanceToTotal(totalDistance, gymLogData.getDistance());
+            totalDuration = addDurationToTotal(totalDuration, gymLogData.getDuration());
+        }
+
+        BigDecimal totalSessions = parseNumberOfGymSessions(activitySessionData.size());
+
+        // Calculate Averages
+        BigDecimal averageDistance = totalDistance.divide(totalSessions, RoundingMode.HALF_UP);
+        BigDecimal averageDuration = totalDuration.divide(totalSessions, RoundingMode.HALF_UP);
+
+        return buildActivityAverage(activity, totalDistance, totalSessions.toString(), averageDistance, averageDuration);
+    }
+
+    private BigDecimal addDistanceToTotal(BigDecimal totalDistance, String distance) {
+        return totalDistance.add(new BigDecimal(distance));
+    }
+
+    private BigDecimal addDurationToTotal(BigDecimal totalDuration, String duration) {
+        return totalDuration.add(new BigDecimal(duration));
+    }
+
+    private BigDecimal parseNumberOfGymSessions(int noOfSessions) {
+        return new BigDecimal(String.valueOf(noOfSessions));
+    }
+
+    private ActivityAverage buildActivityAverage(String activity, BigDecimal totalDistance,
+                                                 String numberOfSessions, BigDecimal averageDistance,
+                                                 BigDecimal averageDuration) {
+
+        return new ActivityAverage(activity, totalDistance.toString(), numberOfSessions,
+                averageDistance.toString(), averageDuration.toString());
     }
 
 }

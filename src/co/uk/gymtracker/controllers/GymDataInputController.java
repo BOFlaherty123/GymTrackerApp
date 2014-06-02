@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +57,8 @@ public class GymDataInputController extends AbstractGymController {
 
             return mav;
         } else {
-
-            // extract the GymUser from the session
-            GymUser gymUser = (GymUser) request.getSession().getAttribute("sessionUser");
+            // extract the GymUser from the security context
+            GymUser user = getLoggedInUser();
 
             GymLogData gymSessionData = new GymLogData(
                     gymSessionForm.getDate(), gymSessionForm.getDuration(), gymSessionForm.getActivity(),
@@ -69,19 +67,21 @@ public class GymDataInputController extends AbstractGymController {
             );
 
             // build and update the list of GymSessions for a user.
-            List<GymLogData> gymSessions = new ArrayList<GymLogData>();
+            List<GymLogData> gymSessions = new ArrayList<>();
+
+            if(user.getUserSessions() != null) {
+                gymSessions = user.getUserSessions();
+            }
+
             gymSessions.add(gymSessionData);
 
-            gymUser.setUserSessions(gymSessions);
+            user.setUserSessions(gymSessions);
 
             // Update the GymUser document
-            userDao.updateGymUser(gymUser);
+            userDao.updateGymUser(user);
 
-            try {
-                mav.addObject(gymDataDao.findAllUserGymData());
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
+            mav.addObject(gymDataDao.findAllUserGymData());
+
         }
 
         return new ModelAndView("redirect:/userLog/show");

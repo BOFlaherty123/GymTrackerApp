@@ -24,13 +24,30 @@
                 displayActivityPieChart(50, 30, 20);
                 displayUserWeightLineChart(362.4, 345.9, 290.9);
 
+                processAvgDistanceChart();
+
             });
+
+            function processAvgDistanceChart() {
+
+                var running_avg = Number($('#running_avg_duration').val());
+                var cycling_avg = Number($('#cycling_avg_distance').val());
+                var rowing_avg = Number($('#rowing_avg_distance').val());
+
+                displayAvgDistanceLineChart(running_avg, cycling_avg, rowing_avg);
+
+            }
 
         </script>
 
     </head>
 
     <body>
+
+        <!-- Average Distance Hidden Fields -->
+        <input type="hidden" name="running_avg_duration" id="running_avg_duration" value="${running_avg_duration}">
+        <input type="hidden" name="cycling_avg_distance" id="cycling_avg_distance" value="${cycling_avg_distance}">
+        <input type="hidden" name="rowing_avg_distance" id="rowing_avg_distance" value="${rowing_avg_distance}">
 
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
@@ -57,11 +74,17 @@
             </h4>
         </div>
 
+        <!-- Row 1 -->
         <div class="col-md-6">
             <div id="activityDurationDiv" style="height: 250px; border: solid 1px"></div>
         </div>
         <div class="col-md-6">
             <div id="avgCaloriesByActivityDiv" style="height: 250px; border: solid 1px"></div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="col-md-6" style="padding-top: 2%">
+            <div id="activityDistanceDiv" style="height: 250px; border: solid 1px"></div>
         </div>
 
     </body>

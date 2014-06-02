@@ -3,11 +3,8 @@ package co.uk.gymtracker.controllers;
 import co.uk.gymtracker.dashboard.averages.CalculateActivityAverages;
 import co.uk.gymtracker.dashboard.targets.CalculateUserTargets;
 import co.uk.gymtracker.model.ActivityAverage;
-import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,9 +39,10 @@ public class GymUserDashboardController extends AbstractGymController {
 
         ModelAndView mav = new ModelAndView("user/userDashboard");
 
-        SecurityContext ctx = SecurityContextHolder.getContext();
-        GymUser user = userDao.findGymUser(ctx.getAuthentication().getName());
+        // Get GymUser object
+        GymUser user = getLoggedInUser();
 
+        // Calculate averages for dashboard display
         processUserAverages(mav, user);
 
         return mav;
@@ -58,25 +56,30 @@ public class GymUserDashboardController extends AbstractGymController {
      */
     private ModelAndView processUserAverages(ModelAndView mav, GymUser user) {
 
-        if(user.getUserSessions() != null) {
-            for(GymLogData session : user.getUserSessions()) {
-                System.out.println(session.getDate());
-            }
-        }
-
         List<ActivityAverage> averages = calculateAverages.calculateActivityAverages(user);
-        mav.addObject(averages);
+        for(ActivityAverage avg : averages) {
+
+            mav = processActivityAverageDistances(mav, avg);
+
+        }
 
         return mav;
     }
 
-    /*
-        Allow the user to view their future workout targets, 5, 10, 15% over 2, 4, 6 , 8 weeks.
+    /**
+     *
+     * @param mav
+     * @param avg
+     * @return
+     */
+    private ModelAndView processActivityAverageDistances(ModelAndView mav, ActivityAverage avg) {
+        String distance = avg.getAverageDistance();
 
-        @RequestMapping(value="/target/{percentage_increase}")
-        @PathVariable("percentage_increase") int percentage_increase
+        return (avg.getActivity().equals("Running")) ? mav.addObject("running_avg_duration", distance) :
+                (avg.getActivity().equals("Cycling")) ? mav.addObject("cycling_avg_distance", distance) :
+                        mav.addObject("rowing_avg_distance", distance);
+    }
 
-    */
     public void calculateTarget() {
         targets.calculateTargetOnPercentageIncrease(10);
     }

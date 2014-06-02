@@ -32,7 +32,7 @@ function displayActivityPieChart(avgRunning, avgCycling, avgRowing) {
     });
 
 
-};
+}
 
 function displayUserWeightLineChart(avgRunning, avgCycling, avgRowing) {
 
@@ -88,6 +88,61 @@ function displayUserWeightLineChart(avgRunning, avgCycling, avgRowing) {
             color: '#666',
             data: [avgRowing]
 
+        }]
+    });
+
+}
+
+function displayAvgDistanceLineChart(avgRunning, avgCycling, avgRowing) {
+
+    $('#activityDistanceDiv').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Avg. Distance per Activity'
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Distance (km)'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: '<b>{point.y:.1f}</b> (km)'
+        },
+        series: [{
+            name: 'Population',
+            data: [
+                ['Running', avgRunning],
+                ['Cycling', avgCycling],
+                ['Rowing', avgRowing]
+            ],
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#000',
+                align: 'right',
+                x: 4,
+                y: 10,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
         }]
     });
 

@@ -2,8 +2,6 @@ package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -33,9 +31,7 @@ public class GymUserLogController extends AbstractGymController {
         // Spring Convention over Configuration
         ModelAndView mav = new ModelAndView("userLog");
 
-        SecurityContext ctx = SecurityContextHolder.getContext();
-
-        GymUser user = userDao.findGymUser(ctx.getAuthentication().getName());
+        GymUser user = getLoggedInUser();
 
         if(user.getUserSessions() != null) {
             List<GymLogData> gymRecords = user.getUserSessions();
