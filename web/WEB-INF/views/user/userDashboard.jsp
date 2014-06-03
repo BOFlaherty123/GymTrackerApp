@@ -1,3 +1,4 @@
+<%--suppress ALL --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -21,20 +22,32 @@
             $(function () {
 
                 // Exact average figures to be provided via an ajax GET
-                displayActivityPieChart(50, 30, 20);
                 displayUserWeightLineChart(362.4, 345.9, 290.9);
 
                 processAvgDistanceChart();
+                processAvgDurationChart();
 
             });
 
             function processAvgDistanceChart() {
 
-                var running_avg = Number($('#running_avg_duration').val());
+                var running_avg = Number($('#running_avg_distance').val());
                 var cycling_avg = Number($('#cycling_avg_distance').val());
                 var rowing_avg = Number($('#rowing_avg_distance').val());
 
                 displayAvgDistanceLineChart(running_avg, cycling_avg, rowing_avg);
+
+            }
+
+            function processAvgDurationChart() {
+
+                var running_percent = Number($('#running_duration_percent').val());
+                var cycling_percent = Number($('#cycling_duration_percent').val());
+                var rowing_percent = Number($('#rowing_duration_percent').val());
+
+                displayActivityPieChart(running_percent, cycling_percent, rowing_percent);
+
+                displayAvgDurationLineChart(running_percent, cycling_percent, rowing_percent);
 
             }
 
@@ -44,10 +57,15 @@
 
     <body>
 
-        <!-- Average Distance Hidden Fields -->
-        <input type="hidden" name="running_avg_duration" id="running_avg_duration" value="${running_avg_duration}">
+        <!-- average distance hidden fields -->
+        <input type="hidden" name="running_avg_distance" id="running_avg_distance" value="${running_avg_distance}">
         <input type="hidden" name="cycling_avg_distance" id="cycling_avg_distance" value="${cycling_avg_distance}">
         <input type="hidden" name="rowing_avg_distance" id="rowing_avg_distance" value="${rowing_avg_distance}">
+
+        <!-- activity duration percentage -->
+        <input type="hidden" name="running_duration_percent" id="running_duration_percent" value="${running_duration_percent}">
+        <input type="hidden" name="cycling_duration_percent" id="cycling_duration_percent" value="${cycling_duration_percent}">
+        <input type="hidden" name="rowing_duration_percent" id="rowing_duration_percent" value="${rowing_duration_percent}">
 
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
@@ -62,7 +80,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/GymTrackerApp/userLog/show">Back</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userLog/show">Back</a></li>
                     </ul>
                 </div>
             </div>
@@ -76,15 +94,20 @@
 
         <!-- Row 1 -->
         <div class="col-md-6">
-            <div id="activityDurationDiv" style="height: 250px; border: solid 1px"></div>
+            <div id="activityDistanceDiv" style="height: 250px; border: solid 1px"></div>
         </div>
+
         <div class="col-md-6">
             <div id="avgCaloriesByActivityDiv" style="height: 250px; border: solid 1px"></div>
         </div>
 
         <!-- Row 2 -->
         <div class="col-md-6" style="padding-top: 2%">
-            <div id="activityDistanceDiv" style="height: 250px; border: solid 1px"></div>
+            <div id="activityDurationDiv" style="height: 250px; border: solid 1px"></div>
+        </div>
+
+        <div class="col-md-6" style="padding-top: 2%">
+            <div id="activityAvgDurationDiv" style="height: 250px; border: solid 1px"></div>
         </div>
 
     </body>

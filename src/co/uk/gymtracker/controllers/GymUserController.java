@@ -3,11 +3,14 @@ package co.uk.gymtracker.controllers;
 import co.uk.gymtracker.model.GymUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Gym User Controller - User Administration, CRUD operations
@@ -47,11 +50,9 @@ public class GymUserController extends AbstractGymController {
         ModelAndView mav = new ModelAndView();
 
         if(errors.hasErrors()) {
-
             mav.setViewName("/user/createUser");
 
             return mav;
-
         } else {
             userDao.saveGymUser(gymUser);
         }
@@ -68,6 +69,16 @@ public class GymUserController extends AbstractGymController {
     @RequestMapping(value="/deleteUsers")
     public void deleteUsers() {
         userDao.deleteUsers();
+    }
+
+    @ModelAttribute("userRoles")
+    public List<String> availableUserRoles() {
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add("ROLE_USER");
+        userRoles.add("ROLE_ADMIN");
+        userRoles.add("ROLE_DENIED");
+
+        return userRoles;
     }
 
 }

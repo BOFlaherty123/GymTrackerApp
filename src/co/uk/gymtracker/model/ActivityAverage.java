@@ -1,5 +1,7 @@
 package co.uk.gymtracker.model;
 
+import java.util.Map;
+
 /**
  * Description Here
  *
@@ -9,28 +11,25 @@ package co.uk.gymtracker.model;
  */
 public class ActivityAverage {
 
-    private String activity;
-    private String totalDistance;
-    private String numberOfSessions;
-    private String averageDistance;
-    private String averageDuration;
+    private final String activity;
+    private final String numberOfSessions;
+    private final String averageDistance;
+    private final String averageDuration;
 
-    public ActivityAverage(String activity_Name, String total_Distance, String number_Of_Sessions,
-                           String average_Distance, String average_Duration) {
+    private final Map<String, String> activityTotals;
+
+    public ActivityAverage(String activity_Name,  String number_Of_Sessions,
+                           String average_Distance, String average_Duration, Map<String, String> activity_totals) {
 
         activity = activity_Name;
-        totalDistance = total_Distance;
         numberOfSessions = number_Of_Sessions;
         averageDistance = average_Distance;
         averageDuration = average_Duration;
+        activityTotals = activity_totals;
     }
 
     public String getActivity() {
         return activity;
-    }
-
-    public String getTotalDistance() {
-        return totalDistance;
     }
 
     public String getNumberOfSessions() {
@@ -43,5 +42,9 @@ public class ActivityAverage {
 
     public String getAverageDuration() {
         return averageDuration;
+    }
+
+    public Map<String, String> getActivityTotals() {
+        return activityTotals;
     }
 }

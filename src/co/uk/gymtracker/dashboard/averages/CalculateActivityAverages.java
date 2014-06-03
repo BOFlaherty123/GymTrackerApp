@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Description Here
@@ -66,6 +68,13 @@ public class CalculateActivityAverages extends AbstractGymController {
         return gymActivities;
     }
 
+    /**
+     * Calculates and builds the ActivityAverages object for each Activity
+     *
+     * @param activitySessionData
+     * @param activity
+     * @return
+     */
     private ActivityAverage calculateAverages(List<GymLogData> activitySessionData, String activity) {
 
         BigDecimal totalDistance = new BigDecimal("0");
@@ -83,27 +92,61 @@ public class CalculateActivityAverages extends AbstractGymController {
         BigDecimal averageDistance = totalDistance.divide(totalSessions, RoundingMode.HALF_UP);
         BigDecimal averageDuration = totalDuration.divide(totalSessions, RoundingMode.HALF_UP);
 
-        return buildActivityAverage(activity, totalDistance, totalSessions.toString(), averageDistance, averageDuration);
+        // TODO - Add Totals to ActivityAverage as required for Pie Chart calculations
+        Map<String,String> activityTotals = new HashMap<>();
+        activityTotals.put("distance", totalDistance.toString());
+        activityTotals.put("duration", totalDuration.toString());
+
+        return buildActivityAverage(activity, totalSessions.toString(), averageDistance, averageDuration, activityTotals);
     }
 
+    /**
+     * Calculates the total distance travelled per activity by the user
+     *
+     * @param totalDistance
+     * @param distance
+     * @return
+     */
     private BigDecimal addDistanceToTotal(BigDecimal totalDistance, String distance) {
         return totalDistance.add(new BigDecimal(distance));
     }
 
+    /**
+     * Calculates the total duration completed per activity by the user
+     *
+     * @param totalDuration
+     * @param duration
+     * @return
+     */
     private BigDecimal addDurationToTotal(BigDecimal totalDuration, String duration) {
         return totalDuration.add(new BigDecimal(duration));
     }
 
+    /**
+     *  Converts the integer number of gym sessions per activity into a BigDecimal value
+     *
+     * @param noOfSessions
+     * @return
+     */
     private BigDecimal parseNumberOfGymSessions(int noOfSessions) {
         return new BigDecimal(String.valueOf(noOfSessions));
     }
 
-    private ActivityAverage buildActivityAverage(String activity, BigDecimal totalDistance,
+    /**
+     * Builds an ActivityAverage for each activity completed by a user
+     *
+     * @param activity
+     * @param numberOfSessions
+     * @param averageDistance
+     * @param averageDuration
+     * @return
+     */
+    private ActivityAverage buildActivityAverage(String activity,
                                                  String numberOfSessions, BigDecimal averageDistance,
-                                                 BigDecimal averageDuration) {
+                                                 BigDecimal averageDuration, Map<String, String> activityTotals) {
 
-        return new ActivityAverage(activity, totalDistance.toString(), numberOfSessions,
-                averageDistance.toString(), averageDuration.toString());
+        return new ActivityAverage(activity, numberOfSessions,
+                averageDistance.toString(), averageDuration.toString(), activityTotals);
     }
 
 }

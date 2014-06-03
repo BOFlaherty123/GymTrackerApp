@@ -46,7 +46,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/GymTrackerApp/userLog/show">Back</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userLog/show">Back</a></li>
                     </ul>
                 </div>
             </div>

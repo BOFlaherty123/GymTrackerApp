@@ -36,11 +36,11 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/GymTrackerApp/user/userDashboard">User Dashboard</a></li>
-                        <li><a href="/GymTrackerApp/user/createUser">Create a new User</a></li>
-                        <li><a href="/GymTrackerApp/addGymSessionForm">Add Gym Session</a></li>
-                        <li><a href="/GymTrackerApp/userLog/view.pdf">Download Results PDF</a></li>
-                        <li><a href="/GymTrackerApp/static/j_spring_security_logout">Logout</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/userDashboard">User Dashboard</a></li>
+                        <li><a href="${pageContext.request.contextPath}/user/createUser">Create a new User</a></li>
+                        <li><a href="${pageContext.request.contextPath}/addGymSessionForm">Add Gym Session</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userLog/view.pdf">Download Results PDF</a></li>
+                        <li><a href="${pageContext.request.contextPath}/static/j_spring_security_logout">Logout</a></li>
                     </ul>
                 </div>
             </div>

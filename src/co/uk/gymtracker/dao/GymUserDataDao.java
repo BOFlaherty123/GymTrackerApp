@@ -65,6 +65,7 @@ public class GymUserDataDao extends GymGenericDao {
         mongoOperations.insert(gymLogData);
     }
 
+    @SuppressWarnings("unchecked")
     public List<GymLogData> findGymUserDataByActivity(GymUser gymUser, String activity) {
 
         DBCollection user = mongoOperations.getCollection("gymUser");

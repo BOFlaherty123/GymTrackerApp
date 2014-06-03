@@ -87,7 +87,7 @@
                         </div>
 
                         <div class="form-group">
-                            <form:input path="role" class="form-control" placeholder="Enter Role"/>
+                            <form:select path="role" items="${userRoles}" class="form-control"/>
                         </div>
 
                     </fieldset>

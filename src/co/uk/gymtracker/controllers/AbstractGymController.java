@@ -23,7 +23,7 @@ public class AbstractGymController {
     public GymUserDataDao gymDataDao;
 
 
-    public GymUser getLoggedInUser() {
+    protected GymUser getLoggedInUser() {
         SecurityContext ctx = SecurityContextHolder.getContext();
         return userDao.findGymUser(ctx.getAuthentication().getName());
     }

@@ -1,39 +1,4 @@
-function displayActivityPieChart(avgRunning, avgCycling, avgRowing) {
-
-    Highcharts.setOptions({
-        colors: ['#CCC', '#333', '#666', '#24CBE5']
-    });
-
-    $('#activityDurationDiv').highcharts({
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false
-        },
-        title: {
-            text: 'Avg. Activity Duration'
-        },
-        plotOptions: {
-            dataLabels: {
-                style: {
-                    color: Highcharts.theme
-                }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Duration',
-            data: [
-                ['Running', avgRunning],
-                ['Cycling', avgCycling],
-                ['Rowing', avgRowing]
-            ]
-        }]
-    });
-
-
-}
-
+// Average Distance Bar Chart
 function displayUserWeightLineChart(avgRunning, avgCycling, avgRowing) {
 
     $('#avgCaloriesByActivityDiv').highcharts({
@@ -143,6 +108,107 @@ function displayAvgDistanceLineChart(avgRunning, avgCycling, avgRowing) {
                     fontFamily: 'Verdana, sans-serif'
                 }
             }
+        }]
+    });
+
+}
+
+// Average Duration Pie Chart
+function displayActivityPieChart(avgRunning, avgCycling, avgRowing) {
+
+    Highcharts.setOptions({
+        colors: ['#CCC', '#333', '#666', '#24CBE5']
+    });
+
+    $('#activityDurationDiv').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Avg. Activity Duration'
+        },
+        plotOptions: {
+            dataLabels: {
+                style: {
+                    color: Highcharts.theme
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Duration',
+            data: [
+                ['Running', avgRunning],
+                ['Cycling', avgCycling],
+                ['Rowing', avgRowing]
+            ]
+        }]
+    });
+
+
+}
+
+// Average Duration Bar Chart
+function displayAvgDurationLineChart(avgRunning, avgCycling, avgRowing) {
+
+    $('#activityAvgDurationDiv').highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Avg. Duration per Activity'
+        },
+        xAxis: {
+            categories: ['Activity'],
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Duration (minutes)',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        tooltip: {
+            valueSuffix: ' minutes'
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -40,
+            y: 100,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: 'Running',
+            data: [avgRunning]
+        }, {
+            name: 'Cycling',
+            data: [avgCycling]
+        }, {
+            name: 'Rowing',
+            data: [avgRowing]
         }]
     });
 
