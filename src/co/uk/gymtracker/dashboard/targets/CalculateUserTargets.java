@@ -15,7 +15,6 @@ public class CalculateUserTargets {
 
     public void calculateTargetOnPercentageIncrease(int percentage_increase) {
 
-
     }
 
 }

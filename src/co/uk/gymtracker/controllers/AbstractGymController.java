@@ -14,14 +14,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @date Created on: 30/05/14
  * @project GymTrackerApp
  */
-public class AbstractGymController {
+public abstract class AbstractGymController {
 
     @Autowired
     public GymUserDao userDao;
 
     @Autowired
     public GymUserDataDao gymDataDao;
-
 
     protected GymUser getLoggedInUser() {
         SecurityContext ctx = SecurityContextHolder.getContext();

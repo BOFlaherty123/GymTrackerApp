@@ -27,6 +27,9 @@ import java.util.Map;
 @Component
 public class CalculateActivityAverages extends AbstractGymController {
 
+    private static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
+    private static final String ZERO_VALUE = "0";
+
     @Autowired
     public GymUserService userService;
 
@@ -46,7 +49,7 @@ public class CalculateActivityAverages extends AbstractGymController {
 
         for(String activity : gymActivities) {
 
-            // Retrieve gym session data for
+            // retrieve gym session data for
             List<GymLogData> userSessionData = gymDataDao.findGymUserDataByActivity(gymUser, activity);
 
             if(userSessionData.size() > 0) {
@@ -55,7 +58,7 @@ public class CalculateActivityAverages extends AbstractGymController {
 
         }
 
-        // Add result(s) to ActivityAverages List and return to the Controller
+        // add result(s) to ActivityAverages List and return to the Controller
         return activityAverages;
     }
 
@@ -77,10 +80,10 @@ public class CalculateActivityAverages extends AbstractGymController {
      */
     private ActivityAverage calculateAverages(List<GymLogData> activitySessionData, String activity) {
 
-        BigDecimal totalDistance = new BigDecimal("0");
-        BigDecimal totalDuration = new BigDecimal("0");
+        BigDecimal totalDistance = new BigDecimal(ZERO_VALUE);
+        BigDecimal totalDuration = new BigDecimal(ZERO_VALUE);
 
-        // Calculate total distance
+        // calculate total distance
         for(GymLogData gymLogData : activitySessionData)  {
             totalDistance = addDistanceToTotal(totalDistance, gymLogData.getDistance());
             totalDuration = addDurationToTotal(totalDuration, gymLogData.getDuration());
@@ -88,11 +91,11 @@ public class CalculateActivityAverages extends AbstractGymController {
 
         BigDecimal totalSessions = parseNumberOfGymSessions(activitySessionData.size());
 
-        // Calculate Averages
+        // calculate Averages
         BigDecimal averageDistance = totalDistance.divide(totalSessions, RoundingMode.HALF_UP);
         BigDecimal averageDuration = totalDuration.divide(totalSessions, RoundingMode.HALF_UP);
 
-        // TODO - Add Totals to ActivityAverage as required for Pie Chart calculations
+        // create a map containing the activity totals for use with further calculations
         Map<String,String> activityTotals = new HashMap<>();
         activityTotals.put("distance", totalDistance.toString());
         activityTotals.put("duration", totalDuration.toString());
@@ -149,4 +152,61 @@ public class CalculateActivityAverages extends AbstractGymController {
                 averageDistance.toString(), averageDuration.toString(), activityTotals);
     }
 
+
+    /**
+     *
+     * @param gymUser
+     * @return
+     */
+    public Map<String, BigDecimal> calculateAvgDurationPercentages(GymUser gymUser) {
+
+        Map<String, BigDecimal> durations = new HashMap<>();
+
+        List<ActivityAverage> averages = calculateActivityAverages(gymUser);
+        for(ActivityAverage avg : averages) {
+            durations.put(avg.getActivity(), new BigDecimal(avg.getActivityTotals().get("duration")));
+        }
+
+        BigDecimal activityTotal = new BigDecimal(ZERO_VALUE);
+        // accumulate the activity duration total
+        activityTotal = addValueToActivityDurationTotal(durations, activityTotal);
+
+        // calculate the value to divide each activity total by
+        BigDecimal pieDivisible = activityTotal.divide(ONE_HUNDRED).setScale(2, RoundingMode.CEILING);
+
+        // add values to model
+        durations = buildAvgDurationPercentageMap(durations, pieDivisible);
+
+        return durations;
+    }
+
+    /**
+     *
+     * @param durations
+     * @param activityTotal
+     * @return
+     */
+    private BigDecimal addValueToActivityDurationTotal(Map<String, BigDecimal> durations, BigDecimal activityTotal) {
+
+        for(Map.Entry<String, BigDecimal> entry : durations.entrySet()) {
+            activityTotal = activityTotal.add(entry.getValue());
+        }
+
+        return activityTotal;
+    }
+
+    /**
+     *
+     * @param durations
+     * @param pieDivisible
+     * @return
+     */
+    private Map<String, BigDecimal> buildAvgDurationPercentageMap(Map<String, BigDecimal> durations, BigDecimal pieDivisible) {
+
+        for(Map.Entry<String, BigDecimal> entry : durations.entrySet()) {
+            entry.setValue(entry.getValue().divide(pieDivisible, RoundingMode.CEILING).setScale(2));
+        }
+
+        return durations;
+    }
 }

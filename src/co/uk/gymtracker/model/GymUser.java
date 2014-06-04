@@ -3,6 +3,7 @@ package co.uk.gymtracker.model;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.AssertTrue;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +17,11 @@ import java.util.List;
 @Document
 public class GymUser implements Serializable {
 
+    @AssertTrue(message="Your passwords do not match, please try again.")
+    private boolean isValid() {
+        return this.password.equals(this.confirmPassword);
+    }
+
     private String id;
     @NotEmpty(message = "FirstName is compulsory")
     private String firstName;
@@ -23,6 +29,8 @@ public class GymUser implements Serializable {
     private String username;
     @NotEmpty(message = "Password is compulsory")
     private String password;
+    @NotEmpty(message = "ConfirmPassword is compulsory")
+    private String confirmPassword;
     @NotEmpty(message = "LastName is compulsory")
     private String lastName;
     private String age;
@@ -56,6 +64,14 @@ public class GymUser implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getFirstName() {

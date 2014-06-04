@@ -77,7 +77,7 @@ public class GymDataInputController extends AbstractGymController {
 
             user.setUserSessions(gymSessions);
 
-            // Update the GymUser document
+            // update the GymUser document
             userDao.updateGymUser(user);
 
             mav.addObject(gymDataDao.findAllUserGymData());

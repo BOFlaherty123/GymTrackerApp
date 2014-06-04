@@ -51,7 +51,6 @@ public class GymUserDataDao extends GymGenericDao {
         client.close();
 
      */
-
     public List<GymLogData> findAllUserGymData() {
         return mongoOperations.findAll(GymLogData.class);
     }

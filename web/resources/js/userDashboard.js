@@ -55,7 +55,6 @@ function displayUserWeightLineChart(avgRunning, avgCycling, avgRowing) {
 
         }]
     });
-
 }
 
 function displayAvgDistanceLineChart(avgRunning, avgCycling, avgRowing) {
@@ -110,7 +109,6 @@ function displayAvgDistanceLineChart(avgRunning, avgCycling, avgRowing) {
             }
         }]
     });
-
 }
 
 // Average Duration Pie Chart
@@ -146,8 +144,6 @@ function displayActivityPieChart(avgRunning, avgCycling, avgRowing) {
             ]
         }]
     });
-
-
 }
 
 // Average Duration Bar Chart
@@ -211,5 +207,4 @@ function displayAvgDurationLineChart(avgRunning, avgCycling, avgRowing) {
             data: [avgRowing]
         }]
     });
-
 }

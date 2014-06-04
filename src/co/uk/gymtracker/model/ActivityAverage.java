@@ -15,7 +15,6 @@ public class ActivityAverage {
     private final String numberOfSessions;
     private final String averageDistance;
     private final String averageDuration;
-
     private final Map<String, String> activityTotals;
 
     public ActivityAverage(String activity_Name,  String number_Of_Sessions,
@@ -47,4 +46,5 @@ public class ActivityAverage {
     public Map<String, String> getActivityTotals() {
         return activityTotals;
     }
+
 }

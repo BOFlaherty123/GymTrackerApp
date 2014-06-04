@@ -43,3 +43,12 @@ div#gymTrackerLogo {
     width: 100%;
     padding: 2%;
 }
+
+.chart_padding {
+    padding-top: 2%;
+}
+
+.chart_size {
+    height: 250px;
+    border: solid 1px;
+}

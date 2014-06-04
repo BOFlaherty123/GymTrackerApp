@@ -28,7 +28,7 @@ public class GymUserLogController extends AbstractGymController {
     @RequestMapping(value="/show")
     public ModelAndView displayLog(HttpServletRequest request) {
 
-        // Spring Convention over Configuration
+        // spring Convention over Configuration
         ModelAndView mav = new ModelAndView("userLog");
 
         GymUser user = getLoggedInUser();
@@ -36,7 +36,7 @@ public class GymUserLogController extends AbstractGymController {
         if(user.getUserSessions() != null) {
             List<GymLogData> gymRecords = user.getUserSessions();
 
-            // Spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
+            // spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
             mav.addObject(gymRecords);
         }
 
