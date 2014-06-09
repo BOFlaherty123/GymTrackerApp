@@ -11,40 +11,49 @@ import java.util.Map;
  */
 public class ActivityAverage {
 
-    private final String activity;
-    private final String numberOfSessions;
-    private final String averageDistance;
-    private final String averageDuration;
-    private final Map<String, String> activityTotals;
-
-    public ActivityAverage(String activity_Name,  String number_Of_Sessions,
-                           String average_Distance, String average_Duration, Map<String, String> activity_totals) {
-
-        activity = activity_Name;
-        numberOfSessions = number_Of_Sessions;
-        averageDistance = average_Distance;
-        averageDuration = average_Duration;
-        activityTotals = activity_totals;
-    }
+    private String activity;
+    private String numberOfSessions;
+    private String averageDistance;
+    private String averageDuration;
+    private Map<String, String> activityTotals;
 
     public String getActivity() {
         return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
     }
 
     public String getNumberOfSessions() {
         return numberOfSessions;
     }
 
+    public void setNumberOfSessions(String numberOfSessions) {
+        this.numberOfSessions = numberOfSessions;
+    }
+
     public String getAverageDistance() {
         return averageDistance;
+    }
+
+    public void setAverageDistance(String averageDistance) {
+        this.averageDistance = averageDistance;
     }
 
     public String getAverageDuration() {
         return averageDuration;
     }
 
+    public void setAverageDuration(String averageDuration) {
+        this.averageDuration = averageDuration;
+    }
+
     public Map<String, String> getActivityTotals() {
         return activityTotals;
     }
 
+    public void setActivityTotals(Map<String, String> activityTotals) {
+        this.activityTotals = activityTotals;
+    }
 }

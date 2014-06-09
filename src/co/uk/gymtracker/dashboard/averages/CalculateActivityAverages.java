@@ -62,15 +62,6 @@ public class CalculateActivityAverages extends AbstractGymController {
         return activityAverages;
     }
 
-    private List<String> buildActivityList() {
-        List<String> gymActivities = new ArrayList<>();
-        gymActivities.add("Running");
-        gymActivities.add("Cycling");
-        gymActivities.add("Rowing");
-
-        return gymActivities;
-    }
-
     /**
      * Calculates and builds the ActivityAverages object for each Activity
      *
@@ -122,6 +113,7 @@ public class CalculateActivityAverages extends AbstractGymController {
      * @return
      */
     private BigDecimal addDurationToTotal(BigDecimal totalDuration, String duration) {
+
         return totalDuration.add(new BigDecimal(duration));
     }
 
@@ -148,8 +140,14 @@ public class CalculateActivityAverages extends AbstractGymController {
                                                  String numberOfSessions, BigDecimal averageDistance,
                                                  BigDecimal averageDuration, Map<String, String> activityTotals) {
 
-        return new ActivityAverage(activity, numberOfSessions,
-                averageDistance.toString(), averageDuration.toString(), activityTotals);
+        ActivityAverage activityObj = new ActivityAverage();
+        activityObj.setActivity(activity);
+        activityObj.setNumberOfSessions(numberOfSessions);
+        activityObj.setAverageDistance(averageDistance.toString());
+        activityObj.setAverageDuration(averageDuration.toString());
+        activityObj.setActivityTotals(activityTotals);
+
+        return activityObj;
     }
 
 
@@ -209,4 +207,14 @@ public class CalculateActivityAverages extends AbstractGymController {
 
         return durations;
     }
+
+    private List<String> buildActivityList() {
+        List<String> gymActivities = new ArrayList<>();
+        gymActivities.add("Running");
+        gymActivities.add("Cycling");
+        gymActivities.add("Rowing");
+
+        return gymActivities;
+    }
+
 }

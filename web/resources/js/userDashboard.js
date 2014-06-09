@@ -59,6 +59,10 @@ function displayUserWeightLineChart(avgRunning, avgCycling, avgRowing) {
 
 function displayAvgDistanceLineChart(avgRunning, avgCycling, avgRowing) {
 
+    Highcharts.setOptions({
+        colors: ['#CCC', '#333', '#666', '#24CBE5']
+    });
+
     $('#activityDistanceDiv').highcharts({
         chart: {
             type: 'column'
@@ -89,7 +93,7 @@ function displayAvgDistanceLineChart(avgRunning, avgCycling, avgRowing) {
             pointFormat: '<b>{point.y:.1f}</b> (km)'
         },
         series: [{
-            name: 'Population',
+            name: 'Activity',
             data: [
                 ['Running', avgRunning],
                 ['Cycling', avgCycling],

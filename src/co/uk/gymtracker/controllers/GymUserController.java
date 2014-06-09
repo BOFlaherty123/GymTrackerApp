@@ -1,6 +1,8 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.model.GymUser;
+import org.perf4j.StopWatch;
+import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,6 +48,9 @@ public class GymUserController extends AbstractGymController {
      */
     @RequestMapping(value="/submitUser", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid GymUser gymUser, Errors errors) {
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        StopWatch watch = new Slf4JStopWatch();
 
         ModelAndView mav = new ModelAndView();
 
@@ -59,8 +64,36 @@ public class GymUserController extends AbstractGymController {
 
         mav.setViewName("redirect:/userLog/show");
 
-        return mav;
+        // log method performance
+        runPerformanceLogging(methodName, watch);
 
+        return mav;
+    }
+
+    @RequestMapping(value="/updateUser", method = RequestMethod.POST)
+    public ModelAndView updateUser(@Valid GymUser gymUser, Errors errors) {
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        StopWatch watch = new Slf4JStopWatch();
+
+        ModelAndView mav = new ModelAndView();
+
+        if(errors.hasErrors()) {
+            mav.setViewName("/user/userDashboard");
+            return mav;
+        } else {
+            GymUser user = userDao.findGymUser(gymUser.getUsername());
+            gymUser.setUserSessions(user.getUserSessions());
+
+            userDao.updateGymUser(gymUser);
+        }
+
+        mav.setViewName("redirect:/user/userDashboard");
+
+        // log method performance
+        runPerformanceLogging(methodName, watch);
+
+        return mav;
     }
 
     /**

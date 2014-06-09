@@ -5,6 +5,8 @@ import co.uk.gymtracker.model.GymUser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import java.util.List;
  */
 @Component
 public class GymUserDataDao extends GymGenericDao {
+
+    private static final Logger LOG = LoggerFactory.getLogger(GymUserDataDao.class);
 
     /**
         String textUri = "mongodb://admin:gymuser@ds061938.mongolab.com:61938/gymtracker";
@@ -55,15 +59,6 @@ public class GymUserDataDao extends GymGenericDao {
         return mongoOperations.findAll(GymLogData.class);
     }
 
-    public void saveUserGymData(GymLogData gymLogData) {
-
-        if(!mongoOperations.collectionExists(GymLogData.class)) {
-            mongoOperations.createCollection(GymLogData.class);
-        }
-
-        mongoOperations.insert(gymLogData);
-    }
-
     @SuppressWarnings("unchecked")
     public List<GymLogData> findGymUserDataByActivity(GymUser gymUser, String activity) {
 
@@ -80,17 +75,21 @@ public class GymUserDataDao extends GymGenericDao {
 
                 ArrayList<BasicDBObject> userSessions = (ArrayList<BasicDBObject>) result.get("userSessions");
 
-                for(BasicDBObject session : userSessions) {
+                if(userSessions != null) {
 
-                    if(session.get("activity").equals(activity)) {
+                    for (BasicDBObject session : userSessions) {
 
-                        GymLogData gymSessionData = new GymLogData(
-                                (String) session.get("date"), (String) session.get("duration"),(String) session.get("activity"),
-                                (String) session.get("activityDuration"), (String) session.get("distance"), (String) session.get("levelOrWeight"),
-                                (String) session.get("calories"), (String) session.get("userWeight")
-                        );
+                        if (session.get("activity").equals(activity)) {
 
-                        gymSessionsForUser.add(gymSessionData);
+                            GymLogData gymSessionData = new GymLogData(
+                                    (String) session.get("date"), (String) session.get("duration"), (String) session.get("activity"),
+                                    (String) session.get("activityDuration"), (String) session.get("distance"), (String) session.get("levelOrWeight"),
+                                    (String) session.get("calories"), (String) session.get("userWeight")
+                            );
+
+                            gymSessionsForUser.add(gymSessionData);
+
+                        }
 
                     }
 

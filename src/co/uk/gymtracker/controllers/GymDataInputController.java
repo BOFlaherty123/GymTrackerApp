@@ -3,6 +3,8 @@ package co.uk.gymtracker.controllers;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymSessionForm;
 import co.uk.gymtracker.model.GymUser;
+import org.perf4j.StopWatch;
+import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,12 +51,14 @@ public class GymDataInputController extends AbstractGymController {
      */
     @RequestMapping(value="/addGymSession", method = RequestMethod.POST)
     public ModelAndView addGymSessionData(HttpServletRequest request, @Valid GymSessionForm gymSessionForm, Errors errors) {
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        StopWatch watch = new Slf4JStopWatch();
 
         ModelAndView mav = new ModelAndView();
 
         if(errors.hasErrors()) {
             mav.setViewName("addGymLog");
-
             return mav;
         } else {
             // extract the GymUser from the security context
@@ -81,8 +85,10 @@ public class GymDataInputController extends AbstractGymController {
             userDao.updateGymUser(user);
 
             mav.addObject(gymDataDao.findAllUserGymData());
-
         }
+
+        // log method performance
+        runPerformanceLogging(methodName, watch);
 
         return new ModelAndView("redirect:/userLog/show");
     }

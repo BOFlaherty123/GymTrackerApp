@@ -52,3 +52,18 @@ div#gymTrackerLogo {
     height: 250px;
     border: solid 1px;
 }
+
+.dashboard_profile, .dashboard_targets, .activityDropdownDiv {
+    padding-top: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.dashboard_charts {
+    padding-top: 2%;
+}
+
+/* User Dashboard - Targets */
+#ex1Slider .slider-selection {
+    background: #BABABA;
+}

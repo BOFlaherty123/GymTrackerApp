@@ -142,7 +142,6 @@
                             Additional rows example, Needs to be removed once refactor has been completed
                             Change to List<Activity> activities and allow for a show/hide function on form input
                         -->
-
                         <div class="row">
                             <div class="col-md-10">
                                 <input type="submit" value="Submit"/>

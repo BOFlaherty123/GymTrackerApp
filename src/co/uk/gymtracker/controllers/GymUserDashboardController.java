@@ -4,15 +4,24 @@ import co.uk.gymtracker.dashboard.averages.CalculateActivityAverages;
 import co.uk.gymtracker.dashboard.targets.CalculateUserTargets;
 import co.uk.gymtracker.model.ActivityAverage;
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.TargetIncrease;
+import org.perf4j.StopWatch;
+import org.perf4j.slf4j.Slf4JStopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.String.format;
 
 /**
  * GymUserTargetController
@@ -31,6 +40,8 @@ public class GymUserDashboardController extends AbstractGymController {
     @Autowired
     public CalculateActivityAverages calculateAverages;
 
+    private static final Logger LOG = LoggerFactory.getLogger(GymUserDashboardController.class);
+
     /**
      * Setup and Display the User Dashboard
      *
@@ -38,15 +49,24 @@ public class GymUserDashboardController extends AbstractGymController {
      */
     @RequestMapping(value="/userDashboard")
     public ModelAndView displayUserDashboard(HttpServletRequest request) {
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        StopWatch watch = new Slf4JStopWatch();
 
         ModelAndView mav = new ModelAndView("user/userDashboard");
 
         // Get GymUser object
         GymUser user = getLoggedInUser();
+        System.out.println("userDashboard - user sessions: " + user.getUserSessions());
+
+        mav.addObject(user);
 
         // Calculate averages for dashboard display
         processUserAverages(mav, user);
         processActivityDurationPercentages(mav, user);
+
+        // log method performance
+        runPerformanceLogging(methodName, watch);
 
         return mav;
     }
@@ -62,9 +82,12 @@ public class GymUserDashboardController extends AbstractGymController {
 
         List<ActivityAverage> averages = calculateAverages.calculateActivityAverages(user);
         for(ActivityAverage avg : averages) {
-            // activity Distance Averages
+            LOG.info(format("processing averages for activity: %s.", avg.getActivity()));
             mav = processActivityAverageDistances(mav, avg);
         }
+
+        user.setActivityAverages(averages);
+        userDao.updateGymUser(user);
 
         return mav;
     }
@@ -78,6 +101,7 @@ public class GymUserDashboardController extends AbstractGymController {
      */
     private ModelAndView processActivityAverageDistances(ModelAndView mav, ActivityAverage avg) {
         String distance = avg.getAverageDistance();
+        LOG.info(format("activity average distance: %s.", avg.getAverageDistance()));
 
         return (avg.getActivity().equals("Running")) ? mav.addObject("running_avg_distance", distance) :
                 (avg.getActivity().equals("Cycling")) ? mav.addObject("cycling_avg_distance", distance) :
@@ -103,8 +127,31 @@ public class GymUserDashboardController extends AbstractGymController {
         return mav;
     }
 
-    public void calculateTarget() {
-        targets.calculateTargetOnPercentageIncrease(10);
+    @RequestMapping(value="/calculateTargetByPercentIncrease/{activity}/{percentage}", method = RequestMethod.POST)
+    public @ResponseBody Map<String, String> calculateTargetOnPercentageIncrease(@PathVariable("activity") String activity,
+                                                                    @PathVariable("percentage") int percentage) {
+
+        GymUser user = getLoggedInUser();
+
+        // TODO - Change from return value of String to TargetIncrease (as a JSON obj? Jackson will be required)
+        TargetIncrease targetIncrease = targets.calculateTargetOnPercentageIncrease(user, activity, percentage);
+
+        Map<String,String> testingMap = new HashMap<>();
+        testingMap.put("distance", targetIncrease.getDistanceIncrease());
+        testingMap.put("duration", targetIncrease.getDurationIncrease());
+
+        return testingMap;
     }
 
+    @ModelAttribute("activity")
+    public List<String> listActivities() {
+
+        List<String> activity = new ArrayList<>();
+        activity.add("");
+        activity.add("Running");
+        activity.add("Cycling");
+        activity.add("Rowing");
+
+        return activity;
+    }
 }
