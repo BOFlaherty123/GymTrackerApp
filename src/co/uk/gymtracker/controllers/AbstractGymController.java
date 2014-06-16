@@ -8,6 +8,10 @@ import org.perf4j.StopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description Here
@@ -35,4 +39,30 @@ public abstract class AbstractGymController {
     protected void runPerformanceLogging(String methodName, StopWatch watch) {
         performanceLogging.isMethodProcessingBelowThreshold(methodName, watch);
     }
+
+    @ModelAttribute("activity")
+    public List<String> listActivities() {
+
+        List<String> activity = new ArrayList<>();
+        activity.add("");
+        activity.add("Running");
+        activity.add("Cycling");
+        activity.add("Rowing");
+
+        return activity;
+    }
+
+    @ModelAttribute("activityDuration")
+    public List<String> listActivityDuration() {
+
+        List<String> activityDuration = new ArrayList<>();
+        activityDuration.add("");
+        activityDuration.add("15");
+        activityDuration.add("30");
+        activityDuration.add("45");
+        activityDuration.add("60");
+
+        return activityDuration;
+    }
+
 }

@@ -15,6 +15,7 @@
 
         <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/form.css">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
         <script>
             $(function() {
@@ -48,7 +49,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" class="active">
-                        <li><a href="${pageContext.request.contextPath}/userLog/show">Back</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userLog/show"><span class="glyphicon glyphicon-backward nav_icon"></span> Back</a></li>
                     </ul>
                 </div>
             </div>

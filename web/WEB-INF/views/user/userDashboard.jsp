@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/bootstrap/bootstrap.min.css">
         <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
         <script>
 
@@ -28,7 +29,7 @@
 
                 $('#tabs').tab();
 
-                $("#ex1").slider({
+                $("#percentage_slider").slider({
                     range: "max",
                     min: 2.5,
                     max: 15,
@@ -129,7 +130,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="${pageContext.request.contextPath}/userLog/show">Back</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userLog/show"><span class="glyphicon glyphicon-backward nav_icon"></span> Back</a></li>
                     </ul>
                 </div>
             </div>
@@ -229,7 +230,7 @@
                 <label for="percentageIncrease">Target Percentage Increase:</label>
                 <input type="text" id="percentageIncrease" style="border:0; color:#f6931f; font-weight:bold;">
 
-                <div id="ex1"></div>
+                <div id="percentage_slider"></div>
 
                 <div class="activityDropdownDiv">
                     <form:select path="activity" id="targetActivity" items="${activity}" class="form-control"/>

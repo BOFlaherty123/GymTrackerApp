@@ -101,5 +101,4 @@ public class GymLogData implements Serializable {
         return "Date: " + date + " Duration: " + duration + " Activity: " + activity  + " ActivityDuration: " + activityDuration
                 + "Distance: " + distance + " LevelOrWeight: " + levelOrWeight + "Calories: " + calories + "UserWeight: " + userWeight;
     }
-
 }

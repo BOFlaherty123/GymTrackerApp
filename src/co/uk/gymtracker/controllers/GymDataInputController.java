@@ -7,7 +7,6 @@ import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -91,31 +90,6 @@ public class GymDataInputController extends AbstractGymController {
         runPerformanceLogging(methodName, watch);
 
         return new ModelAndView("redirect:/userLog/show");
-    }
-
-    @ModelAttribute("activity")
-    public List<String> listActivities() {
-
-        List<String> activity = new ArrayList<>();
-        activity.add("");
-        activity.add("Running");
-        activity.add("Cycling");
-        activity.add("Rowing");
-
-        return activity;
-    }
-
-    @ModelAttribute("activityDuration")
-    public List<String> listActivityDuration() {
-
-        List<String> activityDuration = new ArrayList<>();
-        activityDuration.add("");
-        activityDuration.add("15");
-        activityDuration.add("30");
-        activityDuration.add("45");
-        activityDuration.add("60");
-
-        return activityDuration;
     }
 
 }

@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd">
 
     <!-- Factory bean that creates the Mongo instance -->
     <bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
-        <property name="host" value="127.0.0.1"/>
+        <property name="host" value="localhost"/>
         <!--<property name="port" value="37847"/>-->
     </bean>
 
@@ -22,5 +24,17 @@
     </bean>
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+    <!-- Default bean name is 'mongo'  -->
+    <!--<mongo:mongo host="kahana.mongohq.com" port="10000"/>-->
+
+    <!--<mongo:db-factory id="mongoDbFactory" host="kahana.mongohq.com" port="10000" dbname="gymtrackerdb" username="ageas" password="ageas"/>-->
+
+    <!-- Offers convenience methods and automatic mapping between MongoDB JSON documents and your domain classes. -->
+    <!--<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">-->
+        <!--<constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>-->
+    <!--</bean>-->
+
+    <!--<mongo:repositories base-package="co.uk.gymtracker.dao" />-->
 
 </beans>

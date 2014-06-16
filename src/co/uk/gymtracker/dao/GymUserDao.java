@@ -1,6 +1,7 @@
 package co.uk.gymtracker.dao;
 
 import co.uk.gymtracker.model.GymUser;
+import com.mongodb.DBCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -30,6 +31,9 @@ public class GymUserDao extends GymGenericDao {
     public GymUser findGymUser(String username) {
 
         Query query = new Query(Criteria.where("username").is(username));
+
+        DBCollection gymUser = mongoOperations.getCollection("gymUser");
+        System.out.println(gymUser.getName());
 
         return mongoOperations.findOne(query, GymUser.class);
     }

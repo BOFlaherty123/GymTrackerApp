@@ -32,6 +32,10 @@ div#gymTrackerLogo {
     color: #000;
 }
 
+.nav_icon {
+    font-size: 25px;
+}
+
 .errorblock {
     border: solid 1px #000;
     background-color: #ffcccf;

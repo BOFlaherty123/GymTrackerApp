@@ -71,7 +71,6 @@ public class GymUserDashboardController extends AbstractGymController {
         return mav;
     }
 
-
     /**
      * Call to CalculateActivityAverages to calculate and return the average distance value(s)
      *
@@ -92,7 +91,6 @@ public class GymUserDashboardController extends AbstractGymController {
         return mav;
     }
 
-
     /**
      *
      * @param mav
@@ -107,7 +105,6 @@ public class GymUserDashboardController extends AbstractGymController {
                 (avg.getActivity().equals("Cycling")) ? mav.addObject("cycling_avg_distance", distance) :
                         mav.addObject("rowing_avg_distance", distance);
     }
-
 
     /**
      * Calculates the percentage value for the duration of each activity
@@ -131,6 +128,10 @@ public class GymUserDashboardController extends AbstractGymController {
     public @ResponseBody Map<String, String> calculateTargetOnPercentageIncrease(@PathVariable("activity") String activity,
                                                                     @PathVariable("percentage") int percentage) {
 
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        StopWatch watch = new Slf4JStopWatch();
+
         GymUser user = getLoggedInUser();
 
         // TODO - Change from return value of String to TargetIncrease (as a JSON obj? Jackson will be required)
@@ -139,6 +140,9 @@ public class GymUserDashboardController extends AbstractGymController {
         Map<String,String> testingMap = new HashMap<>();
         testingMap.put("distance", targetIncrease.getDistanceIncrease());
         testingMap.put("duration", targetIncrease.getDurationIncrease());
+
+        // log method performance
+        performanceLogging.isMethodProcessingBelowThreshold(methodName, watch);
 
         return testingMap;
     }

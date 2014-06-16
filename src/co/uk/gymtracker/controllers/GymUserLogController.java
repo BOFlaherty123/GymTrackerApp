@@ -1,6 +1,7 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.model.GymLogData;
+import co.uk.gymtracker.model.GymSessionForm;
 import co.uk.gymtracker.model.GymUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,6 @@ public class GymUserLogController extends AbstractGymController {
      */
     @RequestMapping(value="/show")
     public ModelAndView displayLog() {
-
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         // spring Convention over Configuration
@@ -50,6 +50,8 @@ public class GymUserLogController extends AbstractGymController {
 
             LOG.info(format("%s - %s gym records added to the model.", methodName, gymRecords.size()));
         }
+
+        mav.addObject(new GymSessionForm());
 
         return mav;
     }

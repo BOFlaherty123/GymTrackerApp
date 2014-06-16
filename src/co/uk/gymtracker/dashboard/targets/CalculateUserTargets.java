@@ -4,8 +4,6 @@ import co.uk.gymtracker.logging.PerformanceLogging;
 import co.uk.gymtracker.model.ActivityAverage;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.TargetIncrease;
-import org.perf4j.StopWatch;
-import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,15 +35,13 @@ public class CalculateUserTargets {
      * @return
      */
     public TargetIncrease calculateTargetOnPercentageIncrease(GymUser gymuser, String activity, int percentage) {
-        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-
-        StopWatch watch = new Slf4JStopWatch();
 
         TargetIncrease target = new TargetIncrease();
         target.setActivity(activity);
         target.setPercentageIncrease(String.valueOf(percentage));
 
         List<ActivityAverage> averages = gymuser.getActivityAverages();
+
 
         for(ActivityAverage average : averages) {
 
@@ -54,8 +50,6 @@ public class CalculateUserTargets {
                 calculatePercentageDistanceIncreased(average.getAverageDistance(), target);
             }
         }
-
-        performanceLogging.isMethodProcessingBelowThreshold(methodName, watch);
 
         return target;
     }
