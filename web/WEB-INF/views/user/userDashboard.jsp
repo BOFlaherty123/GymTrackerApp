@@ -21,7 +21,6 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/bootstrap/bootstrap.min.css">
         <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet">
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
         <script>
 
@@ -130,7 +129,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="${pageContext.request.contextPath}/userLog/show"><span class="glyphicon glyphicon-backward nav_icon"></span> Back</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userLog/show"> Back</a></li>
                     </ul>
                 </div>
             </div>

@@ -1,10 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 
     <head>
-        <title>Add Gym Session Data</title>
+        <title>Gym Tracker App</title>
 
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -15,7 +14,6 @@
 
         <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/form.css">
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
         <script>
             $(function() {
@@ -49,13 +47,11 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav" class="active">
-                        <li><a href="${pageContext.request.contextPath}/userLog/show"><span class="glyphicon glyphicon-backward nav_icon"></span> Back</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userLog/show"> Back</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-
-        <div class="container">
 
             <div class="submit_user_form">
 
@@ -71,71 +67,79 @@
                                 </div>
                             </div>
 
-                            <fieldset>
-                                <legend><h4>Session Information</h4></legend>
+                            <div class="gym_layout_padding">
 
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <form:label path="date">Date</form:label>
-                                        <form:input path="date" id="date" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <form:label path="duration">Duration</form:label>
-                                        <form:input path="duration" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <form:label path="userWeight">User Weight</form:label>
-                                        <form:input path="userWeight" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-2"></div>
+                                <fieldset>
+                                    <legend><h4>Session Information</h4></legend>
 
-                            </fieldset>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <form:label path="date">Date</form:label>
+                                            <form:input path="date" id="date" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <form:label path="duration">Duration</form:label>
+                                            <form:input path="duration" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <form:label path="userWeight">User Weight</form:label>
+                                            <form:input path="userWeight" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-2"></div>
+
+                                </fieldset>
+
+                            </div>
 
                         </div>
 
                         <div class="row">
 
-                            <fieldset>
-                                <legend><h4>Activity Data</h4></legend>
+                            <div class="gym_layout_padding">
 
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <form:label path="activity">Activity</form:label>
-                                        <form:select path="activity" items="${activity}" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <form:label path="activityDuration">Duration</form:label>
-                                        <form:select path="activityDuration" items="${activityDuration}" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <form:label path="distance">Distance</form:label>
-                                        <form:input path="distance" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <form:label path="levelOrWeight">Level/Weight</form:label>
-                                        <form:input path="levelOrWeight" class="form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <form:label path="calories">Calories</form:label>
-                                        <form:input path="calories" class="form-control"/>
-                                    </div>
-                                </div>
+                                <fieldset>
+                                    <legend><h4>Activity Data</h4></legend>
 
-                            </fieldset>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <form:label path="activity">Activity</form:label>
+                                            <form:select path="activity" items="${activity}" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <form:label path="activityDuration">Duration</form:label>
+                                            <form:select path="activityDuration" items="${activityDuration}" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <form:label path="distance">Distance</form:label>
+                                            <form:input path="distance" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <form:label path="levelOrWeight">Level/Weight</form:label>
+                                            <form:input path="levelOrWeight" class="form-control"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <form:label path="calories">Calories</form:label>
+                                            <form:input path="calories" class="form-control"/>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+
+                            </div>
 
                         </div>
 
@@ -154,8 +158,6 @@
                 </form:form>
 
             </div>
-
-        </div>
 
     </body>
 

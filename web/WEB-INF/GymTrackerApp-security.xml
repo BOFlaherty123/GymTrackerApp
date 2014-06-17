@@ -8,8 +8,8 @@
             http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <http use-expressions="true" access-denied-page="/accessDenied">
-        <intercept-url pattern="/userLog/*" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/userLog/admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/userLog/*" access="hasAnyRole('ROLE_ADMIN','ROLE_USER')"/>
+        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
         <form-login login-processing-url="/static/j_spring_security_check"
                     login-page="/login"
                     authentication-failure-url="/login?login_error=t"/>

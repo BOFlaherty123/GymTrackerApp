@@ -2,9 +2,9 @@ package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.dashboard.averages.CalculateActivityAverages;
 import co.uk.gymtracker.dashboard.targets.CalculateUserTargets;
-import co.uk.gymtracker.model.ActivityAverage;
+import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.model.GymUser;
-import co.uk.gymtracker.model.TargetIncrease;
+import co.uk.gymtracker.model.dashboard.TargetIncrease;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.slf4j.Logger;

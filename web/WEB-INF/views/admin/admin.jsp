@@ -1,13 +1,18 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 
     <head>
-        <title>Gym Tracker App</title>
+        <title>Admin: Overview</title>
 
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/bootstrap/bootstrap.min.css">
         <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
     </head>
 
@@ -28,23 +33,40 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="${pageContext.request.contextPath}/userLog/show">Login</a></li>
+                        <li><a href="${pageContext.request.contextPath}/userLog/show"> Back</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/createUser"><span class="glyphicon glyphicon-user nav_icon"></span> Create a new User</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/editUser"><span class="glyphicon glyphicon-user nav_icon"></span> Edit User</a></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
-                <div id="gymTrackerLogo" class="img-responsive"></div>
+
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="#appStats" data-toggle="tab">Statistics</a></li>
+            <li><a href="#performance" data-toggle="tab">Performance</a></li>
+            <li><a href="#audit" data-toggle="tab">Audit</a></li>
+        </ul>
+
+        <div id="my-tab-content" class="tab-content">
+            <div class="tab-pane active application_stats" id="appStats">
+
+                - App Stats Number of Users Registered / Number of Gym Sessions Recorded
+
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6" style="text-align: center">
-                <h1><b>Gym Tracker App</b></h1>
+
+            <div class="tab-pane application_performance" id="performance">
+
+                - Application Performance (slow queries etc)
+
             </div>
-            <div class="col-md-3"></div>
+
+            <div class="tab-pane application_audit" id="audit">
+
+                - Recorded Audits
+
+            </div>
+
         </div>
 
     </body>

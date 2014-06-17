@@ -65,4 +65,13 @@ public abstract class AbstractGymController {
         return activityDuration;
     }
 
+    @ModelAttribute("userRoles")
+    public List<String> availableUserRoles() {
+        List<String> userRoles = new ArrayList<>();
+        userRoles.add("ROLE_USER");
+        userRoles.add("ROLE_ADMIN");
+        userRoles.add("ROLE_DENIED");
+
+        return userRoles;
+    }
 }

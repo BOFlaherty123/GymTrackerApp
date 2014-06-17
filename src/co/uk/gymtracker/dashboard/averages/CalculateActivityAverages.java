@@ -1,7 +1,7 @@
 package co.uk.gymtracker.dashboard.averages;
 
 import co.uk.gymtracker.controllers.AbstractGymController;
-import co.uk.gymtracker.model.ActivityAverage;
+import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.service.GymUserService;

@@ -22,7 +22,7 @@ import java.util.List;
 @Component
 public class GymUserDataDao extends GymGenericDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GymUserDataDao.class);
+    private static final Logger logger = LoggerFactory.getLogger(GymUserDataDao.class);
 
     /**
         String textUri = "mongodb://admin:gymuser@ds061938.mongolab.com:61938/gymtracker";

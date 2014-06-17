@@ -1,7 +1,7 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.model.GymLogData;
-import co.uk.gymtracker.model.GymSessionForm;
+import co.uk.gymtracker.model.form.GymSessionForm;
 import co.uk.gymtracker.model.GymUser;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;

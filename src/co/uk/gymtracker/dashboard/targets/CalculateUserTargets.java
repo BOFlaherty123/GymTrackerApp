@@ -1,9 +1,9 @@
 package co.uk.gymtracker.dashboard.targets;
 
 import co.uk.gymtracker.logging.PerformanceLogging;
-import co.uk.gymtracker.model.ActivityAverage;
+import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.model.GymUser;
-import co.uk.gymtracker.model.TargetIncrease;
+import co.uk.gymtracker.model.dashboard.TargetIncrease;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

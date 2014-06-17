@@ -5,7 +5,7 @@
 <html>
 
     <head>
-        <title>Log</title>
+        <title>Gym Tracker App</title>
 
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -13,6 +13,7 @@
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/bootstrap/bootstrap.min.css">
         <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/style/form.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 
@@ -49,28 +50,28 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath}/user/userDashboard"><span class="glyphicon glyphicon-stats nav_icon"></span> User Dashboard</a></li>
-                        <li><a href="${pageContext.request.contextPath}/user/createUser"><span class="glyphicon glyphicon-user nav_icon"></span> Create a new User</a></li>
                         <li><a href="${pageContext.request.contextPath}/addGymSessionForm"><span class="glyphicon glyphicon-file nav_icon"></span> Add Gym Session</a></li>
                         <li><a href="${pageContext.request.contextPath}/userLog/view.pdf"><span class="glyphicon glyphicon-list-alt nav_icon"></span> Download Results PDF</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/dashboard"><span class="glyphicon glyphicon-cog nav_icon"></span> Admin</a></li>
                         <li><a href="${pageContext.request.contextPath}/static/j_spring_security_logout"><span class="glyphicon glyphicon-log-out nav_icon"></span> Logout</a></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div id="welcomeUserDiv">
-            <div>
-                <h4>Welcome, <sec:authentication property="principal.username" />!</h4>
-            </div>
-        </div>
+        <div class="gym_layout_padding">
 
-        <div id="search">
-
-            <fieldset>
+            <fieldset class="gym_fieldset">
                 <legend><h4>Search</h4></legend>
 
-                <form:form method="post" commandName="gymSessionForm" action="/test">
+                <form:form method="post" commandName="gymLogSearch" action="${pageContext.request.contextPath}/userLog/search">
                     <form role="form">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form:errors path="*" cssClass="errorblock" element="div" title="Errors"/>
+                            </div>
+                        </div>
 
                         <div class="col-md-2">
                             <div class="form-group">
@@ -81,15 +82,15 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <form:label path="date">From</form:label>
-                                <form:input path="date" id="toDate" class="form-control" placeholder="From Date"/>
+                                <form:label path="startDate">From</form:label>
+                                <form:input path="startDate" id="toDate" class="form-control" placeholder="From Date"/>
                             </div>
                         </div>
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <form:label path="date">To</form:label>
-                                <form:input path="date" id="fromDate" class="form-control" placeholder="To Date"/>
+                                <form:label path="endDate">To</form:label>
+                                <form:input path="endDate" id="fromDate" class="form-control" placeholder="To Date"/>
                             </div>
                         </div>
 

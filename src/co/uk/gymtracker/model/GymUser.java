@@ -1,5 +1,6 @@
 package co.uk.gymtracker.model;
 
+import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.mongodb.core.mapping.Document;
 

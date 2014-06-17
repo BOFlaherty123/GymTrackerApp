@@ -1,4 +1,21 @@
+/* UserLog/Show Search Form */
+.gym_fieldset {
+    background: #FFF5EC;
+    border: 2px solid orange;
+}
+
+.gym_layout_padding {
+    padding: 1%;
+}
+
+/* /addGymSessionForm Form */
+.submit_user_form {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
 #activity_dropdown, #activityDuration_dropdown {
     width: 100%;
     height: 25px;
 }
+

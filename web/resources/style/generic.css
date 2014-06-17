@@ -2,6 +2,7 @@ body {
     padding-top: 5%;
 }
 
+/* Application Navigation Styling */
 div#gymTrackerLogo {
     background-image:url("/GymTrackerApp/resources/images/gymTrackerLogo.png");
     background-repeat:no-repeat;
@@ -9,11 +10,6 @@ div#gymTrackerLogo {
     background-size: 55%;
     height: 400px;
     padding: 5%;
-}
-
-.submit_user_form {
-    padding-left: 10%;
-    padding-right: 10%;
 }
 
 .navbar-inverse {
@@ -36,6 +32,7 @@ div#gymTrackerLogo {
     font-size: 25px;
 }
 
+/* Application Error Styling */
 .errorblock {
     border: solid 1px #000;
     background-color: #ffcccf;
