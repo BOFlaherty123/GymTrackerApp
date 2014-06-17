@@ -1,9 +1,9 @@
 package co.uk.gymtracker.dashboard.averages;
 
-import co.uk.gymtracker.controllers.AbstractGymController;
-import co.uk.gymtracker.model.dashboard.ActivityAverage;
+import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.service.GymUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,13 +25,16 @@ import java.util.Map;
  * @project GymTrackerApp
  */
 @Component
-public class CalculateActivityAverages extends AbstractGymController {
+public class CalculateActivityAverages  {
 
     private static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
     private static final String ZERO_VALUE = "0";
 
     @Autowired
     public GymUserService userService;
+
+    @Autowired
+    public GymUserDataDao gymDataDao;
 
     /**
      * Calculate the Avg Distance per Activity

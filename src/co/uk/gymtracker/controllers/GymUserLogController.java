@@ -35,8 +35,9 @@ public class GymUserLogController extends AbstractGymController {
      *
      * @return
      */
+    @Override
     @RequestMapping(value="/show")
-    public ModelAndView displayLog() {
+    public ModelAndView processEntryPage() {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         // spring Convention over Configuration

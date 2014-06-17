@@ -1,5 +1,6 @@
 package co.uk.gymtracker.controllers.admin;
 
+import co.uk.gymtracker.controllers.AbstractGymController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,11 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping(value="/admin")
-public class AdminOptionsController {
+public class AdminOptionsController extends AbstractGymController {
 
+    @Override
     @RequestMapping(value="/editAppOptions")
-    public ModelAndView editApplicationOptions() {
+    public ModelAndView processEntryPage() {
         return new ModelAndView("admin/editAppOptions");
     }
-
 }

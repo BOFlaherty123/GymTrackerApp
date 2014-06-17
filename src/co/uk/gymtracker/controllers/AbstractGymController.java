@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,8 @@ public abstract class AbstractGymController {
 
     @Autowired
     public PerformanceLogging performanceLogging;
+
+    public abstract ModelAndView processEntryPage();
 
     protected GymUser getLoggedInUser() {
         SecurityContext ctx = SecurityContextHolder.getContext();

@@ -25,6 +25,11 @@ import java.util.List;
 @RequestMapping(value="/admin")
 public class AdminUserController extends AbstractGymController {
 
+    @Override
+    public ModelAndView processEntryPage() {
+        return null;
+    }
+
     @RequestMapping(value="/dashboard")
     public ModelAndView displayAdminPage() {
         return new ModelAndView("admin/admin");

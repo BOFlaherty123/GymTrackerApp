@@ -2,8 +2,8 @@ package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.dashboard.averages.CalculateActivityAverages;
 import co.uk.gymtracker.dashboard.targets.CalculateUserTargets;
-import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.model.dashboard.TargetIncrease;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
@@ -11,10 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,8 +48,9 @@ public class GymUserDashboardController extends AbstractGymController {
      *
      * @return
      */
+    @Override
     @RequestMapping(value="/userDashboard")
-    public ModelAndView displayUserDashboard(HttpServletRequest request) {
+    public ModelAndView processEntryPage() {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         StopWatch watch = new Slf4JStopWatch();
@@ -69,6 +71,40 @@ public class GymUserDashboardController extends AbstractGymController {
         runPerformanceLogging(methodName, watch);
 
         return mav;
+    }
+
+    @RequestMapping(value="/updateUser", method = RequestMethod.POST)
+    public ModelAndView updateUser(@Valid GymUser gymUser, Errors errors) {
+        final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        StopWatch watch = new Slf4JStopWatch();
+
+        ModelAndView mav = new ModelAndView();
+
+        if(errors.hasErrors()) {
+            mav.setViewName("/user/userDashboard");
+            return mav;
+        } else {
+            GymUser user = userDao.findGymUser(gymUser.getUsername());
+            gymUser.setUserSessions(user.getUserSessions());
+
+            userDao.updateGymUser(gymUser);
+        }
+
+        mav.setViewName("redirect:/user/userDashboard");
+
+        // log method performance
+        runPerformanceLogging(methodName, watch);
+
+        return mav;
+    }
+
+    /**
+     * Deletes a GymUser object
+     */
+    @RequestMapping(value="/deleteUser")
+    public void deleteUsers() {
+        userDao.deleteUser("test");
     }
 
     /**

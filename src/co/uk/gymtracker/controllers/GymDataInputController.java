@@ -31,8 +31,9 @@ public class GymDataInputController extends AbstractGymController {
      *
      * @return
      */
+    @Override
     @RequestMapping(value="/addGymSessionForm")
-    public ModelAndView displayGymSessionForm() {
+    public ModelAndView processEntryPage() {
 
         ModelAndView mav = new ModelAndView("addGymLog");
         mav.addObject(new GymSessionForm());
