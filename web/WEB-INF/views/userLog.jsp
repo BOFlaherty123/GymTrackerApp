@@ -52,7 +52,7 @@
                         <li><a href="${pageContext.request.contextPath}/user/userDashboard"><span class="glyphicon glyphicon-stats nav_icon"></span> User Dashboard</a></li>
                         <li><a href="${pageContext.request.contextPath}/addGymSessionForm"><span class="glyphicon glyphicon-file nav_icon"></span> Add Gym Session</a></li>
                         <li><a href="${pageContext.request.contextPath}/userLog/view.pdf"><span class="glyphicon glyphicon-list-alt nav_icon"></span> Download Results PDF</a></li>
-                        <li><a href="${pageContext.request.contextPath}/admin/dashboard"><span class="glyphicon glyphicon-cog nav_icon"></span> Admin</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/dashboard"><span class="glyphicon glyphicon-cog nav_icon"></span> Admin Panel</a></li>
                         <li><a href="${pageContext.request.contextPath}/static/j_spring_security_logout"><span class="glyphicon glyphicon-log-out nav_icon"></span> Logout</a></li>
                     </ul>
                 </div>

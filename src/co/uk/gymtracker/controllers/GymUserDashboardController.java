@@ -40,7 +40,7 @@ public class GymUserDashboardController extends AbstractGymController {
     @Autowired
     public CalculateActivityAverages calculateAverages;
 
-    private static final Logger LOG = LoggerFactory.getLogger(GymUserDashboardController.class);
+    private static final Logger logger = LoggerFactory.getLogger(GymUserDashboardController.class);
 
     /**
      * Setup and Display the User Dashboard
@@ -81,7 +81,7 @@ public class GymUserDashboardController extends AbstractGymController {
 
         List<ActivityAverage> averages = calculateAverages.calculateActivityAverages(user);
         for(ActivityAverage avg : averages) {
-            LOG.info(format("processing averages for activity: %s.", avg.getActivity()));
+            logger.info(format("processing averages for activity: %s.", avg.getActivity()));
             mav = processActivityAverageDistances(mav, avg);
         }
 
@@ -99,7 +99,7 @@ public class GymUserDashboardController extends AbstractGymController {
      */
     private ModelAndView processActivityAverageDistances(ModelAndView mav, ActivityAverage avg) {
         String distance = avg.getAverageDistance();
-        LOG.info(format("activity average distance: %s.", avg.getAverageDistance()));
+        logger.info(format("activity average distance: %s.", avg.getAverageDistance()));
 
         return (avg.getActivity().equals("Running")) ? mav.addObject("running_avg_distance", distance) :
                 (avg.getActivity().equals("Cycling")) ? mav.addObject("cycling_avg_distance", distance) :

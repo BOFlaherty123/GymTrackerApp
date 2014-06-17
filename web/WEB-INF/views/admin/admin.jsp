@@ -35,12 +35,12 @@
                     <ul class="nav navbar-nav">
                         <li><a href="${pageContext.request.contextPath}/userLog/show"> Back</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/createUser"><span class="glyphicon glyphicon-user nav_icon"></span> Create a new User</a></li>
-                        <li><a href="${pageContext.request.contextPath}/admin/editUser"><span class="glyphicon glyphicon-user nav_icon"></span> Edit User</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/editUser"><span class="glyphicon glyphicon-user nav_icon"></span> User Administration</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/editAppOptions"><span class="glyphicon glyphicon-user nav_icon"></span> Customise Options</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-
 
         <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
             <li class="active"><a href="#appStats" data-toggle="tab">Statistics</a></li>
@@ -49,6 +49,7 @@
         </ul>
 
         <div id="my-tab-content" class="tab-content">
+
             <div class="tab-pane active application_stats" id="appStats">
 
                 - App Stats Number of Users Registered / Number of Gym Sessions Recorded
