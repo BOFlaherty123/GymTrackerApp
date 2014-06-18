@@ -1,10 +1,12 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.model.GymLogData;
-import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.form.GymLogSearch;
+import co.uk.gymtracker.model.GymUser;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,8 @@ import static java.lang.String.format;
 @RequestMapping(value="/userLog")
 public class GymUserLogController extends AbstractGymController {
 
+    private static final Logger logger = LoggerFactory.getLogger(GymUserLogController.class);
+
     /**
      * Setup and displays the GymSessionLog page
      *
@@ -33,11 +37,11 @@ public class GymUserLogController extends AbstractGymController {
      */
     @Override
     @RequestMapping(value="/show")
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView processEntryPage() {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         // spring Convention over Configuration
-        mav.setViewName("userLog");
+        ModelAndView mav = new ModelAndView("userLog");
 
         GymUser user = retrieveGymUser();
 
@@ -86,7 +90,7 @@ public class GymUserLogController extends AbstractGymController {
         }
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, watch);
+        runPerformanceLogging(methodName, watch);
 
         return mav;
     }

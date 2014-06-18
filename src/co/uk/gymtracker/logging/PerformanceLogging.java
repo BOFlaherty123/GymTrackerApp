@@ -32,25 +32,17 @@ public class PerformanceLogging {
      * @param methodName
      * @param watch
      */
-    public void isMethodProcessingBelowThreshold(String className, String methodName, StopWatch watch) {
+    public void isMethodProcessingBelowThreshold(String methodName, StopWatch watch) {
 
         long elapsedTime = watch.getElapsedTime();
-
-        boolean slowQuery = false;
 
         // if method processing elapsedTime is 1 second or over, log warning for following up.
         if(watch.getElapsedTime() >= ONE_SECOND) {
             logger.warn(format("%s method - slow performance (%s ms) review.", methodName, elapsedTime));
-            slowQuery = true;
+
+            PerformanceLog performanceLog = new PerformanceLog(methodName, elapsedTime);
+            mongoOperations.insert(performanceLog);
         }
-
-        PerformanceLog performanceLog = new PerformanceLog();
-        performanceLog.setClassName(className);
-        performanceLog.setMethodName(methodName);
-        performanceLog.setElapsedTime(elapsedTime);
-        performanceLog.setSlowQuery(slowQuery);
-
-        mongoOperations.insert(performanceLog);
 
         logger.info(format("%s -  method performance %s", methodName, watch.stop()));
 

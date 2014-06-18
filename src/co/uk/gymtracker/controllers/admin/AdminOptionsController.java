@@ -18,7 +18,7 @@ public class AdminOptionsController extends AbstractGymController {
 
     @Override
     @RequestMapping(value="/editAppOptions")
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView processEntryPage() {
         return new ModelAndView("admin/editAppOptions");
     }
 }

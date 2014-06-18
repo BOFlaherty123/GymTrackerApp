@@ -7,6 +7,8 @@ import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.model.dashboard.TargetIncrease;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -39,6 +41,8 @@ public class GymUserDashboardController extends AbstractGymController {
     @Autowired
     public CalculateActivityAverages calculateAverages;
 
+    private static final Logger logger = LoggerFactory.getLogger(GymUserDashboardController.class);
+
     /**
      * Setup and Display the User Dashboard
      *
@@ -46,12 +50,12 @@ public class GymUserDashboardController extends AbstractGymController {
      */
     @Override
     @RequestMapping(value="/userDashboard")
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView processEntryPage() {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         StopWatch watch = new Slf4JStopWatch();
 
-        mav.setViewName("user/userDashboard");
+        ModelAndView mav = new ModelAndView("user/userDashboard");
 
         // Get GymUser object
         GymUser user = getLoggedInUser();
@@ -64,7 +68,7 @@ public class GymUserDashboardController extends AbstractGymController {
         processActivityDurationPercentages(mav, user);
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, watch);
+        runPerformanceLogging(methodName, watch);
 
         return mav;
     }
@@ -90,7 +94,7 @@ public class GymUserDashboardController extends AbstractGymController {
         mav.setViewName("redirect:/user/userDashboard");
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, watch);
+        runPerformanceLogging(methodName, watch);
 
         return mav;
     }
@@ -174,7 +178,7 @@ public class GymUserDashboardController extends AbstractGymController {
         testingMap.put("duration", targetIncrease.getDurationIncrease());
 
         // log method performance
-        performanceLogging.isMethodProcessingBelowThreshold(this.getClass().getName(), methodName, watch);
+        performanceLogging.isMethodProcessingBelowThreshold(methodName, watch);
 
         return testingMap;
     }

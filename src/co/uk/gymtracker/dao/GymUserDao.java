@@ -1,7 +1,6 @@
 package co.uk.gymtracker.dao;
 
 import co.uk.gymtracker.model.GymUser;
-import co.uk.gymtracker.model.form.GymUserSearch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -69,24 +68,6 @@ public class GymUserDao extends GymGenericDao {
 
         mongoOperations.save(updateUser);
         logger.info(format("%s - updated gymUser %s", methodName, updateUser.toString()));
-    }
-
-    public List<GymUser> findUserByCriteria(GymUserSearch searchCriteria) {
-
-        new Query(Criteria.where("username").is(true));
-
-        Query searchQuery = new Query(Criteria.where("username").regex(searchCriteria.getUsername()));
-
-        // add query to search by firstName
-        if (!searchCriteria.getFirstName().isEmpty()) {
-            searchQuery.addCriteria(Criteria.where("firstName").regex(searchCriteria.getFirstName()));
-        }
-        // add query to search by lastName
-        if(!searchCriteria.getLastName().isEmpty()) {
-            searchQuery.addCriteria(Criteria.where("lastName").regex(searchCriteria.getFirstName()));
-        }
-
-        return mongoOperations.find(searchQuery, GymUser.class);
     }
 
     public void deleteUser(String username) {

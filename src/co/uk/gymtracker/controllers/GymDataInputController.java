@@ -33,9 +33,9 @@ public class GymDataInputController extends AbstractGymController {
      */
     @Override
     @RequestMapping(value="/addGymSessionForm")
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView processEntryPage() {
 
-        mav.setViewName("addGymLog");
+        ModelAndView mav = new ModelAndView("addGymLog");
         mav.addObject(new GymSessionForm());
 
         return mav;
@@ -88,7 +88,7 @@ public class GymDataInputController extends AbstractGymController {
         }
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, watch);
+        runPerformanceLogging(methodName, watch);
 
         return new ModelAndView("redirect:/userLog/show");
     }

@@ -36,7 +36,7 @@
                         <li><a href="${pageContext.request.contextPath}/userLog/show"> Back</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/createUser"><span class="glyphicon glyphicon-user nav_icon"></span> Create a new User</a></li>
                         <li><a href="${pageContext.request.contextPath}/admin/editUser"><span class="glyphicon glyphicon-user nav_icon"></span> User Administration</a></li>
-                        <li><a href="${pageContext.request.contextPath}/admin/editAppOptions"><span class="glyphicon glyphicon-th nav_icon"></span> Customise Options</a></li>
+                        <li><a href="${pageContext.request.contextPath}/admin/editAppOptions"><span class="glyphicon glyphicon-user nav_icon"></span> Customise Options</a></li>
                     </ul>
                 </div>
             </div>
@@ -52,30 +52,13 @@
 
             <div class="tab-pane active application_stats" id="appStats">
 
-                Number Of Users: ${numberOfUsers}
-                <br/>
                 - App Stats Number of Users Registered / Number of Gym Sessions Recorded
 
             </div>
 
             <div class="tab-pane application_performance" id="performance">
 
-                <table class="table table-hover">
-                    <tr>
-                        <th>Class Name</th>
-                        <th>Method Name</th>
-                        <th>Elapsed Time (ms)</th>
-                        <th>Slow Query?</th>
-                    </tr>
-                    <c:forEach var="performacneLog" items="${performanceLogList}">
-                        <tr>
-                            <td><c:out value="${performacneLog.className}"/> </td>
-                            <td><c:out value="${performacneLog.methodName}"/> </td>
-                            <td><c:out value="${performacneLog.elapsedTime}"/> </td>
-                            <td><c:out value="${performacneLog.slowQuery}"/> </td>
-                        </tr>
-                    </c:forEach>
-                </table>
+                - Application Performance (slow queries etc)
 
             </div>
 

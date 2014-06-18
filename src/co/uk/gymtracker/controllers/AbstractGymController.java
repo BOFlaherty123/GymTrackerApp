@@ -5,8 +5,6 @@ import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.logging.PerformanceLogging;
 import co.uk.gymtracker.model.GymUser;
 import org.perf4j.StopWatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,17 +32,15 @@ public abstract class AbstractGymController {
     @Autowired
     public PerformanceLogging performanceLogging;
 
-    protected static final Logger logger = LoggerFactory.getLogger(GymUserLogController.class);
-
-    public abstract ModelAndView processEntryPage(ModelAndView mav);
+    public abstract ModelAndView processEntryPage();
 
     protected GymUser getLoggedInUser() {
         SecurityContext ctx = SecurityContextHolder.getContext();
         return userDao.findGymUser(ctx.getAuthentication().getName());
     }
 
-    protected void runPerformanceLogging(String className, String methodName, StopWatch watch) {
-        performanceLogging.isMethodProcessingBelowThreshold(className, methodName, watch);
+    protected void runPerformanceLogging(String methodName, StopWatch watch) {
+        performanceLogging.isMethodProcessingBelowThreshold(methodName, watch);
     }
 
     @ModelAttribute("activity")
