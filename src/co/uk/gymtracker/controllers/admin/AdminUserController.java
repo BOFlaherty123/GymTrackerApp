@@ -2,6 +2,7 @@ package co.uk.gymtracker.controllers.admin;
 
 import co.uk.gymtracker.controllers.AbstractGymController;
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.form.GymUserSearch;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
@@ -26,13 +27,8 @@ import java.util.List;
 public class AdminUserController extends AbstractGymController {
 
     @Override
-    public ModelAndView processEntryPage() {
+    public ModelAndView processEntryPage(ModelAndView mav) {
         return null;
-    }
-
-    @RequestMapping(value="/dashboard")
-    public ModelAndView displayAdminPage() {
-        return new ModelAndView("admin/admin");
     }
 
     /**
@@ -75,18 +71,11 @@ public class AdminUserController extends AbstractGymController {
         mav.setViewName("redirect:/admin/dashboard");
 
         // log method performance
-        runPerformanceLogging(methodName, watch);
+        runPerformanceLogging(this.getClass().getName(), methodName, watch);
 
         return mav;
     }
 
-    /**
-     *
-     */
-    @RequestMapping(value="/user/search")
-    public void findUserByUsername() {
-        System.out.println("find a user by username");
-    }
 
     /**
      * Display a list of users to modify
@@ -97,9 +86,29 @@ public class AdminUserController extends AbstractGymController {
     public ModelAndView editUser() {
 
         ModelAndView mav = new ModelAndView("admin/editUser");
+        mav.addObject(new GymUserSearch());
 
         List<GymUser> gymUsers = userDao.findAllGymUsers();
         mav.addObject(gymUsers);
+
+        return mav;
+    }
+
+    /**
+     *
+     */
+    @RequestMapping(value="/user/search")
+    public ModelAndView findUserByUsername(@Valid GymUserSearch gymUserSearch, ModelAndView mav, Errors error) {
+
+        mav.setViewName("admin/editUser");
+
+        if(error.hasErrors()) {
+            return mav;
+        } else {
+            List<GymUser> searchUsers = userDao.findUserByCriteria(gymUserSearch);
+            mav.addObject(searchUsers);
+
+        }
 
         return mav;
     }

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 
@@ -9,7 +10,7 @@
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/bootstrap/bootstrap.min.css">
-        <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet"
+        <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet">
 
         <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -41,41 +42,80 @@
             </div>
         </div>
 
-        <div style="padding-left: 5%; padding-right: 5%;">
+        <div style="padding-left: 5%; padding-right: 5%; padding: 1%;">
 
-            <fieldset>
-                <legend><h4>Edit Users</h4></legend>
+            <fieldset class="gym_fieldset">
+                <legend><h4>User Administration - Search</h4></legend>
 
-                <div class="table-responsive">
+                <form:form method="post" commandName="gymUserSearch" action="${pageContext.request.contextPath}/admin/user/search">
+                    <form role="form">
 
-                    <table class="table table-hover">
-                        <tr>
-                            <th>Username</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Delete</th>
-                        </tr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form:errors path="*" cssClass="errorblock" element="div" title="Errors"/>
+                            </div>
+                        </div>
 
-                        <c:forEach var="gymUser" items="${gymUserList}">
-                            <tr>
-                                <td><c:out value="${gymUser.username}"/> </td>
-                                <td><c:out value="${gymUser.firstName}"/> </td>
-                                <td><c:out value="${gymUser.lastName}"/> </td>
-                                <td><c:out value="${gymUser.email}"/> </td>
-                                <td><c:out value="${gymUser.role}"/> </td>
-                                <td><a href="${pageContext.request.contextPath}/admin/deleteUser/<c:out value="${gymUser.username}"/>">Delete</a></td>
-                            </tr>
-                        </c:forEach>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <form:label path="username">Username</form:label>
+                                <form:input path="username" class="form-control" placeholder="Username"/>
+                            </div>
+                        </div>
 
-                    </table>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <form:label path="firstName">First Name</form:label>
+                                <form:input path="firstName" class="form-control" placeholder="FirstName"/>
+                            </div>
+                        </div>
 
-                 </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <form:label path="lastName">Last Name</form:label>
+                                <form:input path="lastName" class="form-control" placeholder="LastName"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <input type="submit" value="Submit"/>
+                            </div>
+                        </div>
+
+                    </form>
+                </form:form>
 
             </fieldset>
 
         </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-hover">
+                <tr>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Delete</th>
+                </tr>
+
+                <c:forEach var="gymUser" items="${gymUserList}">
+                    <tr>
+                        <td><c:out value="${gymUser.username}"/> </td>
+                        <td><c:out value="${gymUser.firstName}"/> </td>
+                        <td><c:out value="${gymUser.lastName}"/> </td>
+                        <td><c:out value="${gymUser.email}"/> </td>
+                        <td><c:out value="${gymUser.role}"/> </td>
+                        <td><a href="${pageContext.request.contextPath}/admin/deleteUser/<c:out value="${gymUser.username}"/>">Delete</a></td>
+                    </tr>
+                </c:forEach>
+
+            </table>
+
+         </div>
 
     </body>
 
