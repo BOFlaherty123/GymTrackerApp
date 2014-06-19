@@ -25,6 +25,12 @@ import java.util.List;
 @Controller
 public class GymDataInputController extends AbstractGymController {
 
+
+    public void addMethodToTestGitCommit() {
+        System.out.println("testing");
+    }
+
+
     /**
      * Displays the addGymSessionForm to the user
      *
