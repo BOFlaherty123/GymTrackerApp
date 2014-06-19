@@ -36,7 +36,7 @@ public abstract class AbstractGymController {
 
     protected static final Logger logger = LoggerFactory.getLogger(GymUserLogController.class);
 
-    public abstract ModelAndView processEntryPage(ModelAndView mav);
+    public abstract ModelAndView executeEntryPage(ModelAndView mav);
 
     protected GymUser getLoggedInUser() {
         SecurityContext ctx = SecurityContextHolder.getContext();
@@ -51,7 +51,6 @@ public abstract class AbstractGymController {
     public List<String> listActivities() {
 
         List<String> activity = new ArrayList<String>();
-        activity.add("");
         activity.add("Running");
         activity.add("Cycling");
         activity.add("Rowing");

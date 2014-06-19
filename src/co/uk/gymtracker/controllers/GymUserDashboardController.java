@@ -46,7 +46,7 @@ public class GymUserDashboardController extends AbstractGymController {
      */
     @Override
     @RequestMapping(value="/userDashboard")
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView executeEntryPage(ModelAndView mav) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         StopWatch watch = new Slf4JStopWatch();

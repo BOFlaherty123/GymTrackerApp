@@ -79,7 +79,7 @@
 
                         <div class="row">
                             <div class="col-md-10">
-                                <input type="submit" value="Submit"/>
+                                <button type="submit" class="btn btn-default">Submit</button>
                             </div>
                         </div>
 

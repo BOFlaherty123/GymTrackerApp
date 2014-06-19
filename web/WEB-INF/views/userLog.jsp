@@ -76,7 +76,10 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <form:label path="activity">By Activity</form:label>
-                                <form:select path="activity" items="${activity}" class="form-control"/>
+                                <form:select path="activity" class="form-control">
+                                    <form:option value="ALL" label="--- ALL ---"/>
+                                    <form:options items="${activity}" />
+                                </form:select>
                             </div>
                         </div>
 
@@ -96,7 +99,7 @@
 
                         <div class="row">
                             <div class="col-md-10">
-                                <input type="submit" value="Submit"/>
+                                <button type="submit" class="btn btn-default">Submit</button>
                             </div>
                         </div>
 

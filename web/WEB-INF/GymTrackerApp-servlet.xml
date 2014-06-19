@@ -28,9 +28,6 @@
                 </bean>
             </list>
         </property>
-        <property name="defaultViews">
-            <bean class="co.uk.gymtracker.documentation.PdfViewBuilder"/>
-        </property>
     </bean>
 
     <mvc:annotation-driven/>

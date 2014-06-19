@@ -197,7 +197,7 @@
                     </div>
 
                     <div class="row">
-                        <input type="submit" value="Submit"/>
+                        <button type="submit" class="btn btn-default">Submit</button>
                     </div>
 
                 </form:form>

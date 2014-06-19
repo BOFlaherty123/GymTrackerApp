@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 
@@ -59,6 +60,31 @@
             </div>
 
             <div class="tab-pane application_performance" id="performance">
+
+                <fieldset>
+                    <legend><h4>Filter By Slow Queries</h4></legend>
+
+                    <form:form method="post" commandName="performanceLog" action="${pageContext.request.contextPath}/admin/performance/slow">
+                        <form role="form">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form:errors path="*" cssClass="errorblock" element="div" title="Errors"/>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <form:select path="methodName" class="form-control">
+                                    <form:option value="N" label="No"/>
+                                    <form:option value="Y" label="Yes"/>
+                                </form:select>
+                            </div>
+                        </div>
+                    </form:form>
+
+                </fieldset>
 
                 <table class="table table-hover">
                     <tr>

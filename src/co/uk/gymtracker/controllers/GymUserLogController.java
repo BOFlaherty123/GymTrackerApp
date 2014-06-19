@@ -33,7 +33,7 @@ public class GymUserLogController extends AbstractGymController {
      */
     @Override
     @RequestMapping(value="/show")
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView executeEntryPage(ModelAndView mav) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         // spring Convention over Configuration
@@ -58,14 +58,14 @@ public class GymUserLogController extends AbstractGymController {
     }
 
     /**
-     * Search for guym sessions using the GymLogSearch form object.
+     * Search for gym sessions using the GymLogSearch form object.
      *
      * @param gymLogSearch
      * @param error
      * @return
      */
     @RequestMapping(value="/search")
-    public ModelAndView displayAdminConsoleMessage(@Valid GymLogSearch gymLogSearch, Errors error) {
+    public ModelAndView executeGymSessionsSearch(@Valid GymLogSearch gymLogSearch, Errors error) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         StopWatch watch = new Slf4JStopWatch();

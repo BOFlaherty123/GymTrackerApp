@@ -68,6 +68,7 @@ public class GymUserDataDao extends GymGenericDao {
         DBCursor cursor = user.find(query);
 
         List<GymLogData> gymSessionsForUser = new ArrayList<GymLogData>();
+        List<GymLogData> allGymSessions = new ArrayList<GymLogData>();
 
         try {
             while(cursor.hasNext()) {
@@ -79,15 +80,19 @@ public class GymUserDataDao extends GymGenericDao {
 
                     for (BasicDBObject session : userSessions) {
 
-                        if (session.get("activity").equals(activity)) {
+                        GymLogData gymSessionData = new GymLogData(
+                                (String) session.get("date"), (String) session.get("duration"), (String) session.get("activity"),
+                                (String) session.get("activityDuration"), (String) session.get("distance"), (String) session.get("levelOrWeight"),
+                                (String) session.get("calories"), (String) session.get("userWeight")
+                        );
 
-                            GymLogData gymSessionData = new GymLogData(
-                                    (String) session.get("date"), (String) session.get("duration"), (String) session.get("activity"),
-                                    (String) session.get("activityDuration"), (String) session.get("distance"), (String) session.get("levelOrWeight"),
-                                    (String) session.get("calories"), (String) session.get("userWeight")
-                            );
+                        if(activity.equals("ALL")) {
+                            allGymSessions.add(gymSessionData);
+                        } else {
 
-                            gymSessionsForUser.add(gymSessionData);
+                            if (session.get("activity").equals(activity)) {
+                                gymSessionsForUser.add(gymSessionData);
+                            }
 
                         }
 
@@ -99,7 +104,7 @@ public class GymUserDataDao extends GymGenericDao {
             cursor.close();
         }
 
-        return gymSessionsForUser;
+        return (activity.equals("ALL")) ?  allGymSessions :  gymSessionsForUser;
     }
 
 }

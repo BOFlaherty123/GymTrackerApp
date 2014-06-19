@@ -27,7 +27,7 @@ import java.util.List;
 public class AdminUserController extends AbstractGymController {
 
     @Override
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView executeEntryPage(ModelAndView mav) {
         return null;
     }
 

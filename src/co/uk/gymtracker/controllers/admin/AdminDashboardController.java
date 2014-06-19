@@ -2,6 +2,7 @@ package co.uk.gymtracker.controllers.admin;
 
 import co.uk.gymtracker.controllers.AbstractGymController;
 import co.uk.gymtracker.dao.AppPerformanceDao;
+import co.uk.gymtracker.model.performance.PerformanceLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +23,10 @@ public class AdminDashboardController extends AbstractGymController {
     private AppPerformanceDao appPerformanceDao;
 
     @RequestMapping(value="/dashboard")
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView executeEntryPage(ModelAndView mav) {
 
         mav.setViewName(("admin/admin"));
+        mav.addObject(new PerformanceLog());
 
         displayAppStatistics(mav);
         displayAppPerformance(mav);
@@ -32,7 +34,6 @@ public class AdminDashboardController extends AbstractGymController {
 
         return mav;
     }
-
 
     private void displayAppStatistics(ModelAndView mav) {
         mav.addObject("numberOfUsers", userDao.findAllGymUsers().size());
@@ -44,6 +45,11 @@ public class AdminDashboardController extends AbstractGymController {
 
     private void displayAppAudit(ModelAndView mav) {
 
+    }
+
+    @RequestMapping(value="/performance/slow")
+    public void displaySlowQueries() {
+        appPerformanceDao.findAllSlowQueries();
     }
 
 

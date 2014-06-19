@@ -25,12 +25,6 @@ import java.util.List;
 @Controller
 public class GymDataInputController extends AbstractGymController {
 
-
-    public void addMethodToTestGitCommit() {
-        System.out.println("testing");
-    }
-
-
     /**
      * Displays the addGymSessionForm to the user
      *
@@ -38,7 +32,7 @@ public class GymDataInputController extends AbstractGymController {
      */
     @Override
     @RequestMapping(value="/addGymSessionForm")
-    public ModelAndView processEntryPage(ModelAndView mav) {
+    public ModelAndView executeEntryPage(ModelAndView mav) {
 
         mav.setViewName("addGymLog");
         mav.addObject(new GymSessionForm());
