@@ -67,7 +67,7 @@ public class GymUserDataDao extends GymGenericDao {
         BasicDBObject query = new BasicDBObject("username", gymUser.getUsername());
         DBCursor cursor = user.find(query);
 
-        List<GymLogData> gymSessionsForUser = new ArrayList<>();
+        List<GymLogData> gymSessionsForUser = new ArrayList<GymLogData>();
 
         try {
             while(cursor.hasNext()) {

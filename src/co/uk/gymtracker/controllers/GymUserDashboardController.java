@@ -7,8 +7,6 @@ import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.model.dashboard.TargetIncrease;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -41,8 +39,6 @@ public class GymUserDashboardController extends AbstractGymController {
     @Autowired
     public CalculateActivityAverages calculateAverages;
 
-    private static final Logger logger = LoggerFactory.getLogger(GymUserDashboardController.class);
-
     /**
      * Setup and Display the User Dashboard
      *
@@ -50,12 +46,12 @@ public class GymUserDashboardController extends AbstractGymController {
      */
     @Override
     @RequestMapping(value="/userDashboard")
-    public ModelAndView processEntryPage() {
+    public ModelAndView processEntryPage(ModelAndView mav) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         StopWatch watch = new Slf4JStopWatch();
 
-        ModelAndView mav = new ModelAndView("user/userDashboard");
+        mav.setViewName("user/userDashboard");
 
         // Get GymUser object
         GymUser user = getLoggedInUser();
@@ -68,7 +64,7 @@ public class GymUserDashboardController extends AbstractGymController {
         processActivityDurationPercentages(mav, user);
 
         // log method performance
-        runPerformanceLogging(methodName, watch);
+        runPerformanceLogging(this.getClass().getName(), methodName, watch);
 
         return mav;
     }
@@ -94,7 +90,7 @@ public class GymUserDashboardController extends AbstractGymController {
         mav.setViewName("redirect:/user/userDashboard");
 
         // log method performance
-        runPerformanceLogging(methodName, watch);
+        runPerformanceLogging(this.getClass().getName(), methodName, watch);
 
         return mav;
     }
@@ -173,12 +169,12 @@ public class GymUserDashboardController extends AbstractGymController {
         // TODO - Change from return value of String to TargetIncrease (as a JSON obj? Jackson will be required)
         TargetIncrease targetIncrease = targets.calculateTargetOnPercentageIncrease(user, activity, percentage);
 
-        Map<String,String> testingMap = new HashMap<>();
+        Map<String,String> testingMap = new HashMap<String,String>();
         testingMap.put("distance", targetIncrease.getDistanceIncrease());
         testingMap.put("duration", targetIncrease.getDurationIncrease());
 
         // log method performance
-        performanceLogging.isMethodProcessingBelowThreshold(methodName, watch);
+        performanceLogging.isMethodProcessingBelowThreshold(this.getClass().getName(), methodName, watch);
 
         return testingMap;
     }
@@ -186,7 +182,7 @@ public class GymUserDashboardController extends AbstractGymController {
     @ModelAttribute("activity")
     public List<String> listActivities() {
 
-        List<String> activity = new ArrayList<>();
+        List<String> activity = new ArrayList<String>();
         activity.add("");
         activity.add("Running");
         activity.add("Cycling");

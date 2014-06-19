@@ -1,8 +1,8 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.model.GymLogData;
-import co.uk.gymtracker.model.form.GymSessionForm;
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.form.GymSessionForm;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +32,9 @@ public class GymDataInputController extends AbstractGymController {
      */
     @Override
     @RequestMapping(value="/addGymSessionForm")
-    public ModelAndView processEntryPage() {
+    public ModelAndView processEntryPage(ModelAndView mav) {
 
-        ModelAndView mav = new ModelAndView("addGymLog");
+        mav.setViewName("addGymLog");
         mav.addObject(new GymSessionForm());
 
         return mav;
@@ -50,7 +49,7 @@ public class GymDataInputController extends AbstractGymController {
      * @return
      */
     @RequestMapping(value="/addGymSession", method = RequestMethod.POST)
-    public ModelAndView addGymSessionData(HttpServletRequest request, @Valid GymSessionForm gymSessionForm, Errors errors) {
+    public ModelAndView addGymSessionData(@Valid GymSessionForm gymSessionForm, Errors errors) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         StopWatch watch = new Slf4JStopWatch();
@@ -71,7 +70,7 @@ public class GymDataInputController extends AbstractGymController {
             );
 
             // build and update the list of GymSessions for a user.
-            List<GymLogData> gymSessions = new ArrayList<>();
+            List<GymLogData> gymSessions = new ArrayList<GymLogData>();
 
             if(user.getUserSessions() != null) {
                 gymSessions = user.getUserSessions();
@@ -88,7 +87,7 @@ public class GymDataInputController extends AbstractGymController {
         }
 
         // log method performance
-        runPerformanceLogging(methodName, watch);
+        runPerformanceLogging(this.getClass().getName(), methodName, watch);
 
         return new ModelAndView("redirect:/userLog/show");
     }

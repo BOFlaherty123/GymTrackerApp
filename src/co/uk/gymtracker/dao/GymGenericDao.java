@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
  * @date Created on: 16/04/14
  * @project GymTrackerApp
  */
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public abstract class GymGenericDao {
 
     @Autowired

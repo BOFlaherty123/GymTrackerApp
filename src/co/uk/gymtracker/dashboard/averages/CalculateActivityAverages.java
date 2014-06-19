@@ -45,7 +45,7 @@ public class CalculateActivityAverages  {
     @RequestMapping(value="/calculateActivityDurationAverages", method = RequestMethod.GET)
     public List<ActivityAverage> calculateActivityAverages(GymUser gymUser) {
 
-        List<ActivityAverage> activityAverages = new ArrayList<>();
+        List<ActivityAverage> activityAverages = new ArrayList<ActivityAverage>();
 
         // TODO - Store list of Activities in the database
         List<String> gymActivities = buildActivityList();
@@ -90,7 +90,7 @@ public class CalculateActivityAverages  {
         BigDecimal averageDuration = totalDuration.divide(totalSessions, RoundingMode.HALF_UP);
 
         // create a map containing the activity totals for use with further calculations
-        Map<String,String> activityTotals = new HashMap<>();
+        Map<String,String> activityTotals = new HashMap<String,String>();
         activityTotals.put("distance", totalDistance.toString());
         activityTotals.put("duration", totalDuration.toString());
 
@@ -161,7 +161,7 @@ public class CalculateActivityAverages  {
      */
     public Map<String, BigDecimal> calculateAvgDurationPercentages(GymUser gymUser) {
 
-        Map<String, BigDecimal> durations = new HashMap<>();
+        Map<String, BigDecimal> durations = new HashMap<String, BigDecimal>();
 
         List<ActivityAverage> averages = calculateActivityAverages(gymUser);
         for(ActivityAverage avg : averages) {
@@ -212,7 +212,7 @@ public class CalculateActivityAverages  {
     }
 
     private List<String> buildActivityList() {
-        List<String> gymActivities = new ArrayList<>();
+        List<String> gymActivities = new ArrayList<String>();
         gymActivities.add("Running");
         gymActivities.add("Cycling");
         gymActivities.add("Rowing");
