@@ -1,11 +1,11 @@
 package co.uk.gymtracker.logging;
 
+import co.uk.gymtracker.dao.AppPerformanceDao;
 import co.uk.gymtracker.model.performance.PerformanceLog;
 import org.perf4j.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
 
 import static java.lang.String.format;
@@ -21,7 +21,7 @@ import static java.lang.String.format;
 public class PerformanceLogging {
 
     @Autowired
-    private MongoOperations mongoOperations;
+    private AppPerformanceDao appPerformanceDao;
 
     private static final long ONE_SECOND = 100;
     private static final Logger logger = LoggerFactory.getLogger(PerformanceLogging.class);
@@ -50,7 +50,7 @@ public class PerformanceLogging {
         performanceLog.setElapsedTime(elapsedTime);
         performanceLog.setSlowQuery(slowQuery);
 
-        mongoOperations.insert(performanceLog);
+        appPerformanceDao.insertPerformanceLog(performanceLog);
 
         logger.info(format("%s -  method performance %s", methodName, watch.stop()));
 

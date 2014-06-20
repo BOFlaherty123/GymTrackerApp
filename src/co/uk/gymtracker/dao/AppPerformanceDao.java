@@ -1,6 +1,7 @@
 package co.uk.gymtracker.dao;
 
 import co.uk.gymtracker.model.performance.PerformanceLog;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
@@ -17,12 +18,25 @@ import java.util.List;
 @Component
 public class AppPerformanceDao extends GymGenericDao {
 
+   public void insertPerformanceLog(PerformanceLog performanceLog) {
+
+        Long id = Long.valueOf(mongoOperations.findAll(PerformanceLog.class).size() + 1);
+        performanceLog.setId(id);
+
+        mongoOperations.insert(performanceLog);
+   }
+
     /**
      *
      * @return
      */
     public List<PerformanceLog> findAllPerformanceLogs() {
-        return mongoOperations.find(new Query().limit(15), PerformanceLog.class);
+
+        Query query = new Query();
+        query.with(new Sort(Sort.Direction.DESC, "_id"));
+        query.limit(15);
+
+        return mongoOperations.find(query, PerformanceLog.class);
     }
 
     /**

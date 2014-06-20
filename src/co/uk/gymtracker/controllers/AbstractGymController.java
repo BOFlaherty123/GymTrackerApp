@@ -5,8 +5,8 @@ import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.logging.PerformanceLogging;
 import co.uk.gymtracker.model.GymUser;
 import org.perf4j.StopWatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,20 +34,28 @@ public abstract class AbstractGymController {
     @Autowired
     public PerformanceLogging performanceLogging;
 
-    protected static final Logger logger = LoggerFactory.getLogger(GymUserLogController.class);
+    protected XLogger logger = XLoggerFactory.getXLogger(AbstractGymController.class
+            .getName());
 
     public abstract ModelAndView executeEntryPage(ModelAndView mav);
 
     protected GymUser getLoggedInUser() {
         SecurityContext ctx = SecurityContextHolder.getContext();
-        return userDao.findGymUser(ctx.getAuthentication().getName());
+
+        GymUser gymUser =  userDao.findGymUser(ctx.getAuthentication().getName());
+
+        if(gymUser != null) {
+            logger.info("gymUser found [" + gymUser.getUsername() + "]");
+        }
+
+        return gymUser;
     }
 
     protected void runPerformanceLogging(String className, String methodName, StopWatch watch) {
         performanceLogging.isMethodProcessingBelowThreshold(className, methodName, watch);
     }
 
-    @ModelAttribute("activity")
+    @ModelAttribute("exercises")
     public List<String> listActivities() {
 
         List<String> activity = new ArrayList<String>();

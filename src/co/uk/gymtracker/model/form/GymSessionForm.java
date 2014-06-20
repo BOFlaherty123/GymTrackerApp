@@ -15,15 +15,13 @@ public class GymSessionForm {
     private String date;
     @NotEmpty(message = "Duration must not be empty")
     private String duration;
-    @NotEmpty(message = "Activity must not be empty")
-    private String activity;
-    @NotEmpty(message = "Activity Duration must not be empty")
+    private String cardioExercise;
     private String activityDuration;
-    @NotEmpty(message = "Distance must not be empty")
     private String distance;
-    @NotEmpty(message = "Level/Weight must not be empty")
-    private String levelOrWeight;
-    @NotEmpty(message = "Calories must not be empty")
+    private String level;
+    private String weightMachine;
+    private String weight;
+    private String reps;
     private String calories;
     @NotEmpty(message = "User Weight must not be empty")
     private String userWeight;
@@ -44,12 +42,12 @@ public class GymSessionForm {
         this.duration = duration;
     }
 
-    public String getActivity() {
-        return activity;
+    public String getCardioExercise() {
+        return cardioExercise;
     }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public void setCardioExercise(String cardioExercise) {
+        this.cardioExercise = cardioExercise;
     }
 
     public String getActivityDuration() {
@@ -68,12 +66,36 @@ public class GymSessionForm {
         this.distance = distance;
     }
 
-    public String getLevelOrWeight() {
-        return levelOrWeight;
+    public String getLevel() {
+        return level;
     }
 
-    public void setLevelOrWeight(String levelOrWeight) {
-        this.levelOrWeight = levelOrWeight;
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getWeightMachine() {
+        return weightMachine;
+    }
+
+    public void setWeightMachine(String weightMachine) {
+        this.weightMachine = weightMachine;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getReps() {
+        return reps;
+    }
+
+    public void setReps(String reps) {
+        this.reps = reps;
     }
 
     public String getCalories() {

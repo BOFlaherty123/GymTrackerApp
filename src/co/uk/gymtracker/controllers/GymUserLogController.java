@@ -36,23 +36,32 @@ public class GymUserLogController extends AbstractGymController {
     public ModelAndView executeEntryPage(ModelAndView mav) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
+        logger.entry(mav);
+
         // spring Convention over Configuration
         mav.setViewName("userLog");
 
         GymUser user = retrieveGymUser();
 
-        if(user.getUserSessions() != null) {
-            logger.info(format("%s - %s has gym sessions.", methodName, user.getUsername()));
+        if(user != null) {
 
-            List<GymLogData> gymRecords = user.getUserSessions();
+            if(user.getUserSessions() != null) {
+                logger.info(format("%s - %s has gym sessions.", methodName, user.getUsername()));
 
-            // spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
-            mav.addObject(gymRecords);
-            logger.info(format("%s - %s gym records added to the model.", methodName, gymRecords.size()));
+                List<GymLogData> gymRecords = user.getUserSessions();
+
+
+                // spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
+                mav.addObject(gymRecords);
+                logger.info(format("%s - %s gym records added to the model.", methodName, gymRecords.size()));
+
+            }
 
         }
 
         mav.addObject(new GymLogSearch());
+
+        logger.exit();
 
         return mav;
     }
@@ -68,6 +77,8 @@ public class GymUserLogController extends AbstractGymController {
     public ModelAndView executeGymSessionsSearch(@Valid GymLogSearch gymLogSearch, Errors error) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
+        logger.entry(gymLogSearch, error);
+
         StopWatch watch = new Slf4JStopWatch();
 
         GymUser user = retrieveGymUser();
@@ -79,7 +90,7 @@ public class GymUserLogController extends AbstractGymController {
             return mav;
         } else {
 
-            List<GymLogData> gymRecords = gymDataDao.findGymUserDataByActivity(user, gymLogSearch.getActivity());
+            List<GymLogData> gymRecords = gymDataDao.findGymUserDataByActivity(user, gymLogSearch.getCardioExercise());
             mav.addObject(gymRecords);
             logger.info(format("%s - %s gym records added to the model.", methodName, gymRecords.size()));
 
@@ -87,6 +98,8 @@ public class GymUserLogController extends AbstractGymController {
 
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, watch);
+
+        logger.exit();
 
         return mav;
     }

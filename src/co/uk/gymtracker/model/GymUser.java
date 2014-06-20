@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Description Here
+ * GymUser model object
  *
  * @author Benjamin O'Flaherty
  * @date Created on: 14/04/14
@@ -131,9 +131,20 @@ public class GymUser implements Serializable {
         this.activityAverages = activityAverages;
     }
 
+    @Override
     public String toString() {
-        return "firstName: " + firstName + " lastName: " + lastName + " age: " + age  + " email: " + email
-                + "role: " + role + " sessions: " + userSessions.toString();
+        return "GymUser{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age='" + age + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", userSessions=" + userSessions +
+                ", activityAverages=" + activityAverages +
+                '}';
     }
-
 }

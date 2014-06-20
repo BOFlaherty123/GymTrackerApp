@@ -1,9 +1,4 @@
 /* UserLog/Show Search Form */
-.gym_fieldset {
-    background: #FFF5EC;
-    border: 2px solid orange;
-}
-
 .gym_layout_padding {
     padding: 1%;
 }
@@ -17,5 +12,10 @@
 #activity_dropdown, #activityDuration_dropdown {
     width: 100%;
     height: 25px;
+}
+
+.row_padding {
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 

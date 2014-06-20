@@ -8,6 +8,7 @@
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/addGymSession.js"></script>
 
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/bootstrap/bootstrap.min.css">
@@ -18,6 +19,11 @@
         <script>
             $(function() {
                 $("#date").datepicker();
+
+                $('#activityCardio').hide();
+                $('#activityWeights').hide();
+
+                selectActivity();
             });
         </script>
 
@@ -70,7 +76,7 @@
                             <div class="gym_layout_padding">
 
                                 <fieldset>
-                                    <legend><h4>Session Information</h4></legend>
+                                    <legend><h4>Gym Session Overview</h4></legend>
 
                                     <div class="col-md-2">
                                         <div class="form-group">
@@ -104,37 +110,69 @@
                             <div class="gym_layout_padding">
 
                                 <fieldset>
-                                    <legend><h4>Activity Data</h4></legend>
 
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <form:label path="activity">Activity</form:label>
-                                            <form:select path="activity" items="${activity}" class="form-control"/>
-                                        </div>
+                                    <legend><h4>Gym Activity Log</h4></legend>
+
+                                    <div class="row row_padding">
+
+                                        <select id="activity" class="form-control">
+                                            <option value="AC">Cardio</option>
+                                            <option value="AW">Weight</option>
+                                        </select>
+
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <form:label path="activityDuration">Duration</form:label>
-                                            <form:select path="activityDuration" items="${activityDuration}" class="form-control"/>
+
+                                    <div class="row .row_padding " id="activityCardio">
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <form:label path="cardioExercise">Exercise</form:label>
+                                                <form:select path="cardioExercise" items="${exercises}" class="form-control"/>
+                                            </div>
                                         </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <form:label path="activityDuration">Duration</form:label>
+                                                <form:select path="activityDuration" items="${activityDuration}" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <form:label path="distance">Distance</form:label>
+                                                <form:input path="distance" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <form:label path="level">Level</form:label>
+                                                <form:input path="level" class="form-control"/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <form:label path="calories">Calories</form:label>
+                                                <form:input path="calories" class="form-control"/>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <form:label path="distance">Distance</form:label>
-                                            <form:input path="distance" class="form-control"/>
+
+                                    <div class="row .row_padding " id="activityWeights">
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <form:label path="reps">Reps</form:label>
+                                                <form:input path="reps" class="form-control"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <form:label path="levelOrWeight">Level/Weight</form:label>
-                                            <form:input path="levelOrWeight" class="form-control"/>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <form:label path="weight">Weight</form:label>
+                                                <form:input path="weight" class="form-control"/>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <form:label path="calories">Calories</form:label>
-                                            <form:input path="calories" class="form-control"/>
-                                        </div>
+
                                     </div>
 
                                 </fieldset>
@@ -147,7 +185,7 @@
                             Additional rows example, Needs to be removed once refactor has been completed
                             Change to List<Activity> activities and allow for a show/hide function on form input
                         -->
-                        <div class="row">
+                        <div class="row .row_padding ">
                             <div class="col-md-10">
                                 <button type="submit" class="btn btn-default">Submit</button>
                             </div>

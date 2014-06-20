@@ -3,7 +3,7 @@ package co.uk.gymtracker.model;
 import java.io.Serializable;
 
 /**
- * Description Here
+ * Gym Session Log Model Object
  *
  * @author Benjamin O'Flaherty
  * @date Created on: 14/04/14
@@ -13,24 +13,31 @@ public class GymLogData implements Serializable {
 
     private String date;
     private String duration;
-    private String activity;
+    private String cardioExercise;
     private String activityDuration;
     private String distance;
-    private String levelOrWeight;
+    private String level;
+    private String weight;
+    private String reps;
     private String calories;
     private String userWeight;
+    private String exercise;
 
-    public GymLogData(String date, String duration, String activity, String activityDuration,
-                      String distance, String levelOrWeight, String calories, String userWeight) {
+    public GymLogData(String date, String duration, String cardioExercise, String activityDuration,
+                      String distance, String level, String weight, String reps, String calories, String userWeight,
+                      String exercise) {
 
         this.date = date;
         this.duration = duration;
-        this.activity = activity;
+        this.cardioExercise = cardioExercise;
         this.activityDuration = activityDuration;
         this.distance = distance;
-        this.levelOrWeight = levelOrWeight;
+        this.level = level;
+        this.weight = weight;
+        this.reps = reps;
         this.calories = calories;
         this.userWeight = userWeight;
+        this.exercise = exercise;
     }
 
     public String getDate() {
@@ -49,16 +56,20 @@ public class GymLogData implements Serializable {
         this.duration = duration;
     }
 
-    public String getActivity() {
-        return activity;
+    public String getCardioExercise() {
+        return cardioExercise;
     }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public void setCardioExercise(String cardioExercise) {
+        this.cardioExercise = cardioExercise;
     }
 
     public String getActivityDuration() {
         return activityDuration;
+    }
+
+    public void setActivityDuration(String activityDuration) {
+        this.activityDuration = activityDuration;
     }
 
     public String getDistance() {
@@ -69,16 +80,28 @@ public class GymLogData implements Serializable {
         this.distance = distance;
     }
 
-    public void setActivityDuration(String activityDuration) {
-        this.activityDuration = activityDuration;
+    public String getLevel() {
+        return level;
     }
 
-    public String getLevelOrWeight() {
-        return levelOrWeight;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public void setLevelOrWeight(String levelOrWeight) {
-        this.levelOrWeight = levelOrWeight;
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
+
+    public String getReps() {
+        return reps;
+    }
+
+    public void setReps(String reps) {
+        this.reps = reps;
     }
 
     public String getCalories() {
@@ -97,8 +120,29 @@ public class GymLogData implements Serializable {
         this.userWeight = userWeight;
     }
 
+    public String getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
+    }
+
+    @Override
     public String toString() {
-        return "Date: " + date + " Duration: " + duration + " Activity: " + activity  + " ActivityDuration: " + activityDuration
-                + "Distance: " + distance + " LevelOrWeight: " + levelOrWeight + "Calories: " + calories + "UserWeight: " + userWeight;
+        return "GymLogData{" +
+                "date='" + date + '\'' +
+                ", duration='" + duration + '\'' +
+                ", cardioExercise='" + cardioExercise + '\'' +
+                ", activityDuration='" + activityDuration + '\'' +
+                ", distance='" + distance + '\'' +
+                ", level='" + level + '\'' +
+                ", weight='" + weight + '\'' +
+                ", reps='" + reps + '\'' +
+                ", calories='" + calories + '\'' +
+                ", userWeight='" + userWeight + '\'' +
+                ", exercise='" + exercise + '\'' +
+                '}';
     }
 }
+

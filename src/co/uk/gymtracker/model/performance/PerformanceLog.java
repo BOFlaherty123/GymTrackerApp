@@ -14,10 +14,19 @@ import java.io.Serializable;
 @Document
 public class PerformanceLog implements Serializable {
 
+    private long id;
     private String className;
     private String methodName;
     private long elapsedTime;
     private boolean slowQuery;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getClassName() {
         return className;

@@ -38,14 +38,14 @@
                     },
                     stop: function( event, ui ) {
 
-                        var activity = $("#targetActivity").val();
+                        var cardioExercise = $("#targetActivity").val();
 
                         $.ajax({
                             type: "POST",
                             data: ui.value,
                             contentType: 'application/json',
                             dataType : 'json',
-                            url: "calculateTargetByPercentIncrease/" + activity + "/" + ui.value,
+                            url: "calculateTargetByPercentIncrease/" + cardioExercise + "/" + ui.value,
                             success: function(data){
 
                                 var response = JSON.stringify(data);
@@ -109,7 +109,7 @@
         <input type="hidden" name="cycling_avg_distance" id="cycling_avg_distance" value="${cycling_avg_distance}">
         <input type="hidden" name="rowing_avg_distance" id="rowing_avg_distance" value="${rowing_avg_distance}">
 
-        <!-- activity duration percentage -->
+        <!-- cardioExercise duration percentage -->
         <input type="hidden" name="running_duration_percent" id="running_duration_percent" value="${running_duration_percent}">
         <input type="hidden" name="cycling_duration_percent" id="cycling_duration_percent" value="${cycling_duration_percent}">
         <input type="hidden" name="rowing_duration_percent" id="rowing_duration_percent" value="${rowing_duration_percent}">
@@ -232,7 +232,7 @@
                 <div id="percentage_slider"></div>
 
                 <div class="activityDropdownDiv">
-                    <form:select path="activity" id="targetActivity" items="${activity}" class="form-control"/>
+                    <form:select path="cardioExercise" id="targetActivity" items="${cardioExercise}" class="form-control"/>
                 </div>
 
                 <div id="durationTargetIncrease" style="padding-top: 2%">

@@ -61,7 +61,7 @@
 
         <div class="gym_layout_padding">
 
-            <fieldset class="gym_fieldset">
+            <fieldset>
                 <legend><h4>Search</h4></legend>
 
                 <form:form method="post" commandName="gymLogSearch" action="${pageContext.request.contextPath}/userLog/search">
@@ -75,10 +75,10 @@
 
                         <div class="col-md-2">
                             <div class="form-group">
-                                <form:label path="activity">By Activity</form:label>
-                                <form:select path="activity" class="form-control">
+                                <form:label path="cardioExercise">By Activity</form:label>
+                                <form:select path="cardioExercise" class="form-control">
                                     <form:option value="ALL" label="--- ALL ---"/>
-                                    <form:options items="${activity}" />
+                                    <form:options items="${exercises}" />
                                 </form:select>
                             </div>
                         </div>
@@ -116,7 +116,7 @@
                     <th>Date</th>
                     <th>Duration</th>
                     <th>User Weight</th>
-                    <th>Activity</th>
+                    <th>Exercise</th>
                     <th>Activity Duration</th>
                     <th>Distance</th>
                     <th>Level/Weight</th>
@@ -128,10 +128,10 @@
                         <td><c:out value="${record.date}"/> </td>
                         <td><c:out value="${record.duration}"/> </td>
                         <td><c:out value="${record.userWeight}"/> </td>
-                        <td><c:out value="${record.activity}"/> </td>
+                        <td><c:out value="${record.cardioExercise}"/> </td>
                         <td><c:out value="${record.activityDuration}"/> </td>
                         <td><c:out value="${record.distance}"/> </td>
-                        <td><c:out value="${record.levelOrWeight}"/> </td>
+                        <td><c:out value="${record.level}"/> </td>
                         <td><c:out value="${record.calories}"/> </td>
                     </tr>
                 </c:forEach>

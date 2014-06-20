@@ -1,5 +1,7 @@
 package co.uk.gymtracker.dao;
 
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 
@@ -16,4 +18,6 @@ public abstract class GymGenericDao {
     @Autowired
     public MongoOperations mongoOperations;
 
+    protected XLogger logger = XLoggerFactory.getXLogger(GymGenericDao.class
+            .getName());
 }

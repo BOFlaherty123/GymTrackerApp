@@ -49,13 +49,14 @@ public class GymUserDashboardController extends AbstractGymController {
     public ModelAndView executeEntryPage(ModelAndView mav) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
+        logger.entry(mav);
+
         StopWatch watch = new Slf4JStopWatch();
 
         mav.setViewName("user/userDashboard");
 
         // Get GymUser object
         GymUser user = getLoggedInUser();
-        System.out.println("userDashboard - user sessions: " + user.getUserSessions());
 
         mav.addObject(user);
 
@@ -66,12 +67,16 @@ public class GymUserDashboardController extends AbstractGymController {
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, watch);
 
+        logger.exit();
+
         return mav;
     }
 
     @RequestMapping(value="/updateUser", method = RequestMethod.POST)
     public ModelAndView updateUser(@Valid GymUser gymUser, Errors errors) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        logger.entry(gymUser, errors);
 
         StopWatch watch = new Slf4JStopWatch();
 
@@ -92,6 +97,8 @@ public class GymUserDashboardController extends AbstractGymController {
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, watch);
 
+        logger.exit();
+
         return mav;
     }
 
@@ -111,6 +118,8 @@ public class GymUserDashboardController extends AbstractGymController {
      */
     private ModelAndView processUserAverages(ModelAndView mav, GymUser user) {
 
+        logger.entry(mav, user);
+
         List<ActivityAverage> averages = calculateAverages.calculateActivityAverages(user);
         for(ActivityAverage avg : averages) {
             logger.info(format("processing averages for activity: %s.", avg.getActivity()));
@@ -119,6 +128,8 @@ public class GymUserDashboardController extends AbstractGymController {
 
         user.setActivityAverages(averages);
         userDao.updateGymUser(user);
+
+        logger.exit();
 
         return mav;
     }
@@ -159,8 +170,9 @@ public class GymUserDashboardController extends AbstractGymController {
     @RequestMapping(value="/calculateTargetByPercentIncrease/{activity}/{percentage}", method = RequestMethod.POST)
     public @ResponseBody Map<String, String> calculateTargetOnPercentageIncrease(@PathVariable("activity") String activity,
                                                                     @PathVariable("percentage") int percentage) {
-
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+
+        logger.entry(activity, percentage);
 
         StopWatch watch = new Slf4JStopWatch();
 
@@ -175,6 +187,8 @@ public class GymUserDashboardController extends AbstractGymController {
 
         // log method performance
         performanceLogging.isMethodProcessingBelowThreshold(this.getClass().getName(), methodName, watch);
+
+        logger.exit();
 
         return testingMap;
     }

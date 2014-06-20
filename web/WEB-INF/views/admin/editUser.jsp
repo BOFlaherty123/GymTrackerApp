@@ -44,7 +44,7 @@
 
         <div style="padding-left: 5%; padding-right: 5%; padding: 1%;">
 
-            <fieldset class="gym_fieldset">
+            <fieldset>
                 <legend><h4>User Administration - Search</h4></legend>
 
                 <form:form method="post" commandName="gymUserSearch" action="${pageContext.request.contextPath}/admin/user/search">

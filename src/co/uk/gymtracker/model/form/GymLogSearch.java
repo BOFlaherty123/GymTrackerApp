@@ -11,17 +11,17 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class GymLogSearch {
 
-    @NotEmpty(message="An Activity is required.")
-    private String activity;
+    @NotEmpty(message="An Exercise is required.")
+    private String cardioExercise;
     private String startDate;
     private String endDate;
 
-    public String getActivity() {
-        return activity;
+    public String getCardioExercise() {
+        return cardioExercise;
     }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public void setCardioExercise(String cardioExercise) {
+        this.cardioExercise = cardioExercise;
     }
 
     public String getStartDate() {
@@ -41,7 +41,7 @@ public class GymLogSearch {
     }
 
     public String toString() {
-        return "activity[ " + activity + " ] startDate [ " + startDate + " ] endDate [ " + endDate + " ]";
+        return "cardioExercise[ " + cardioExercise + " ] startDate [ " + startDate + " ] endDate [ " + endDate + " ]";
     }
 
 }
