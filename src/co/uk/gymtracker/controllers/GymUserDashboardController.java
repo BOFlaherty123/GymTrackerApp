@@ -87,8 +87,6 @@ public class GymUserDashboardController extends AbstractGymController {
             return mav;
         } else {
             GymUser user = userDao.findGymUser(gymUser.getUsername());
-            gymUser.setUserSessions(user.getUserSessions());
-
             userDao.updateGymUser(gymUser);
         }
 

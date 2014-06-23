@@ -31,7 +31,6 @@ public class GymUserDao extends GymGenericDao {
      * @return
      */
     public GymUser findGymUser(String username) {
-
         Query query = new Query(Criteria.where("username").is(username));
 
         return mongoOperations.findOne(query, GymUser.class);
@@ -61,7 +60,6 @@ public class GymUserDao extends GymGenericDao {
         updateUser.setAge(gymUser.getAge());
         updateUser.setEmail(gymUser.getEmail());
         updateUser.setPassword(gymUser.getPassword());
-        updateUser.setUserSessions(gymUser.getUserSessions());
 
         if(gymUser.getActivityAverages() != null) {
             updateUser.setActivityAverages(gymUser.getActivityAverages());

@@ -55,7 +55,7 @@ public class CalculateActivityAverages  {
             // retrieve gym session data for
             List<GymLogData> userSessionData = gymDataDao.findGymUserDataByActivity(gymUser, activity);
 
-            if(userSessionData.size() > 0) {
+            if(!userSessionData.isEmpty()) {
                 activityAverages.add(calculateAverages(userSessionData, activity));
             }
 
@@ -91,10 +91,10 @@ public class CalculateActivityAverages  {
 
         // create a map containing the activity totals for use with further calculations
         Map<String,String> activityTotals = new HashMap<String,String>();
-        activityTotals.put("distance", totalDistance.toString());
-        activityTotals.put("duration", totalDuration.toString());
+        activityTotals.put("distance", String.valueOf(totalDistance));
+        activityTotals.put("duration", String.valueOf(totalDuration));
 
-        return buildActivityAverage(activity, totalSessions.toString(), averageDistance, averageDuration, activityTotals);
+        return buildActivityAverage(activity, String.valueOf(totalSessions), averageDistance, averageDuration, activityTotals);
     }
 
     /**
@@ -116,7 +116,6 @@ public class CalculateActivityAverages  {
      * @return
      */
     private BigDecimal addDurationToTotal(BigDecimal totalDuration, String duration) {
-
         return totalDuration.add(new BigDecimal(duration));
     }
 
@@ -143,14 +142,8 @@ public class CalculateActivityAverages  {
                                                  String numberOfSessions, BigDecimal averageDistance,
                                                  BigDecimal averageDuration, Map<String, String> activityTotals) {
 
-        ActivityAverage activityObj = new ActivityAverage();
-        activityObj.setActivity(activity);
-        activityObj.setNumberOfSessions(numberOfSessions);
-        activityObj.setAverageDistance(averageDistance.toString());
-        activityObj.setAverageDuration(averageDuration.toString());
-        activityObj.setActivityTotals(activityTotals);
-
-        return activityObj;
+        return new ActivityAverage(activity, numberOfSessions, String.valueOf(averageDistance),
+                String.valueOf(averageDuration), activityTotals);
     }
 
 

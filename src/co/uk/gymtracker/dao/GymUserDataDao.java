@@ -2,9 +2,8 @@ package co.uk.gymtracker.dao;
 
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -20,8 +19,12 @@ import java.util.List;
 @Component
 public class GymUserDataDao extends GymGenericDao {
 
-    public List<GymLogData> findAllUserGymData() {
-        return mongoOperations.findAll(GymLogData.class);
+    public List<GymLogData> findAllUserGymData(String userId) {
+        return mongoOperations.find(new Query(Criteria.where("userId").is(userId)), GymLogData.class);
+    }
+
+    public void saveGymLogData(GymLogData gymLogData) {
+        mongoOperations.save(gymLogData);
     }
 
     @SuppressWarnings("unchecked")
@@ -29,47 +32,21 @@ public class GymUserDataDao extends GymGenericDao {
 
         logger.entry(gymUser, activity);
 
-        DBCollection user = mongoOperations.getCollection("gymUser");
+        List<GymLogData> gymDataByUser = findAllUserGymData(gymUser.getId());
 
-        BasicDBObject query = new BasicDBObject("username", gymUser.getUsername());
-        DBCursor cursor = user.find(query);
-
-        List<GymLogData> gymSessionsForUser = new ArrayList<GymLogData>();
         List<GymLogData> allGymSessions = new ArrayList<GymLogData>();
+        List<GymLogData> gymSessionsForUser = new ArrayList<GymLogData>();
 
-        try {
-            while(cursor.hasNext()) {
-                BasicDBObject result = (BasicDBObject) cursor.next();
+        for(GymLogData gld : gymDataByUser) {
 
-                ArrayList<BasicDBObject> userSessions = (ArrayList<BasicDBObject>) result.get("userSessions");
-
-                if(userSessions != null) {
-
-                    for (BasicDBObject session : userSessions) {
-
-                        GymLogData gymSessionData = new GymLogData(
-                                (String) session.get("date"), (String) session.get("duration"), (String) session.get("cardioExercise"),
-                                (String) session.get("activityDuration"), (String) session.get("distance"), (String) session.get("level"),
-                                (String) session.get("weight"), (String) session.get("reps"), (String) session.get("calories"),
-                                (String) session.get("userWeight"), "exercise"
-                        );
-
-                        if(activity.equals("ALL")) {
-                            allGymSessions.add(gymSessionData);
-                        } else {
-
-                            if (session.get("activity").equals(activity)) {
-                                gymSessionsForUser.add(gymSessionData);
-                            }
-
-                        }
-
-                    }
-
-                }
+            if(gld.getCardioExercise().equals(activity)) {
+                gymSessionsForUser.add(gld);
+                logger.info("added [" + gld.toString() + "] to gymSessionByActivity collection.");
+            } else if (activity.equals("ALL")) {
+                allGymSessions.add(gld);
+                logger.info("added [" + gld.toString() + "] to allGymSessions collection.");
             }
-        } finally {
-            cursor.close();
+
         }
 
         logger.exit();

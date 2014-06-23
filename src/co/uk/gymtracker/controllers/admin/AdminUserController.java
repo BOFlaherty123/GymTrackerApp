@@ -3,7 +3,6 @@ package co.uk.gymtracker.controllers.admin;
 import co.uk.gymtracker.controllers.AbstractGymController;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.form.GymUserSearch;
-import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -56,8 +55,6 @@ public class AdminUserController extends AbstractGymController {
     public ModelAndView createNewUser(@Valid GymUser gymUser, Errors errors) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-        StopWatch watch = new Slf4JStopWatch();
-
         ModelAndView mav = new ModelAndView();
 
         if(errors.hasErrors()) {
@@ -71,7 +68,7 @@ public class AdminUserController extends AbstractGymController {
         mav.setViewName("redirect:/admin/dashboard");
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, watch);
+        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
 
         return mav;
     }

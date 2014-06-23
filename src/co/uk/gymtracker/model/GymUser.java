@@ -39,8 +39,6 @@ public class GymUser implements Serializable {
     @NotEmpty(message = "Role is compulsory")
     private String role;
 
-    private List<GymLogData> userSessions;
-
     private List<ActivityAverage> activityAverages;
 
     public String getId() {
@@ -115,14 +113,6 @@ public class GymUser implements Serializable {
         this.role = role;
     }
 
-    public List<GymLogData> getUserSessions() {
-        return userSessions;
-    }
-
-    public void setUserSessions(List<GymLogData> userSessions) {
-        this.userSessions = userSessions;
-    }
-
     public List<ActivityAverage> getActivityAverages() {
         return activityAverages;
     }
@@ -143,7 +133,6 @@ public class GymUser implements Serializable {
                 ", age='" + age + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
-                ", userSessions=" + userSessions +
                 ", activityAverages=" + activityAverages +
                 '}';
     }

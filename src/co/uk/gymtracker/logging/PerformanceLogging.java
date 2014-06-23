@@ -40,7 +40,7 @@ public class PerformanceLogging {
 
         // if method processing elapsedTime is 1 second or over, log warning for following up.
         if(watch.getElapsedTime() >= ONE_SECOND) {
-            logger.warn(format("%s method - slow performance (%s ms) review.", methodName, elapsedTime));
+            logger.warn(format("[ %s ] method - slow performance (%s ms) review.", methodName, elapsedTime));
             slowQuery = true;
         }
 
@@ -52,7 +52,7 @@ public class PerformanceLogging {
 
         appPerformanceDao.insertPerformanceLog(performanceLog);
 
-        logger.info(format("%s -  method performance %s", methodName, watch.stop()));
+        logger.info(format("] %s ] -  method performance [ %s ]", methodName, watch.stop()));
 
     }
 

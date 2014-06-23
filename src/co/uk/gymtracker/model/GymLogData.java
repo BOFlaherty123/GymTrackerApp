@@ -1,5 +1,7 @@
 package co.uk.gymtracker.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 
 /**
@@ -9,8 +11,11 @@ import java.io.Serializable;
  * @date Created on: 14/04/14
  * @project GymTrackerApp
  */
+@Document
 public class GymLogData implements Serializable {
 
+    private String id;
+    private String userId;
     private String date;
     private String duration;
     private String cardioExercise;
@@ -21,12 +26,11 @@ public class GymLogData implements Serializable {
     private String reps;
     private String calories;
     private String userWeight;
-    private String exercise;
 
-    public GymLogData(String date, String duration, String cardioExercise, String activityDuration,
-                      String distance, String level, String weight, String reps, String calories, String userWeight,
-                      String exercise) {
+    public GymLogData(String userId, String date, String duration, String cardioExercise, String activityDuration,
+                      String distance, String level, String weight, String reps, String calories, String userWeight) {
 
+        this.userId = userId;
         this.date = date;
         this.duration = duration;
         this.cardioExercise = cardioExercise;
@@ -37,7 +41,14 @@ public class GymLogData implements Serializable {
         this.reps = reps;
         this.calories = calories;
         this.userWeight = userWeight;
-        this.exercise = exercise;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -120,18 +131,12 @@ public class GymLogData implements Serializable {
         this.userWeight = userWeight;
     }
 
-    public String getExercise() {
-        return exercise;
-    }
-
-    public void setExercise(String exercise) {
-        this.exercise = exercise;
-    }
-
     @Override
     public String toString() {
         return "GymLogData{" +
-                "date='" + date + '\'' +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", date='" + date + '\'' +
                 ", duration='" + duration + '\'' +
                 ", cardioExercise='" + cardioExercise + '\'' +
                 ", activityDuration='" + activityDuration + '\'' +
@@ -141,7 +146,6 @@ public class GymLogData implements Serializable {
                 ", reps='" + reps + '\'' +
                 ", calories='" + calories + '\'' +
                 ", userWeight='" + userWeight + '\'' +
-                ", exercise='" + exercise + '\'' +
                 '}';
     }
 }

@@ -17,6 +17,15 @@ public class ActivityAverage {
     private String averageDuration;
     private Map<String, String> activityTotals;
 
+    public ActivityAverage(String activity, String numberOfSessions, String averageDistance, String averageDuration,
+                           Map<String, String> activityTotals) {
+        this.activity = activity;
+        this.numberOfSessions = numberOfSessions;
+        this.averageDistance = averageDistance;
+        this.averageDuration = averageDuration;
+        this.activityTotals = activityTotals;
+    }
+
     public String getActivity() {
         return activity;
     }

@@ -15,7 +15,8 @@ public class GymSessionForm {
     private String date;
     @NotEmpty(message = "Duration must not be empty")
     private String duration;
-    private String cardioExercise;
+    private String typeOfExercise;
+    private String exercise;
     private String activityDuration;
     private String distance;
     private String level;
@@ -42,12 +43,20 @@ public class GymSessionForm {
         this.duration = duration;
     }
 
-    public String getCardioExercise() {
-        return cardioExercise;
+    public String getTypeOfExercise() {
+        return typeOfExercise;
     }
 
-    public void setCardioExercise(String cardioExercise) {
-        this.cardioExercise = cardioExercise;
+    public void setTypeOfExercise(String typeOfExercise) {
+        this.typeOfExercise = typeOfExercise;
+    }
+
+    public String getExercise() {
+        return exercise;
+    }
+
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
     }
 
     public String getActivityDuration() {
@@ -112,5 +121,23 @@ public class GymSessionForm {
 
     public void setUserWeight(String userWeight) {
         this.userWeight = userWeight;
+    }
+
+    @Override
+    public String toString() {
+        return "GymSessionForm{" +
+                "date='" + date + '\'' +
+                ", duration='" + duration + '\'' +
+                ", typeOfExercise='" + typeOfExercise + '\'' +
+                ", exercise='" + exercise + '\'' +
+                ", activityDuration='" + activityDuration + '\'' +
+                ", distance='" + distance + '\'' +
+                ", level='" + level + '\'' +
+                ", weightMachine='" + weightMachine + '\'' +
+                ", weight='" + weight + '\'' +
+                ", reps='" + reps + '\'' +
+                ", calories='" + calories + '\'' +
+                ", userWeight='" + userWeight + '\'' +
+                '}';
     }
 }

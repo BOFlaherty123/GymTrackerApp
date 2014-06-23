@@ -3,7 +3,6 @@ package co.uk.gymtracker.controllers;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.form.GymLogSearch;
-import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -44,19 +43,13 @@ public class GymUserLogController extends AbstractGymController {
         GymUser user = retrieveGymUser();
 
         if(user != null) {
+            logger.info(format("[ %s ] - [ %s ] has gym sessions.", methodName, user.getUsername()));
 
-            if(user.getUserSessions() != null) {
-                logger.info(format("%s - %s has gym sessions.", methodName, user.getUsername()));
+            List<GymLogData> gymRecords = gymDataDao.findAllUserGymData(user.getId());
 
-                List<GymLogData> gymRecords = user.getUserSessions();
-
-
-                // spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
-                mav.addObject(gymRecords);
-                logger.info(format("%s - %s gym records added to the model.", methodName, gymRecords.size()));
-
-            }
-
+            // spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
+            mav.addObject(gymRecords);
+            logger.info(format("[ %s ] - [ %s ] gym records added to the model.", methodName, gymRecords.size()));
         }
 
         mav.addObject(new GymLogSearch());
@@ -79,25 +72,20 @@ public class GymUserLogController extends AbstractGymController {
 
         logger.entry(gymLogSearch, error);
 
-        StopWatch watch = new Slf4JStopWatch();
-
-        GymUser user = retrieveGymUser();
-
         ModelAndView mav = new ModelAndView("userLog");
 
         if(error.hasErrors()) {
-            logger.info(format("%s .hasErrors() - %s", methodName, gymLogSearch.toString()));
+            logger.info(format("[ %s ] .hasErrors() - %s", methodName, gymLogSearch.toString()));
             return mav;
         } else {
-
-            List<GymLogData> gymRecords = gymDataDao.findGymUserDataByActivity(user, gymLogSearch.getCardioExercise());
+            List<GymLogData> gymRecords = gymDataDao.findGymUserDataByActivity(retrieveGymUser(), gymLogSearch.getCardioExercise());
             mav.addObject(gymRecords);
-            logger.info(format("%s - %s gym records added to the model.", methodName, gymRecords.size()));
 
+            logger.info(format("[ %s ] - [ %s ] gym records added to the model.", methodName, gymRecords.size()));
         }
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, watch);
+        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
 
         logger.exit();
 

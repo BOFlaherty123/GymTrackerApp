@@ -232,7 +232,7 @@
                 <div id="percentage_slider"></div>
 
                 <div class="activityDropdownDiv">
-                    <form:select path="cardioExercise" id="targetActivity" items="${cardioExercise}" class="form-control"/>
+                    <form:select path="activity" id="targetActivity" items="${activity}" class="form-control"/>
                 </div>
 
                 <div id="durationTargetIncrease" style="padding-top: 2%">

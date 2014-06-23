@@ -8,7 +8,7 @@ function selectActivity() {
 
         var code = $( "#activity").val();
 
-        if(code == 'AC') {
+        if(code == 'CE') {
             $('#activityWeights').hide();
             $('#activityCardio').show();
         } else {

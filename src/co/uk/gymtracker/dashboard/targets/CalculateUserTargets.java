@@ -59,7 +59,7 @@ public class CalculateUserTargets {
         BigDecimal increase = new BigDecimal(duration);
         increase = increase.add(increase.divide(new BigDecimal(ONE_HUNDRED)).multiply(new BigDecimal(target.getPercentageIncrease())));
 
-        target.setDurationIncrease(increase.toString());
+        target.setDurationIncrease(String.valueOf(increase));
 
         return target;
     }
@@ -69,7 +69,7 @@ public class CalculateUserTargets {
         BigDecimal increase = new BigDecimal(distance);
         increase = increase.add(increase.divide(new BigDecimal(ONE_HUNDRED)).multiply(new BigDecimal(target.getPercentageIncrease())));
 
-        target.setDistanceIncrease(increase.toString());
+        target.setDistanceIncrease(String.valueOf(increase));
 
         return target;
 

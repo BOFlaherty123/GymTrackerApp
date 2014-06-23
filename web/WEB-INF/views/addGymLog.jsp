@@ -115,10 +115,10 @@
 
                                     <div class="row row_padding">
 
-                                        <select id="activity" class="form-control">
-                                            <option value="AC">Cardio</option>
-                                            <option value="AW">Weight</option>
-                                        </select>
+                                        <form:select id="activity" path="typeOfExercise" class="form-control">
+                                            <form:option value="CE" label="Cardio Exercise"/>
+                                            <form:option value="WE" label="Weight Exercise"/>
+                                        </form:select>
 
                                     </div>
 
@@ -126,8 +126,11 @@
 
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <form:label path="cardioExercise">Exercise</form:label>
-                                                <form:select path="cardioExercise" items="${exercises}" class="form-control"/>
+                                                <form:label path="exercise">Exercise</form:label>
+                                                <form:select path="exercise" class="form-control">
+                                                    <form:option value="" label=" "/>
+                                                    <form:options items="${exercises}" />
+                                                </form:select>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
