@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- * Description Here
+ * CalculateUserTargets
  *
  * @author Benjamin O'Flaherty
  * @date Created on: 15/04/14

@@ -20,7 +20,7 @@ public class AppPerformanceDao extends GymGenericDao {
 
    public void insertPerformanceLog(PerformanceLog performanceLog) {
 
-        Long id = Long.valueOf(mongoOperations.findAll(PerformanceLog.class).size() + 1);
+        Long id = (long) (mongoOperations.findAll(PerformanceLog.class).size() + 1);
         performanceLog.setId(id);
 
         mongoOperations.insert(performanceLog);

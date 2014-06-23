@@ -5,7 +5,6 @@ import co.uk.gymtracker.dashboard.targets.CalculateUserTargets;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.dashboard.ActivityAverage;
 import co.uk.gymtracker.model.dashboard.TargetIncrease;
-import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,8 +50,6 @@ public class GymUserDashboardController extends AbstractGymController {
 
         logger.entry(mav);
 
-        StopWatch watch = new Slf4JStopWatch();
-
         mav.setViewName("user/userDashboard");
 
         // Get GymUser object
@@ -65,7 +62,7 @@ public class GymUserDashboardController extends AbstractGymController {
         processActivityDurationPercentages(mav, user);
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, watch);
+        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
 
         logger.exit();
 
@@ -78,22 +75,19 @@ public class GymUserDashboardController extends AbstractGymController {
 
         logger.entry(gymUser, errors);
 
-        StopWatch watch = new Slf4JStopWatch();
-
         ModelAndView mav = new ModelAndView();
 
         if(errors.hasErrors()) {
             mav.setViewName("/user/userDashboard");
             return mav;
         } else {
-            GymUser user = userDao.findGymUser(gymUser.getUsername());
             userDao.updateGymUser(gymUser);
         }
 
         mav.setViewName("redirect:/user/userDashboard");
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, watch);
+        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
 
         logger.exit();
 
@@ -172,8 +166,6 @@ public class GymUserDashboardController extends AbstractGymController {
 
         logger.entry(activity, percentage);
 
-        StopWatch watch = new Slf4JStopWatch();
-
         GymUser user = getLoggedInUser();
 
         // TODO - Change from return value of String to TargetIncrease (as a JSON obj? Jackson will be required)
@@ -184,7 +176,7 @@ public class GymUserDashboardController extends AbstractGymController {
         testingMap.put("duration", targetIncrease.getDurationIncrease());
 
         // log method performance
-        performanceLogging.isMethodProcessingBelowThreshold(this.getClass().getName(), methodName, watch);
+        performanceLogging.isMethodProcessingBelowThreshold(this.getClass().getName(), methodName, new Slf4JStopWatch());
 
         logger.exit();
 

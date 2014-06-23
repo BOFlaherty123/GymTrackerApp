@@ -32,7 +32,6 @@ public class AdminDashboardController extends AbstractGymController {
 
         displayAppStatistics(mav);
         displayAppPerformance(mav);
-        displayAppAudit(mav);
 
         logger.exit();
 
@@ -53,10 +52,6 @@ public class AdminDashboardController extends AbstractGymController {
         mav.addObject(appPerformanceDao.findAllPerformanceLogs());
 
         logger.exit();
-    }
-
-    private void displayAppAudit(ModelAndView mav) {
-
     }
 
     @RequestMapping(value="/performance/slow")

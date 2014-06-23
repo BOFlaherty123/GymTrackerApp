@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.List;
 
+import static java.lang.String.format;
+
 /**
  * Admin Controller
  *
@@ -25,21 +27,21 @@ import java.util.List;
 @RequestMapping(value="/admin")
 public class AdminUserController extends AbstractGymController {
 
-    @Override
-    public ModelAndView executeEntryPage(ModelAndView mav) {
-        return null;
-    }
-
     /**
      * Setup and displays the createUser form
      *
      * @return
      */
+    @Override
     @RequestMapping(value="/createUser", method = RequestMethod.GET)
-    public ModelAndView displayCreateUserForm() {
+    public ModelAndView executeEntryPage(ModelAndView mav) {
 
-        ModelAndView mav = new ModelAndView("admin/createUser");
+        logger.entry();
+
+        mav.setViewName("admin/createUser");
         mav.addObject(new GymUser());
+
+        logger.exit();
 
         return mav;
     }
@@ -55,6 +57,8 @@ public class AdminUserController extends AbstractGymController {
     public ModelAndView createNewUser(@Valid GymUser gymUser, Errors errors) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
+        logger.entry(gymUser);
+
         ModelAndView mav = new ModelAndView();
 
         if(errors.hasErrors()) {
@@ -63,12 +67,15 @@ public class AdminUserController extends AbstractGymController {
             return mav;
         } else {
             userDao.saveGymUser(gymUser);
+            logger.info(format("Create User [ %s ] ", gymUser.toString()));
         }
 
         mav.setViewName("redirect:/admin/dashboard");
 
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
+
+        logger.exit();
 
         return mav;
     }
@@ -82,11 +89,15 @@ public class AdminUserController extends AbstractGymController {
     @RequestMapping(value="/editUser")
     public ModelAndView editUser() {
 
+        logger.entry();
+
         ModelAndView mav = new ModelAndView("admin/editUser");
         mav.addObject(new GymUserSearch());
 
         List<GymUser> gymUsers = userDao.findAllGymUsers();
         mav.addObject(gymUsers);
+
+        logger.exit();
 
         return mav;
     }
@@ -97,6 +108,8 @@ public class AdminUserController extends AbstractGymController {
     @RequestMapping(value="/user/search")
     public ModelAndView findUserByUsername(@Valid GymUserSearch gymUserSearch, ModelAndView mav, Errors error) {
 
+        logger.entry(gymUserSearch);
+
         mav.setViewName("admin/editUser");
 
         if(error.hasErrors()) {
@@ -105,7 +118,10 @@ public class AdminUserController extends AbstractGymController {
             List<GymUser> searchUsers = userDao.findUserByCriteria(gymUserSearch);
             mav.addObject(searchUsers);
 
+            logger.info(format("searchUsers returned [" + searchUsers + "]"));
         }
+
+        logger.exit();
 
         return mav;
     }
@@ -119,6 +135,8 @@ public class AdminUserController extends AbstractGymController {
     @RequestMapping(value="/deleteUser/{username}")
     public ModelAndView deleteUser(@PathVariable("username") String username) {
 
+        logger.entry(username);
+
         ModelAndView mav = new ModelAndView("redirect:/admin/editUser");
 
         // delete the user by id
@@ -126,6 +144,8 @@ public class AdminUserController extends AbstractGymController {
 
         // retrieve all active users
         mav.addObject(userDao.findAllGymUsers());
+
+        logger.exit();
 
         return mav;
     }

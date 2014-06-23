@@ -2,8 +2,6 @@ package co.uk.gymtracker.dao;
 
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.form.GymUserSearch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
@@ -21,8 +19,6 @@ import static java.lang.String.format;
  */
 @Component
 public class GymUserDao extends GymGenericDao {
-
-    private static final Logger logger = LoggerFactory.getLogger(GymUserDao.class);
 
     /**
      * find a gymUser object by username
@@ -52,6 +48,8 @@ public class GymUserDao extends GymGenericDao {
     public void updateGymUser(GymUser gymUser) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
+        logger.entry(gymUser);
+
         Query query = new Query(Criteria.where("username").is(gymUser.getUsername()));
 
         GymUser updateUser = mongoOperations.findOne(query, GymUser.class);
@@ -67,11 +65,13 @@ public class GymUserDao extends GymGenericDao {
 
         mongoOperations.save(updateUser);
         logger.info(format("%s - updated gymUser %s", methodName, updateUser.toString()));
+
+        logger.exit();
     }
 
     public List<GymUser> findUserByCriteria(GymUserSearch searchCriteria) {
 
-        new Query(Criteria.where("username").is(true));
+        logger.entry(searchCriteria);
 
         Query searchQuery = new Query(Criteria.where("username").regex(searchCriteria.getUsername()));
 
@@ -83,6 +83,10 @@ public class GymUserDao extends GymGenericDao {
         if(!searchCriteria.getLastName().isEmpty()) {
             searchQuery.addCriteria(Criteria.where("lastName").regex(searchCriteria.getFirstName()));
         }
+
+        logger.info(format("findUserByCriteria - [ %s ]", searchQuery));
+
+        logger.exit();
 
         return mongoOperations.find(searchQuery, GymUser.class);
     }

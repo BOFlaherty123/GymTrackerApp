@@ -34,7 +34,7 @@ public abstract class AbstractGymController {
     @Autowired
     public PerformanceLogging performanceLogging;
 
-    protected XLogger logger = XLoggerFactory.getXLogger(AbstractGymController.class
+    protected final XLogger logger = XLoggerFactory.getXLogger(AbstractGymController.class
             .getName());
 
     public abstract ModelAndView executeEntryPage(ModelAndView mav);
