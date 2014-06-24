@@ -40,11 +40,11 @@ public class GymLogDataValidator implements Validator {
 
             // cardio activity validation
             logger.info("Validate [CardioExercises]");
-            ValidationUtils.rejectIfEmpty(errors, "exercise", "error.empty.exercise");
-            ValidationUtils.rejectIfEmpty(errors, "duration", "error.empty.duration");
-            ValidationUtils.rejectIfEmpty(errors, "distance", "error.empty.distance");
-            ValidationUtils.rejectIfEmpty(errors, "level", "error.empty.level");
-            ValidationUtils.rejectIfEmpty(errors, "calories", "error.empty.calories");
+            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].exercise", "error.empty.exercise");
+            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].duration", "error.empty.duration");
+            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].distance", "error.empty.distance");
+            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].level", "error.empty.level");
+            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].calories", "error.empty.calories");
 
         }
 
@@ -53,8 +53,8 @@ public class GymLogDataValidator implements Validator {
             // weight activity validation
             logger.info("Validate [Reps/Weight]");
 
-            ValidationUtils.rejectIfEmpty(errors, "weight", "error.empty.weight");
-            ValidationUtils.rejectIfEmpty(errors, "reps", "error.empty.reps");
+            ValidationUtils.rejectIfEmpty(errors, "exerciseWeight[0].reps", "error.empty.reps");
+            ValidationUtils.rejectIfEmpty(errors, "exerciseWeight[0].weightLifted", "error.empty.weight");
 
         }
 

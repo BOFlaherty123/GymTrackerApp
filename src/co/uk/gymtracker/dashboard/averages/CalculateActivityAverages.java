@@ -1,6 +1,7 @@
 package co.uk.gymtracker.dashboard.averages;
 
 import co.uk.gymtracker.dao.GymUserDataDao;
+import co.uk.gymtracker.model.ExerciseCardio;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.dashboard.ActivityAverage;
@@ -79,8 +80,12 @@ public class CalculateActivityAverages  {
 
         // calculate total distance
         for(GymLogData gymLogData : activitySessionData)  {
-            totalDistance = addDistanceToTotal(totalDistance, gymLogData.getDistance());
-            totalDuration = addDurationToTotal(totalDuration, gymLogData.getDuration());
+
+            for(ExerciseCardio cardioExercise : gymLogData.getExerciseCardio()) {
+                totalDistance = addDistanceToTotal(totalDistance, cardioExercise.getDistance());
+                totalDuration = addDurationToTotal(totalDuration, cardioExercise.getDuration());
+            }
+
         }
 
         BigDecimal totalSessions = parseNumberOfGymSessions(activitySessionData.size());

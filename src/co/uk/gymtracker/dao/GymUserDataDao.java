@@ -1,5 +1,6 @@
 package co.uk.gymtracker.dao;
 
+import co.uk.gymtracker.model.ExerciseCardio;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -39,12 +40,16 @@ public class GymUserDataDao extends GymGenericDao {
 
         for(GymLogData gld : gymDataByUser) {
 
-            if(gld.getCardioExercise().equals(activity)) {
-                gymSessionsForUser.add(gld);
-                logger.info("added [" + gld.toString() + "] to gymSessionByActivity collection.");
-            } else if (activity.equals("ALL")) {
-                allGymSessions.add(gld);
-                logger.info("added [" + gld.toString() + "] to allGymSessions collection.");
+            for(ExerciseCardio cardioExercise : gld.getExerciseCardio())  {
+
+                if(cardioExercise.getExercise().equals(activity)) {
+                    gymSessionsForUser.add(gld);
+                    logger.info("added [" + gld.toString() + "] to gymSessionByActivity collection.");
+                } else if (activity.equals("ALL")) {
+                    allGymSessions.add(gld);
+                    logger.info("added [" + gld.toString() + "] to allGymSessions collection.");
+                }
+
             }
 
         }

@@ -112,28 +112,73 @@
         <div class="table-responsive">
 
             <table class="table table-hover">
-                <tr>
-                    <th>Date</th>
-                    <th>Duration</th>
-                    <th>User Weight</th>
-                    <th>Exercise</th>
-                    <th>Activity Duration</th>
-                    <th>Distance</th>
-                    <th>Level/Weight</th>
-                    <th>Calories</th>
-                </tr>
 
                 <c:forEach var="record" items="${gymLogDataList}">
-                    <tr>
-                        <td><c:out value="${record.date}"/> </td>
-                        <td><c:out value="${record.duration}"/> </td>
-                        <td><c:out value="${record.userWeight}"/> </td>
-                        <td><c:out value="${record.cardioExercise}"/> </td>
-                        <td><c:out value="${record.activityDuration}"/> </td>
-                        <td><c:out value="${record.distance}"/> </td>
-                        <td><c:out value="${record.level}"/> </td>
-                        <td><c:out value="${record.calories}"/> </td>
+
+                    <tr class="active">
+                        <th>Date</th>
+                        <th>Total Duration (mins)</th>
+                        <th>User Weight</th>
+                        <th/>
+                        <th/>
                     </tr>
+
+                    <tr>
+                        <td><b><c:out value="${record.date}"/></b></td>
+                        <td><b><c:out value="${record.duration}"/></b></td>
+                        <td><b><c:out value="${record.userWeight}"/></b></td>
+                        <td/>
+                        <td/>
+                    </tr>
+
+                    <c:if test="${record.exerciseCardio != null}">
+
+                        <tr class="active">
+                            <th>Exercise</th>
+                            <th>Activity Duration</th>
+                            <th>Distance</th>
+                            <th>Level/Weight</th>
+                            <th>Calories</th>
+                        </tr>
+
+                        <c:forEach varStatus="i" items="${record.exerciseCardio}">
+
+                            <tr>
+                                <td><c:out value="${record.exerciseCardio[i.index].exercise}"/> </td>
+                                <td><c:out value="${record.exerciseCardio[i.index].distance}"/> </td>
+                                <td><c:out value="${record.exerciseCardio[i.index].duration}"/> </td>
+                                <td><c:out value="${record.exerciseCardio[i.index].level}"/> </td>
+                                <td><c:out value="${record.exerciseCardio[i.index].calories}"/> </td>
+                            </tr>
+
+                        </c:forEach>
+
+                    </c:if>
+
+                    <c:if test="${record.exerciseWeight != null}">
+
+                        <tr class="active">
+                            <th>Exercise</th>
+                            <th>Reps</th>
+                            <th>Weight Lifted</th>
+                            <th/>
+                            <th/>
+                        </tr>
+
+                        <c:forEach varStatus="i" items="${record.exerciseWeight}">
+
+                            <tr>
+                                <td/>
+                                <td><c:out value="${record.exerciseWeight[i.index].reps}"/> </td>
+                                <td><c:out value="${record.exerciseWeight[i.index].weightLifted}"/> </td>
+                                <td/>
+                                <td/>
+                            </tr>
+
+                        </c:forEach>
+
+                    </c:if>
+
                 </c:forEach>
 
             </table>
