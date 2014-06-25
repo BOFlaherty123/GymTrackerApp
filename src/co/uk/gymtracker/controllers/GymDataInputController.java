@@ -1,18 +1,19 @@
 package co.uk.gymtracker.controllers;
 
+import co.uk.gymtracker.model.ExerciseCardio;
+import co.uk.gymtracker.model.ExerciseWeight;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.form.GymSessionForm;
-import co.uk.gymtracker.validation.GymLogDataValidator;
 import org.perf4j.slf4j.Slf4JStopWatch;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GymDataInputController
@@ -26,14 +27,6 @@ public class GymDataInputController extends AbstractGymController {
 
     private static final String CARDIO_EXERCISE = "CE";
     private static final String WEIGHT_EXERCISE = "WE";
-
-    @Autowired
-    private GymLogDataValidator gymLogDataValidator;
-
-    @InitBinder("GymLogData")
-    protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(gymLogDataValidator);
-    }
 
     /**
      * Displays the addGymSessionForm to the user
@@ -68,7 +61,7 @@ public class GymDataInputController extends AbstractGymController {
 
         logger.entry(gymSessionForm, errors);
 
-        gymLogDataValidator.validate(gymSessionForm, errors);
+        Slf4JStopWatch stopWatch = createStopWatchInstance();
 
         if(errors.hasErrors()) {
             mav.setViewName("addGymSession");
@@ -103,13 +96,20 @@ public class GymDataInputController extends AbstractGymController {
         }
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
+        runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
 
         logger.exit();
 
         return new ModelAndView("redirect:/userLog/show");
     }
 
+    /**
+     * populate a gym log data object from the form submission
+     *
+     * @param gymSessionForm
+     * @param user
+     * @return gymSessionData
+     */
     private GymLogData populateGymLogData(GymSessionForm gymSessionForm, GymUser user) {
         GymLogData gymSessionData = new GymLogData();
 
@@ -129,15 +129,37 @@ public class GymDataInputController extends AbstractGymController {
         return (typeOfExercise.equals(CARDIO_EXERCISE)) ? true : false;
     }
 
-    private void addWeightExercise(GymSessionForm gymSessionForm, GymLogData gymSessionData, boolean saveWeightExercise) {
-        if(saveWeightExercise) {
-            gymSessionData.setExerciseWeight(gymSessionForm.getExerciseWeight());
+    private void addCardioExercise(GymSessionForm gymSessionForm, GymLogData gymSessionData, boolean saveCardioExercise) {
+
+        List<ExerciseCardio> exerciseCardio = new ArrayList<ExerciseCardio>();
+
+        // filter out any blank cardio exercise rows
+        for(ExerciseCardio ec : gymSessionForm.getExerciseCardio()) {
+            if(ec.getExercise() != null && !ec.getExercise().isEmpty()) {
+                exerciseCardio.add(ec);
+            }
+        }
+
+        // save cardio exercises if true
+        if(saveCardioExercise) {
+            gymSessionData.setExerciseCardio(exerciseCardio);
         }
     }
 
-    private void addCardioExercise(GymSessionForm gymSessionForm, GymLogData gymSessionData, boolean saveCardioExercise) {
-        if(saveCardioExercise) {
-            gymSessionData.setExerciseCardio(gymSessionForm.getExerciseCardio());
+    private void addWeightExercise(GymSessionForm gymSessionForm, GymLogData gymSessionData, boolean saveWeightExercise) {
+
+        List<ExerciseWeight> exerciseWeight = new ArrayList<ExerciseWeight>();
+
+        // filter out any blank weight exercise rows
+        for(ExerciseWeight ew : gymSessionForm.getExerciseWeight()) {
+            if(ew.getExercise() != null && !ew.getExercise().isEmpty()) {
+                exerciseWeight.add(ew);
+            }
+        }
+
+        // save weight exercises if true
+        if(saveWeightExercise) {
+            gymSessionData.setExerciseWeight(gymSessionForm.getExerciseWeight());
         }
     }
 

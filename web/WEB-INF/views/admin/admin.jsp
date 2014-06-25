@@ -8,7 +8,7 @@
 
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js"></script>
 
         <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/bootstrap/bootstrap.min.css">

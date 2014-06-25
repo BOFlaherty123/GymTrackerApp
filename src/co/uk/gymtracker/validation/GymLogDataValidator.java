@@ -6,7 +6,6 @@ import org.slf4j.ext.XLoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import static java.lang.String.format;
@@ -35,16 +34,12 @@ public class GymLogDataValidator implements Validator {
         logger.entry();
 
         GymSessionForm logData = (GymSessionForm) target;
+        System.out.println(logData.toString());
 
         if(logData.getTypeOfExercise().equals("CE")) {
 
             // cardio activity validation
             logger.info("Validate [CardioExercises]");
-            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].exercise", "error.empty.exercise");
-            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].duration", "error.empty.duration");
-            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].distance", "error.empty.distance");
-            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].level", "error.empty.level");
-            ValidationUtils.rejectIfEmpty(errors, "exerciseCardio[0].calories", "error.empty.calories");
 
         }
 
@@ -52,10 +47,6 @@ public class GymLogDataValidator implements Validator {
 
             // weight activity validation
             logger.info("Validate [Reps/Weight]");
-
-            ValidationUtils.rejectIfEmpty(errors, "exerciseWeight[0].reps", "error.empty.reps");
-            ValidationUtils.rejectIfEmpty(errors, "exerciseWeight[0].weightLifted", "error.empty.weight");
-
         }
 
         // Log all thrown error messages

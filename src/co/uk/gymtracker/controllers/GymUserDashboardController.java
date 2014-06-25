@@ -50,6 +50,8 @@ public class GymUserDashboardController extends AbstractGymController {
 
         logger.entry(mav);
 
+        Slf4JStopWatch stopWatch = createStopWatchInstance();
+
         mav.setViewName("user/userDashboard");
 
         // Get GymUser object
@@ -62,7 +64,7 @@ public class GymUserDashboardController extends AbstractGymController {
         processActivityDurationPercentages(mav, user);
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
+        runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
 
         logger.exit();
 
@@ -74,6 +76,8 @@ public class GymUserDashboardController extends AbstractGymController {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
         logger.entry(gymUser, errors);
+
+        Slf4JStopWatch stopWatch = createStopWatchInstance();
 
         ModelAndView mav = new ModelAndView();
 
@@ -87,7 +91,7 @@ public class GymUserDashboardController extends AbstractGymController {
         mav.setViewName("redirect:/user/userDashboard");
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
+        runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
 
         logger.exit();
 

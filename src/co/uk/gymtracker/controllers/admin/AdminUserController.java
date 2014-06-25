@@ -59,6 +59,8 @@ public class AdminUserController extends AbstractGymController {
 
         logger.entry(gymUser);
 
+        Slf4JStopWatch stopWatch = createStopWatchInstance();
+
         ModelAndView mav = new ModelAndView();
 
         if(errors.hasErrors()) {
@@ -73,7 +75,7 @@ public class AdminUserController extends AbstractGymController {
         mav.setViewName("redirect:/admin/dashboard");
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
+        runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
 
         logger.exit();
 

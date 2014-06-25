@@ -5,7 +5,7 @@
         <title>Gym Tracker App</title>
 
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js"></script>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/style/bootstrap/bootstrap.min.css">
         <link href="${pageContext.request.contextPath}/resources/style/generic.css" rel="stylesheet">
 

@@ -5,6 +5,7 @@ import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.logging.PerformanceLogging;
 import co.uk.gymtracker.model.GymUser;
 import org.perf4j.StopWatch;
+import org.perf4j.slf4j.Slf4JStopWatch;
 import org.slf4j.ext.XLogger;
 import org.slf4j.ext.XLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,10 @@ public abstract class AbstractGymController {
         }
 
         return gymUser;
+    }
+
+    protected Slf4JStopWatch createStopWatchInstance() {
+        return new Slf4JStopWatch();
     }
 
     protected void runPerformanceLogging(String className, String methodName, StopWatch watch) {

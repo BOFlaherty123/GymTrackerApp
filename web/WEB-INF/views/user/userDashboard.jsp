@@ -12,7 +12,7 @@
         <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
         <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <!-- Bootstrap -->
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap/bootstrap.min.js"></script>
         <!-- Highchart API -->
         <script src="http://code.highcharts.com/highcharts.js"></script>
         <!-- User Dashboard Charts -->

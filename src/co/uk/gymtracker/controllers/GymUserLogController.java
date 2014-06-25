@@ -72,6 +72,8 @@ public class GymUserLogController extends AbstractGymController {
 
         logger.entry(gymLogSearch, error);
 
+        Slf4JStopWatch stopWatch = createStopWatchInstance();
+
         ModelAndView mav = new ModelAndView("userLog");
 
         if(error.hasErrors()) {
@@ -85,7 +87,7 @@ public class GymUserLogController extends AbstractGymController {
         }
 
         // log method performance
-        runPerformanceLogging(this.getClass().getName(), methodName, new Slf4JStopWatch());
+        runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
 
         logger.exit();
 
