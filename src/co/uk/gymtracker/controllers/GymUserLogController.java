@@ -45,7 +45,7 @@ public class GymUserLogController extends AbstractGymController {
         if(user != null) {
             logger.info(format("[ %s ] - [ %s ] has gym sessions.", methodName, user.getUsername()));
 
-            List<GymLogData> gymRecords = gymDataDao.findAllUserGymData(user.getId());
+            List<GymLogData> gymRecords = gymDataInputService.retrieveGymLogDataByUserId(user);
 
             // spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
             mav.addObject(gymRecords);
@@ -80,7 +80,7 @@ public class GymUserLogController extends AbstractGymController {
             logger.info(format("[ %s ] .hasErrors() - %s", methodName, gymLogSearch.toString()));
             return mav;
         } else {
-            List<GymLogData> gymRecords = gymDataDao.findGymUserDataByActivity(retrieveGymUser(), gymLogSearch.getCardioExercise());
+            List<GymLogData> gymRecords = gymDataInputService.retrieveGymUserDataByActivity(retrieveGymUser(), gymLogSearch.getCardioExercise());
             mav.addObject(gymRecords);
 
             logger.info(format("[ %s ] - [ %s ] gym records added to the model.", methodName, gymRecords.size()));

@@ -1,9 +1,9 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.dao.GymUserDao;
-import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.logging.PerformanceLogging;
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.service.GymDataInputService;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.slf4j.ext.XLogger;
@@ -30,7 +30,7 @@ public abstract class AbstractGymController {
     public GymUserDao userDao;
 
     @Autowired
-    public GymUserDataDao gymDataDao;
+    public GymDataInputService gymDataInputService;
 
     @Autowired
     public PerformanceLogging performanceLogging;
