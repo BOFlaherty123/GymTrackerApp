@@ -2,6 +2,8 @@ package co.uk.gymtracker.controllers.admin;
 
 import co.uk.gymtracker.controllers.AbstractGymController;
 import co.uk.gymtracker.dao.AppPerformanceDao;
+import co.uk.gymtracker.dao.AuditTrailDao;
+import co.uk.gymtracker.model.form.AuditSearch;
 import co.uk.gymtracker.model.performance.PerformanceLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,9 @@ public class AdminDashboardController extends AbstractGymController {
     @Autowired
     private AppPerformanceDao appPerformanceDao;
 
+    @Autowired
+    private AuditTrailDao auditDao;
+
     @RequestMapping(value="/dashboard")
     public ModelAndView executeEntryPage(ModelAndView mav) {
 
@@ -29,9 +34,11 @@ public class AdminDashboardController extends AbstractGymController {
 
         mav.setViewName(("admin/admin"));
         mav.addObject(new PerformanceLog());
+        mav.addObject(new AuditSearch());
 
         displayAppStatistics(mav);
         displayAppPerformance(mav);
+        displayAuditRecords(mav);
 
         logger.exit();
 
@@ -39,7 +46,7 @@ public class AdminDashboardController extends AbstractGymController {
     }
 
     private void displayAppStatistics(ModelAndView mav) {
-        logger.entry();
+        logger.entry(mav);
 
         mav.addObject("numberOfUsers", userDao.findAllGymUsers().size());
 
@@ -50,6 +57,14 @@ public class AdminDashboardController extends AbstractGymController {
         logger.entry();
 
         mav.addObject(appPerformanceDao.findAllPerformanceLogs());
+
+        logger.exit();
+    }
+
+    private void displayAuditRecords(ModelAndView mav) {
+        logger.entry(mav);
+
+        mav.addObject(auditDao.findAllAuditRecords());
 
         logger.exit();
     }

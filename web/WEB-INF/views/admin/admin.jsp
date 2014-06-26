@@ -107,7 +107,54 @@
 
             <div class="tab-pane application_audit" id="audit">
 
-                - Recorded Audits
+                <fieldset>
+                    <legend><h4>Find Audit Records By Username</h4></legend>
+
+                    <form:form method="post" commandName="auditSearch" action="${pageContext.request.contextPath}/admin/performance/slow">
+                        <form role="form">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form:errors path="*" cssClass="errorblock" element="div" title="Errors"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <form:input path="username" class="form-control" placeholder="Enter Username"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <button type="submit" class="btn btn-default">Submit</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </form:form>
+
+                </fieldset>
+
+                <table class="table table-striped table-condensed content_font_small">
+                    <tr>
+                        <th>Username</th>
+                        <th>Date</th>
+                        <th>Class Name</th>
+                        <th>Method Name</th>
+                        <th>Arguments</th>
+                    </tr>
+                    <c:forEach var="audit" items="${auditList}">
+                        <tr>
+                            <td><c:out value="${audit.username}"/> </td>
+                            <td><c:out value="${audit.date}"/> </td>
+                            <td><c:out value="${audit.className}"/> </td>
+                            <td><c:out value="${audit.methodName}"/> </td>
+                            <td><c:out value="${audit.arguments}"/> </td>
+                        </tr>
+                    </c:forEach>
+                </table>
 
             </div>
 
