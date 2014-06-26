@@ -1077,11 +1077,9 @@
             var numChoices = $field.is('select')
                             ? validator.getFieldElements($field.attr('data-bv-field')).find('option').filter(':selected').length
                             : validator.getFieldElements($field.attr('data-bv-field')).filter(':checked').length;
-            if ((options.min && numChoices < options.min) || (options.max && numChoices > options.max)) {
-                return false;
-            }
+            return !((options.min && numChoices < options.min) || (options.max && numChoices > options.max));
 
-            return true;
+
         }
     };
 }(window.jQuery));
@@ -3531,11 +3529,9 @@
             }
 
             var length = $.trim(value).length;
-            if ((options.min && length < options.min) || (options.max && length > options.max)) {
-                return false;
-            }
+            return !((options.min && length < options.min) || (options.max && length > options.max));
 
-            return true;
+
         }
     };
 }(window.jQuery));

@@ -18,6 +18,6 @@ public abstract class GymGenericDao {
     @Autowired
     public MongoOperations mongoOperations;
 
-    protected XLogger logger = XLoggerFactory.getXLogger(GymGenericDao.class
+    final XLogger logger = XLoggerFactory.getXLogger(GymGenericDao.class
             .getName());
 }

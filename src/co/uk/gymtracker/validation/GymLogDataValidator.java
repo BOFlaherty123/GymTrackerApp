@@ -25,7 +25,7 @@ public class GymLogDataValidator implements Validator {
         return GymSessionForm.class.equals(clazz);
     }
 
-    protected final XLogger logger = XLoggerFactory.getXLogger(GymLogDataValidator.class
+    private final XLogger logger = XLoggerFactory.getXLogger(GymLogDataValidator.class
             .getName());
 
     @Override

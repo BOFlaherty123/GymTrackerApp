@@ -1,14 +1,10 @@
 package co.uk.gymtracker.service;
 
-import co.uk.gymtracker.dao.GymUserDataDao;
 import co.uk.gymtracker.model.ExerciseCardio;
 import co.uk.gymtracker.model.ExerciseWeight;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.form.GymSessionForm;
-import org.slf4j.ext.XLogger;
-import org.slf4j.ext.XLoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,16 +18,10 @@ import java.util.List;
  * @project GymTrackerApp
  */
 @Service
-public class GymDataInputService {
+public class GymDataInputService extends AbstractGymService {
 
     private static final String CARDIO_EXERCISE = "CE";
     private static final String WEIGHT_EXERCISE = "WE";
-
-    protected final XLogger logger = XLoggerFactory.getXLogger(GymDataInputService.class
-            .getName());
-
-    @Autowired
-    public GymUserDataDao gymDataDao;
 
     public List<GymLogData> retrieveGymLogDataByUserId(GymUser user) {
         return gymDataDao.findAllUserGymData(user.getId());
@@ -42,7 +32,6 @@ public class GymDataInputService {
     }
 
     public void buildAndSaveGymLogData(GymUser user, GymSessionForm gymSessionForm) {
-
         logger.entry();
 
         GymLogData logData = populateGymLogData(gymSessionForm, user);
@@ -51,24 +40,20 @@ public class GymDataInputService {
         logger.info(".getTypeOfExercise() [" + typeOfExercise + "]");
 
         boolean saveCardioExercise; boolean saveWeightExercise;
-        saveCardioExercise = isCardioExercise(typeOfExercise);
-        saveWeightExercise = isWeightExercise(typeOfExercise);
+        saveCardioExercise = determineTypeOfExercise(typeOfExercise, CARDIO_EXERCISE);
+        saveWeightExercise = determineTypeOfExercise(typeOfExercise, WEIGHT_EXERCISE);
 
         if(!typeOfExercise.equals(CARDIO_EXERCISE) && !typeOfExercise.equals(WEIGHT_EXERCISE)){
-            saveCardioExercise = true;
-            saveWeightExercise = true;
+            saveCardioExercise = true; saveWeightExercise = true;
         }
 
-        addCardioExercise(gymSessionForm, logData, saveCardioExercise);
-        addWeightExercise(gymSessionForm, logData, saveWeightExercise);
-
-        logger.info("added gymSessionData [" + logData + "]");
+        addCardioExercise(gymSessionForm, logData, saveCardioExercise, new ArrayList<ExerciseCardio>());
+        addWeightExercise(gymSessionForm, logData, saveWeightExercise, new ArrayList<ExerciseWeight>());
 
         gymDataDao.saveGymLogData(logData);
         logger.info("saved gymSessionData [" + logData + "]");
 
         logger.exit();
-
     }
 
     /**
@@ -79,60 +64,86 @@ public class GymDataInputService {
      * @return gymSessionData
      */
     private GymLogData populateGymLogData(GymSessionForm gymSessionForm, GymUser user) {
-        GymLogData gymSessionData = new GymLogData();
+        logger.entry();
 
+        GymLogData gymSessionData = new GymLogData();
         gymSessionData.setUserId(user.getId());
         gymSessionData.setDate(gymSessionForm.getDate());
         gymSessionData.setDuration(gymSessionForm.getDuration());
         gymSessionData.setUserWeight(gymSessionForm.getUserWeight());
 
         logger.info("built GymLogData[" + gymSessionData.toString() + "]");
+        logger.exit();
 
         return gymSessionData;
     }
 
-    private boolean isWeightExercise(String typeOfExercise) {
-        return (typeOfExercise.equals(WEIGHT_EXERCISE)) ? true : false;
+    /**
+     * determines which type of exercise data has been submitted by the end user
+     *
+     * @param typeOfExercise
+     * @param exercise
+     * @return
+     */
+    private boolean determineTypeOfExercise(String typeOfExercise, String exercise) {
+        return typeOfExercise.equals(exercise);
     }
 
-    private boolean isCardioExercise(String typeOfExercise) {
-        return (typeOfExercise.equals(CARDIO_EXERCISE)) ? true : false;
-    }
+    /**
+     * creates & adds a list of ExerciseCardio to GymLogData if required
+     *
+     * @param gymSessionForm
+     * @param gymSessionData
+     * @param saveToDatabase
+     * @param cardioExercises
+     */
+    private void addCardioExercise(GymSessionForm gymSessionForm, GymLogData gymSessionData, boolean saveToDatabase,
+                                   List<ExerciseCardio> cardioExercises) {
+        logger.entry(gymSessionForm, gymSessionData, saveToDatabase);
 
-    private void addCardioExercise(GymSessionForm gymSessionForm, GymLogData gymSessionData, boolean saveCardioExercise) {
-
-        List<ExerciseCardio> exerciseCardio = new ArrayList<ExerciseCardio>();
-
-        if(saveCardioExercise) {
+        if(saveToDatabase) {
 
             // filter out any blank cardio exercise rows
             for(ExerciseCardio ec : gymSessionForm.getExerciseCardio()) {
                 if(ec.getExercise() != null && !ec.getExercise().isEmpty()) {
-                    exerciseCardio.add(ec);
+                    cardioExercises.add(ec);
                 }
             }
 
             // save cardio exercises
-            gymSessionData.setExerciseCardio(exerciseCardio);
+            logger.info("set [ " + cardioExercises + " ] on gymSessionData");
+            gymSessionData.setExerciseCardio(cardioExercises);
 
         }
+
+        logger.exit();
     }
 
-    private void addWeightExercise(GymSessionForm gymSessionForm, GymLogData gymSessionData, boolean saveWeightExercise) {
+    /**
+     * creates & adds a list of ExerciseWeight to GymLogData if required
+     *
+     * @param gymSessionForm
+     * @param gymSessionData
+     * @param saveToDatabase
+     * @param weightExercises
+     */
+    private void addWeightExercise(GymSessionForm gymSessionForm, GymLogData gymSessionData, boolean saveToDatabase,
+                                   List<ExerciseWeight> weightExercises) {
 
-        List<ExerciseWeight> exerciseWeight = new ArrayList<ExerciseWeight>();
+        logger.entry(gymSessionForm, gymSessionData, saveToDatabase);
 
-        if(saveWeightExercise) {
+        if(saveToDatabase) {
 
             // filter out any blank weight exercise rows
             for(ExerciseWeight ew : gymSessionForm.getExerciseWeight()) {
                 if(ew.getExercise() != null && !ew.getExercise().isEmpty()) {
-                    exerciseWeight.add(ew);
+                    weightExercises.add(ew);
                 }
             }
 
             // save weight exercises
-            gymSessionData.setExerciseWeight(gymSessionForm.getExerciseWeight());
+            logger.info("set [ " + weightExercises + " ] on gymSessionData");
+            gymSessionData.setExerciseWeight(weightExercises);
 
         }
 

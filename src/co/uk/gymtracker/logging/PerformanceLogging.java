@@ -3,8 +3,8 @@ package co.uk.gymtracker.logging;
 import co.uk.gymtracker.dao.AppPerformanceDao;
 import co.uk.gymtracker.model.performance.PerformanceLog;
 import org.perf4j.StopWatch;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +24,8 @@ public class PerformanceLogging {
     private AppPerformanceDao appPerformanceDao;
 
     private static final long ONE_SECOND = 100;
-    private static final Logger logger = LoggerFactory.getLogger(PerformanceLogging.class);
+    private final XLogger logger = XLoggerFactory.getXLogger(PerformanceLogging.class
+            .getName());
 
     /**
      * logs and stores a record in the database if a method takes longer than 1 second to complete it's process
@@ -33,6 +34,7 @@ public class PerformanceLogging {
      * @param watch
      */
     public void isMethodProcessingBelowThreshold(String className, String methodName, StopWatch watch) {
+        logger.entry(className, methodName);
 
         long elapsedTime = watch.getElapsedTime();
 
@@ -53,7 +55,7 @@ public class PerformanceLogging {
         appPerformanceDao.insertPerformanceLog(performanceLog);
 
         logger.info(format("] %s ] -  method performance [ %s ]", methodName, watch.stop()));
-
+        logger.exit();
     }
 
 }

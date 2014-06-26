@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Description Here
+ * Common Controller setup and behavior
  *
  * @author Benjamin O'Flaherty
  * @date Created on: 30/05/14
@@ -40,7 +40,7 @@ public abstract class AbstractGymController {
 
     public abstract ModelAndView executeEntryPage(ModelAndView mav);
 
-    protected GymUser getLoggedInUser() {
+    GymUser getLoggedInUser() {
         SecurityContext ctx = SecurityContextHolder.getContext();
 
         GymUser gymUser =  userDao.findGymUser(ctx.getAuthentication().getName());

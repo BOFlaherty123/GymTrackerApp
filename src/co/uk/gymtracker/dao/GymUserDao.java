@@ -27,9 +27,7 @@ public class GymUserDao extends GymGenericDao {
      * @return
      */
     public GymUser findGymUser(String username) {
-        Query query = new Query(Criteria.where("username").is(username));
-
-        return mongoOperations.findOne(query, GymUser.class);
+        return mongoOperations.findOne(new Query(Criteria.where("username").is(username)), GymUser.class);
     }
 
     public List<GymUser> findAllGymUsers() {
@@ -50,9 +48,8 @@ public class GymUserDao extends GymGenericDao {
 
         logger.entry(gymUser);
 
-        Query query = new Query(Criteria.where("username").is(gymUser.getUsername()));
-
-        GymUser updateUser = mongoOperations.findOne(query, GymUser.class);
+        GymUser updateUser = mongoOperations.findOne(new Query(Criteria.where("username").is(gymUser.getUsername())),
+                GymUser.class);
         updateUser.setFirstName(gymUser.getFirstName());
         updateUser.setLastName(gymUser.getLastName());
         updateUser.setAge(gymUser.getAge());
@@ -92,10 +89,7 @@ public class GymUserDao extends GymGenericDao {
     }
 
     public void deleteUser(String username) {
-
-        Query query = new Query(Criteria.where("username").is(username));
-
-        mongoOperations.remove(query, GymUser.class);
+        mongoOperations.remove(new Query(Criteria.where("username").is(username)), GymUser.class);
     }
 
 }

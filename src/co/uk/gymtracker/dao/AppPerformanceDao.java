@@ -27,27 +27,20 @@ public class AppPerformanceDao extends GymGenericDao {
    }
 
     /**
+     * find all PerformanceLog documents
      *
      * @return
      */
     public List<PerformanceLog> findAllPerformanceLogs() {
-
-        Query query = new Query();
-        query.with(new Sort(Sort.Direction.DESC, "_id"));
-        query.limit(15);
-
-        return mongoOperations.find(query, PerformanceLog.class);
+        return mongoOperations.find(new Query().with(new Sort(Sort.Direction.DESC, "_id")).limit(15), PerformanceLog.class);
     }
 
     /**
+     * find all slow queries within the PerformanceLog mongo document
      *
      * @return
      */
     public List<PerformanceLog> findAllSlowQueries() {
-
-        Query query = new Query();
-        query.addCriteria(Criteria.where("slowQuery").is(true));
-
-        return mongoOperations.find(query, PerformanceLog.class);
+        return mongoOperations.find(new Query().addCriteria(Criteria.where("slowQuery").is(true)), PerformanceLog.class);
     }
 }

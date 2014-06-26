@@ -29,27 +29,27 @@
 
                 var exerciseCardioOptions = {
                     callback: function () {
-                        var rowNo = ($("#table_cardioExercise tr").length -1);
+                        var rowNo = ($("#table_cardioExercise tr").length - 1);
                         $("#table_cardioExercise tr#exerciseCardio_row" + rowNo).show();
                         $("#table_cardioExercise tr#exerciseCardio_row" + rowNo).find('input, select').attr('disabled', false);
                     },
                     wait: 200,
                     highlight: true,
                     captureLength: 1
-                }
+                };
 
                 $("#exerciseCardo_calories0").typeWatch( exerciseCardioOptions );
 
                 var exerciseWeightOptions = {
                     callback: function () {
-                        var rowNo = ($("#table_cardioExercise tr").length -1);
+                        var rowNo = ($("#table_cardioExercise tr").length - 1);
                         $("#table_weightExercise tr#exerciseWeight_row" + rowNo).show();
                         $("#table_weightExercise tr#exerciseWeight_row" + rowNo).find('input, select').attr('disabled', false);
                     },
                     wait: 200,
                     highlight: true,
                     captureLength: 1
-                }
+                };
 
                 $("#exerciseWeight_weightLifted0").typeWatch( exerciseWeightOptions );
 
