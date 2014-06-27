@@ -19,7 +19,7 @@ import static java.lang.String.format;
  * @project GymTrackerApp
  */
 @Component
-public class GymUserDao extends GymGenericDao {
+public class GymUserDao extends GenericDao {
 
     /**
      * find a gymUser object by username
@@ -31,10 +31,20 @@ public class GymUserDao extends GymGenericDao {
         return mongoOperations.findOne(new Query(Criteria.where("username").is(username)), GymUser.class);
     }
 
+    /**
+     * find all GymUser documents
+     *
+     * @return
+     */
     public List<GymUser> findAllGymUsers() {
         return mongoOperations.findAll(GymUser.class);
     }
 
+    /**
+     * save GymUser document
+     *
+     * @param gymUser
+     */
     public void saveGymUser(GymUser gymUser) {
         mongoOperations.insert(gymUser);
     }
@@ -74,6 +84,12 @@ public class GymUserDao extends GymGenericDao {
         logger.exit();
     }
 
+    /**
+     * allows a user to find a GymUser using search criteria
+     *
+     * @param searchCriteria
+     * @return
+     */
     public List<GymUser> findUserByCriteria(GymUserSearch searchCriteria) {
 
         logger.entry(searchCriteria);
@@ -96,6 +112,11 @@ public class GymUserDao extends GymGenericDao {
         return mongoOperations.find(searchQuery, GymUser.class);
     }
 
+    /**
+     * delete a user from the GymUser document
+     *
+     * @param username
+     */
     public void deleteUser(String username) {
         mongoOperations.remove(new Query(Criteria.where("username").is(username)), GymUser.class);
     }

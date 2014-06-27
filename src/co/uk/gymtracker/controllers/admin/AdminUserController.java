@@ -106,6 +106,10 @@ public class AdminUserController extends AbstractGymController {
 
     /**
      *
+     * @param gymUserSearch
+     * @param mav
+     * @param error
+     * @return
      */
     @RequestMapping(value="/user/search")
     public ModelAndView findUserByUsername(@Valid GymUserSearch gymUserSearch, ModelAndView mav, Errors error) {

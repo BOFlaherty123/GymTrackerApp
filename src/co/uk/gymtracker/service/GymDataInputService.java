@@ -27,10 +27,23 @@ public class GymDataInputService extends AbstractGymService {
         return gymDataDao.findAllUserGymData(user.getId());
     }
 
+    /**
+     * retrieves GymLogData for a given GymUser object
+     *
+     * @param user
+     * @param activity
+     * @return
+     */
     public List<GymLogData> retrieveGymUserDataByActivity(GymUser user, String activity) {
         return gymDataDao.findGymUserDataByActivity(user, activity);
     }
 
+    /**
+     * builds and saves an instance of GymLogData to the database
+     *
+     * @param user
+     * @param gymSessionForm
+     */
     public void buildAndSaveGymLogData(GymUser user, GymSessionForm gymSessionForm) {
         logger.entry();
 

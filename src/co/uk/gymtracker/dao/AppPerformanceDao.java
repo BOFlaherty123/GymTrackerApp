@@ -21,7 +21,7 @@ import java.util.Set;
  * @project GymTrackerApp
  */
 @Component
-public class AppPerformanceDao extends GymGenericDao {
+public class AppPerformanceDao extends GenericDao {
 
    public void insertPerformanceLog(PerformanceLog performanceLog) {
 

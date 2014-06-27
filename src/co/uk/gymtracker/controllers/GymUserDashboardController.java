@@ -73,6 +73,13 @@ public class GymUserDashboardController extends AbstractGymController {
         return mav;
     }
 
+    /**
+     * updates a GymUser document from end-user data submission
+     *
+     * @param gymUser
+     * @param errors
+     * @return
+     */
     @RequestMapping(value="/updateUser", method = RequestMethod.POST)
     public ModelAndView updateUser(@Valid GymUser gymUser, Errors errors) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
@@ -165,6 +172,13 @@ public class GymUserDashboardController extends AbstractGymController {
         return mav;
     }
 
+    /**
+     * calculate the end users target based on the percentage increase input
+     *
+     * @param activity
+     * @param percentage
+     * @return
+     */
     @RequestMapping(value="/calculateTargetByPercentIncrease/{activity}/{percentage}", method = RequestMethod.POST)
     public @ResponseBody Map<String, String> calculateTargetOnPercentageIncrease(@PathVariable("activity") String activity,
                                                                     @PathVariable("percentage") int percentage) {

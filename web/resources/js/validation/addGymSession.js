@@ -9,7 +9,6 @@ function validate() {
         },
         fields: {
             date: {
-                message: 'Date is not valid',
                 validators: {
                     date: {
                         format: 'DD/MM/YYYY',
@@ -18,7 +17,6 @@ function validate() {
                 }
             },
             duration: {
-                message: 'Duration is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Duration is required and cannot be empty'
@@ -26,7 +24,6 @@ function validate() {
                 }
             },
             userWeight: {
-                message: 'UserWeight is not valid',
                 validators: {
                     notEmpty: {
                         message: 'UserWeight is required and cannot be empty'
@@ -34,7 +31,6 @@ function validate() {
                 }
             },
             'exerciseCardio[0].exercise': {
-                message: 'Cardio Exercise is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Cardio Exercise is required and cannot be empty'
@@ -42,7 +38,6 @@ function validate() {
                 }
             },
             'exerciseCardio[0].duration': {
-                message: 'Cardio Duration is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Cardio Duration is required and cannot be empty'
@@ -50,7 +45,6 @@ function validate() {
                 }
             },
             'exerciseCardio[0].distance': {
-                message: 'Cardio Distance is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Cardio Distance is required and cannot be empty'
@@ -61,7 +55,6 @@ function validate() {
                 }
             },
             'exerciseCardio[0].level': {
-                message: 'Cardio Level is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Level is required and cannot be empty'
@@ -77,13 +70,39 @@ function validate() {
                 }
             },
             'exerciseCardio[0].calories': {
-                message: 'Cardio Calories is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Cardio Calories is required and cannot be empty'
                     },
                     digits: {
                         message: 'Cardio Calories must only contain numerical values'
+                    }
+                }
+            },
+            'exerciseWeight[0].exercise': {
+                validators: {
+                    notEmpty: {
+                        message: 'Weight Exercise is required and cannot be empty'
+                    }
+                }
+            },
+            'exerciseWeight[0].reps': {
+                validators: {
+                    notEmpty: {
+                        message: 'Weight Reps is required and cannot be empty'
+                    },
+                    digits: {
+                        message: 'Weight Reps must only contain numerical values'
+                    }
+                }
+            },
+            'exerciseWeight[0].weightLifted': {
+                validators: {
+                    notEmpty: {
+                        message: 'Weight Lifted is required and cannot be empty'
+                    },
+                    digits: {
+                        message: 'Weight Lifted must only contain numerical values'
                     }
                 }
             }

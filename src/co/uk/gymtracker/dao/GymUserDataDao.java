@@ -18,12 +18,23 @@ import java.util.List;
  * @project GymTrackerApp
  */
 @Component
-public class GymUserDataDao extends GymGenericDao {
+public class GymUserDataDao extends GenericDao {
 
+    /**
+     * finds all GymLogData for a user
+     *
+     * @param userId
+     * @return
+     */
     public List<GymLogData> findAllUserGymData(String userId) {
         return mongoOperations.find(new Query(Criteria.where("userId").is(userId)), GymLogData.class);
     }
 
+    /**
+     * saves GymLogData to the database table
+     *
+     * @param gymLogData
+     */
     public void saveGymLogData(GymLogData gymLogData) {
         mongoOperations.save(gymLogData);
     }

@@ -15,16 +15,32 @@ import java.util.List;
  * @project GymTrackerApp
  */
 @Component
-public class AuditTrailDao extends GymGenericDao {
+public class AuditTrailDao extends GenericDao {
 
+    /**
+     * find all audit record documents
+     *
+     * @return
+     */
     public List<Audit> findAllAuditRecords() {
         return mongoOperations.findAll(Audit.class);
     }
 
+    /**
+     * find audit records that are associated with a GymUser
+     *
+     * @param userId
+     * @return
+     */
     public List<Audit> findAllAuditRecordsByUserId(String userId) {
         return mongoOperations.find(new Query(Criteria.where("userId").is(userId)), Audit.class);
     }
 
+    /**
+     * save an Audit record by GymUser
+     *
+     * @param audit
+     */
     public void saveAuditRecordByUsername(Audit audit) {
         mongoOperations.save(audit);
     }
