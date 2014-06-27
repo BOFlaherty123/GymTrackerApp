@@ -42,7 +42,6 @@ public class CalculateUserTargets {
 
         List<ActivityAverage> averages = gymuser.getActivityAverages();
 
-
         for(ActivityAverage average : averages) {
 
             if(average.getActivity().equals(activity)) {

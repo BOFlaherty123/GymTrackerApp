@@ -9,12 +9,14 @@ import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -187,15 +189,4 @@ public class GymUserDashboardController extends AbstractGymController {
         return testingMap;
     }
 
-    @ModelAttribute("activity")
-    public List<String> listActivities() {
-
-        List<String> activity = new ArrayList<String>();
-        activity.add("");
-        activity.add("Running");
-        activity.add("Cycling");
-        activity.add("Rowing");
-
-        return activity;
-    }
 }

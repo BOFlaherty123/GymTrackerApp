@@ -1,6 +1,7 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.dao.GymUserDao;
+import co.uk.gymtracker.exceptions.GymUserNotFoundException;
 import co.uk.gymtracker.logging.PerformanceLogging;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.service.GymDataInputService;
@@ -47,6 +48,8 @@ public abstract class AbstractGymController {
 
         if(gymUser != null) {
             logger.info("gymUser found [" + gymUser.getUsername() + "]");
+        } else {
+            throw new GymUserNotFoundException("User[ " + gymUser.getUsername() + " ] not found.");
         }
 
         return gymUser;
@@ -92,5 +95,18 @@ public abstract class AbstractGymController {
         userRoles.add("ROLE_DENIED");
 
         return userRoles;
+    }
+
+    // TODO Change ModelAttributes name and refact the UserDashboard class
+    @ModelAttribute("activity")
+    public List<String> listActivities2() {
+
+        List<String> activity = new ArrayList<String>();
+        activity.add("");
+        activity.add("Running");
+        activity.add("Cycling");
+        activity.add("Rowing");
+
+        return activity;
     }
 }

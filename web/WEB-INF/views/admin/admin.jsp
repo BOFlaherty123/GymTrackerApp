@@ -53,9 +53,50 @@
 
             <div class="tab-pane active application_stats" id="appStats">
 
-                Number Of Users: ${numberOfUsers}
-                <br/>
-                - App Stats Number of Users Registered / Number of Gym Sessions Recorded
+                <fieldset>
+                    <legend>Database Details</legend>
+
+                    <table class="table table-condensed">
+                        <tr>
+                            <th>Name</th>
+                            <th>Server</th>
+                            <th>Size (kb)</th>
+                            <th>Collections</th>
+                            <th>Objects</th>
+                            <th>Avg. Object Size (kb)</th>
+                        </tr>
+                        <tr>
+                            <td><c:out value="${database.name}"/></td>
+                            <td><c:out value="${database.server}"/></td>
+                            <td><c:out value="${database.size}"/></td>
+                            <td><c:out value="${database.numOfCollections}"/></td>
+                            <td><c:out value="${database.numbOfObjects}"/></td>
+                            <td><c:out value="${database.avgObjSize}"/></td>
+                        </tr>
+                        <tr>
+                            <th>Collection name</th>
+                            <th>Number of Documents</th>
+                            <th>Size (kb)</th>
+                            <th>Avg Object Size (kb)</th>
+                        </tr>
+                        <c:forEach var="dbCollection" items="${database.collections}">
+                            <tr>
+                                <td><c:out value="${dbCollection.name}"/></td>
+                                <td><c:out value="${dbCollection.numberOfDocuments}"/></td>
+                                <td><c:out value="${dbCollection.size}"/></td>
+                                <td><c:out value="${dbCollection.avgObjectSize}"/></td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>Database User Statistics</legend>
+
+                    <b>Number Of Users:</b> <c:out value="${numberOfUsers}"/><br/>
+
+                </fieldset>
 
             </div>
 
@@ -73,7 +114,6 @@
                                 </div>
                             </div>
                         </form>
-
                         <div class="col-md-2">
                             <div class="form-group">
                                 <form:select path="methodName" class="form-control">
@@ -86,7 +126,7 @@
 
                 </fieldset>
 
-                <table class="table table-hover">
+                <table class="table table-striped table-condensed content_font_small">
                     <tr>
                         <th>Class Name</th>
                         <th>Method Name</th>

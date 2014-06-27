@@ -5,7 +5,7 @@ import co.uk.gymtracker.model.ExerciseCardio;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.dashboard.ActivityAverage;
-import co.uk.gymtracker.service.GymUserService;
+import co.uk.gymtracker.service.GymUserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +32,7 @@ public class CalculateActivityAverages  {
     private static final String ZERO_VALUE = "0";
 
     @Autowired
-    public GymUserService userService;
+    public GymUserLoginService userService;
 
     @Autowired
     public GymUserDataDao gymDataDao;

@@ -1,5 +1,6 @@
 package co.uk.gymtracker.dao;
 
+import co.uk.gymtracker.exceptions.GymUserNotFoundException;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.form.GymUserSearch;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -50,18 +51,25 @@ public class GymUserDao extends GymGenericDao {
 
         GymUser updateUser = mongoOperations.findOne(new Query(Criteria.where("username").is(gymUser.getUsername())),
                 GymUser.class);
-        updateUser.setFirstName(gymUser.getFirstName());
-        updateUser.setLastName(gymUser.getLastName());
-        updateUser.setAge(gymUser.getAge());
-        updateUser.setEmail(gymUser.getEmail());
-        updateUser.setPassword(gymUser.getPassword());
 
-        if(gymUser.getActivityAverages() != null) {
-            updateUser.setActivityAverages(gymUser.getActivityAverages());
+        if(updateUser != null) {
+
+            updateUser.setFirstName(gymUser.getFirstName());
+            updateUser.setLastName(gymUser.getLastName());
+            updateUser.setAge(gymUser.getAge());
+            updateUser.setEmail(gymUser.getEmail());
+            updateUser.setPassword(gymUser.getPassword());
+
+            if(gymUser.getActivityAverages() != null) {
+                updateUser.setActivityAverages(gymUser.getActivityAverages());
+            }
+
+            mongoOperations.save(updateUser);
+            logger.info(format("%s - updated gymUser %s", methodName, updateUser.toString()));
+
+        } else {
+            throw new GymUserNotFoundException("User[ " + gymUser.getUsername() + " ] not found.");
         }
-
-        mongoOperations.save(updateUser);
-        logger.info(format("%s - updated gymUser %s", methodName, updateUser.toString()));
 
         logger.exit();
     }

@@ -2,6 +2,7 @@ package co.uk.gymtracker.logging;
 
 import co.uk.gymtracker.dao.AuditTrailDao;
 import co.uk.gymtracker.dao.GymUserDao;
+import co.uk.gymtracker.exceptions.GymUserNotFoundException;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.audit.Audit;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -37,14 +38,20 @@ public class AuditTrailAspect {
         SecurityContext ctx = SecurityContextHolder.getContext();
         GymUser gymUser =  dao.findGymUser(ctx.getAuthentication().getName());
 
-        String className = joinPoint.getStaticPart().getSignature().getDeclaringType().getName();
-        String methodName = joinPoint.getSignature().getName();
-        String arguments = Arrays.toString(joinPoint.getArgs());
+        if(gymUser != null) {
 
-        Audit audit = new Audit(new Date().toString(), className, methodName, gymUser.getId(),
-                gymUser.getUsername(), arguments);
+            String className = joinPoint.getStaticPart().getSignature().getDeclaringType().getName();
+            String methodName = joinPoint.getSignature().getName();
+            String arguments = Arrays.toString(joinPoint.getArgs());
 
-        auditDao.saveAuditRecordByUsername(audit);
+            Audit audit = new Audit(new Date().toString(), className, methodName, gymUser.getId(),
+                    gymUser.getUsername(), arguments);
+
+            auditDao.saveAuditRecordByUsername(audit);
+
+        } else {
+            throw new GymUserNotFoundException("User[ " + gymUser.getUsername() + " ] not found.");
+        }
 
         return joinPoint.proceed();
     }

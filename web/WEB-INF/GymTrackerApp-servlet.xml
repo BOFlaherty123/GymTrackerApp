@@ -41,8 +41,6 @@
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
 
-    <bean name="userDetailService" class="co.uk.gymtracker.service.GymUserService" />
-
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <property name="basename" value="/WEB-INF/messages"/>
     </bean>

@@ -231,6 +231,7 @@
 
                 <div id="percentage_slider"></div>
 
+                <!-- TODO rename the $activity attribute to match the ModelAttribute value in the AbstractController -->
                 <div class="activityDropdownDiv">
                     <form:select path="activity" id="targetActivity" items="${activity}" class="form-control"/>
                 </div>

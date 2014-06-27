@@ -48,6 +48,8 @@ public class AdminDashboardController extends AbstractGymController {
     private void displayAppStatistics(ModelAndView mav) {
         logger.entry(mav);
 
+        // display database statistics
+        mav.addObject(appPerformanceDao.retrieveDatabaseInformation());
         mav.addObject("numberOfUsers", userDao.findAllGymUsers().size());
 
         logger.exit();
@@ -73,6 +75,5 @@ public class AdminDashboardController extends AbstractGymController {
     public void displaySlowQueries() {
         appPerformanceDao.findAllSlowQueries();
     }
-
 
 }

@@ -1,5 +1,6 @@
 package co.uk.gymtracker.controllers;
 
+import co.uk.gymtracker.exceptions.AppRunTimeException;
 import co.uk.gymtracker.model.GymLogData;
 import co.uk.gymtracker.model.GymUser;
 import co.uk.gymtracker.model.form.GymLogSearch;
@@ -50,6 +51,8 @@ public class GymUserLogController extends AbstractGymController {
             // spring Convention Over Configuration Example (List is called within the jsp via gymLogDataList)
             mav.addObject(gymRecords);
             logger.info(format("[ %s ] - [ %s ] gym records added to the model.", methodName, gymRecords.size()));
+        } else {
+            throw new AppRunTimeException(".retrieveGymUser() has returned a null GymUser object");
         }
 
         mav.addObject(new GymLogSearch());
