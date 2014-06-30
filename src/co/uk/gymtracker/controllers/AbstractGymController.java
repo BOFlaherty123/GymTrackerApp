@@ -66,7 +66,7 @@ public abstract class AbstractGymController {
     @ModelAttribute("exercises")
     public List<String> listActivities() {
 
-        List<String> activity = new ArrayList<String>();
+        List<String> activity = new ArrayList<>();
         activity.add("Running");
         activity.add("Cycling");
         activity.add("Rowing");
@@ -77,7 +77,7 @@ public abstract class AbstractGymController {
     @ModelAttribute("activityDuration")
     public List<String> listActivityDuration() {
 
-        List<String> activityDuration = new ArrayList<String>();
+        List<String> activityDuration = new ArrayList<>();
         activityDuration.add("");
         activityDuration.add("15");
         activityDuration.add("30");
@@ -89,7 +89,7 @@ public abstract class AbstractGymController {
 
     @ModelAttribute("userRoles")
     public List<String> availableUserRoles() {
-        List<String> userRoles = new ArrayList<String>();
+        List<String> userRoles = new ArrayList<>();
         userRoles.add("ROLE_USER");
         userRoles.add("ROLE_ADMIN");
         userRoles.add("ROLE_DENIED");
@@ -101,7 +101,7 @@ public abstract class AbstractGymController {
     @ModelAttribute("activity")
     public List<String> listActivities2() {
 
-        List<String> activity = new ArrayList<String>();
+        List<String> activity = new ArrayList<>();
         activity.add("");
         activity.add("Running");
         activity.add("Cycling");

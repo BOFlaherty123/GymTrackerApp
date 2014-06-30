@@ -9,7 +9,7 @@ package co.uk.gymtracker.model;
  */
 public class ExerciseWeight {
 
-    private String exercise;
+    public String exercise;
     private String reps;
     private String weightLifted;
 

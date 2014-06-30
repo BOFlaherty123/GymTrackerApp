@@ -67,7 +67,7 @@ public class AppPerformanceDao extends GenericDao {
 
         Set<String> dbCollectionNames =  mongoOperations.getCollection("gymUser").getDB().getCollectionNames();
 
-        List<Collection> dbCollections = new ArrayList<Collection>();
+        List<Collection> dbCollections = new ArrayList<>();
 
         for(String collectionName : dbCollectionNames) {
 

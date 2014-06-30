@@ -46,19 +46,24 @@ public class GymUserDataDao extends GenericDao {
 
         List<GymLogData> gymDataByUser = findAllUserGymData(gymUser.getId());
 
-        List<GymLogData> allGymSessions = new ArrayList<GymLogData>();
-        List<GymLogData> gymSessionsForUser = new ArrayList<GymLogData>();
+        List<GymLogData> allGymSessions = new ArrayList<>();
+        List<GymLogData> gymSessionsForUser = new ArrayList<>();
 
         for(GymLogData gld : gymDataByUser) {
 
-            for(ExerciseCardio cardioExercise : gld.getExerciseCardio())  {
+            // TODO - needs a complete refactor to run through ExerciseCardio and ExerciseWeight
+            if(gld.getExerciseCardio() != null) {
 
-                if(cardioExercise.getExercise().equals(activity)) {
-                    gymSessionsForUser.add(gld);
-                    logger.info("added [" + gld.toString() + "] to gymSessionByActivity collection.");
-                } else if (activity.equals("ALL")) {
-                    allGymSessions.add(gld);
-                    logger.info("added [" + gld.toString() + "] to allGymSessions collection.");
+                for(ExerciseCardio cardioExercise : gld.getExerciseCardio())  {
+
+                    if(cardioExercise.getExercise().equals(activity)) {
+                        gymSessionsForUser.add(gld);
+                        logger.info("added [" + gld.toString() + "] to gymSessionByActivity collection.");
+                    } else if (activity.equals("ALL")) {
+                        allGymSessions.add(gld);
+                        logger.info("added [" + gld.toString() + "] to allGymSessions collection.");
+                    }
+
                 }
 
             }

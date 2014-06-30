@@ -1761,7 +1761,7 @@
 
         /**
          * Validate an International Bank Account Number (IBAN)
-         * To test it, take the sample IBAN from
+         * To processUserTargetIncreases it, take the sample IBAN from
          * http://www.nordea.com/Our+services/International+products+and+services/Cash+Management/IBAN+countries/908462.html
          *
          * @param {BootstrapValidator} validator The validator plugin instance
@@ -3565,7 +3565,7 @@
             // the regular expression composed & commented
             // could be easily tweaked for RFC compliance,
             // it was expressly modified to fit & satisfy
-            // these test for an URL shortener:
+            // these processUserTargetIncreases for an URL shortener:
             //
             //   http://mathiasbynens.be/demo/url-regex
             //

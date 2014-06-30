@@ -13,12 +13,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Audit {
 
     private String id;
-    private String date;
-    private String className;
-    private String methodName;
-    private String userId;
-    private String username;
-    private String arguments;
+    private final String date;
+    private final String className;
+    private final String methodName;
+    private final String userId;
+    private final String username;
+    private final String arguments;
 
     public Audit(String date, String className, String methodName, String userId, String username, String arguments) {
         this.date = date;

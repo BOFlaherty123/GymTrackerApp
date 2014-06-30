@@ -105,14 +105,14 @@
     <body>
 
         <!-- average distance hidden fields -->
-        <input type="hidden" name="running_avg_distance" id="running_avg_distance" value="${running_avg_distance}">
-        <input type="hidden" name="cycling_avg_distance" id="cycling_avg_distance" value="${cycling_avg_distance}">
-        <input type="hidden" name="rowing_avg_distance" id="rowing_avg_distance" value="${rowing_avg_distance}">
+        <input type="hidden" name="running_avg_distance" id="running_avg_distance" value="${avgDistances.running_avg_distance}">
+        <input type="hidden" name="cycling_avg_distance" id="cycling_avg_distance" value="${avgDistances.cycling_avg_distance}">
+        <input type="hidden" name="rowing_avg_distance" id="rowing_avg_distance" value="${avgDistances.rowing_avg_distance}">
 
         <!-- cardioExercise duration percentage -->
-        <input type="hidden" name="running_duration_percent" id="running_duration_percent" value="${running_duration_percent}">
-        <input type="hidden" name="cycling_duration_percent" id="cycling_duration_percent" value="${cycling_duration_percent}">
-        <input type="hidden" name="rowing_duration_percent" id="rowing_duration_percent" value="${rowing_duration_percent}">
+        <input type="hidden" name="running_duration_percent" id="running_duration_percent" value="${avgPercents.running_duration_percent}">
+        <input type="hidden" name="cycling_duration_percent" id="cycling_duration_percent" value="${avgPercents.cycling_duration_percent}">
+        <input type="hidden" name="rowing_duration_percent" id="rowing_duration_percent" value="${avgPercents.rowing_duration_percent}">
 
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">

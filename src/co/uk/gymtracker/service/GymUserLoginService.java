@@ -35,10 +35,8 @@ public class GymUserLoginService extends AbstractGymService implements UserDetai
         Collection<? extends GrantedAuthority> authorities;
 
         if(gymUser.getRole().equals("ROLE_USER")) {
-            System.out.println("has ROLE_USER");
             authorities = AuthorityUtils.createAuthorityList("ROLE_USER");
         } else {
-            System.out.println("has ROLE_DENIED");
             authorities = AuthorityUtils.createAuthorityList("ROLE_DENIED");
         }
 

@@ -46,7 +46,7 @@ public class CalculateActivityAverages  {
     @RequestMapping(value="/calculateActivityDurationAverages", method = RequestMethod.GET)
     public List<ActivityAverage> calculateActivityAverages(GymUser gymUser) {
 
-        List<ActivityAverage> activityAverages = new ArrayList<ActivityAverage>();
+        List<ActivityAverage> activityAverages = new ArrayList<>();
 
         // TODO - Store list of Activities in the database
         List<String> gymActivities = buildActivityList();
@@ -210,7 +210,7 @@ public class CalculateActivityAverages  {
     }
 
     private List<String> buildActivityList() {
-        List<String> gymActivities = new ArrayList<String>();
+        List<String> gymActivities = new ArrayList<>();
         gymActivities.add("Running");
         gymActivities.add("Cycling");
         gymActivities.add("Rowing");
