@@ -26,7 +26,7 @@
 
         <script>
             $(function() {
-                $("#toDate, #fromDate").datepicker();
+                $("#toDate, #fromDate").datepicker({ dateFormat: 'dd/mm/yy' });
             });
         </script>
 
@@ -135,7 +135,7 @@
 
                         <tr class="active">
                             <th>Exercise</th>
-                            <th>Activity Duration</th>
+                            <th>Activity Duration (mins)</th>
                             <th>Distance</th>
                             <th>Level/Weight</th>
                             <th>Calories</th>

@@ -49,7 +49,7 @@ public abstract class AbstractGymController {
         if(gymUser != null) {
             logger.info("gymUser found [" + gymUser.getUsername() + "]");
         } else {
-            throw new GymUserNotFoundException("User[ " + gymUser.getUsername() + " ] not found.");
+            throw new GymUserNotFoundException("User[ " + (gymUser != null ? gymUser.getUsername() : null) + " ] not found.");
         }
 
         return gymUser;

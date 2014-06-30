@@ -3,7 +3,7 @@
  */
 function setupAddGymSessionPage() {
 
-    $("#date").datepicker();
+    $("#date").datepicker({ dateFormat: 'dd/mm/yy' });
     $('#activityCardio').hide();
     $('#activityWeights').hide();
 

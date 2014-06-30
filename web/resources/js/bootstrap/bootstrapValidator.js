@@ -664,7 +664,6 @@
                 case this.STATUS_VALIDATING:
                     this.disableSubmitButtons(true);
                     $parent.removeClass('has-success').removeClass('has-error');
-                    // TODO: Show validating message
                     validatorName ? $errors.filter('.help-block[data-bv-validator="' + validatorName + '"]').hide() : $errors.hide();
                     if ($icon) {
                         $icon.removeClass(this.options.feedbackIcons.valid).removeClass(this.options.feedbackIcons.invalid).addClass(this.options.feedbackIcons.validating).show();

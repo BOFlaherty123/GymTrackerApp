@@ -50,7 +50,7 @@ public class AuditTrailAspect {
             auditDao.saveAuditRecordByUsername(audit);
 
         } else {
-            throw new GymUserNotFoundException("User[ " + gymUser.getUsername() + " ] not found.");
+            throw new GymUserNotFoundException("User[ " + (gymUser != null ? gymUser.getUsername() : null) + " ] not found.");
         }
 
         return joinPoint.proceed();

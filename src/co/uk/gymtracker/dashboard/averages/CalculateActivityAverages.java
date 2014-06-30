@@ -52,14 +52,12 @@ public class CalculateActivityAverages  {
         List<String> gymActivities = buildActivityList();
 
         for(String activity : gymActivities) {
-
             // retrieve gym session data for
             List<GymLogData> userSessionData = gymDataDao.findGymUserDataByActivity(gymUser, activity);
 
             if(!userSessionData.isEmpty()) {
                 activityAverages.add(calculateAverages(userSessionData, activity));
             }
-
         }
 
         // add result(s) to ActivityAverages List and return to the Controller
@@ -75,53 +73,47 @@ public class CalculateActivityAverages  {
      */
     private ActivityAverage calculateAverages(List<GymLogData> activitySessionData, String activity) {
 
-        BigDecimal totalDistance = new BigDecimal(ZERO_VALUE);
-        BigDecimal totalDuration = new BigDecimal(ZERO_VALUE);
+        BigDecimal totalDistance = new BigDecimal(ZERO_VALUE);  BigDecimal totalDuration = new BigDecimal(ZERO_VALUE);
 
         // calculate total distance
         for(GymLogData gymLogData : activitySessionData)  {
 
             for(ExerciseCardio cardioExercise : gymLogData.getExerciseCardio()) {
-                totalDistance = addDistanceToTotal(totalDistance, cardioExercise.getDistance());
-                totalDuration = addDurationToTotal(totalDuration, cardioExercise.getDuration());
+                totalDistance = addValue(totalDistance, cardioExercise.getDistance());
+                totalDuration = addValue(totalDuration, cardioExercise.getDuration());
             }
 
         }
 
+        // retrieve the total number of sessions for the activity
         BigDecimal totalSessions = parseNumberOfGymSessions(activitySessionData.size());
 
         // calculate Averages
-        BigDecimal averageDistance = totalDistance.divide(totalSessions, RoundingMode.HALF_UP);
-        BigDecimal averageDuration = totalDuration.divide(totalSessions, RoundingMode.HALF_UP);
+        BigDecimal averageDistance = calculateAverage(totalDistance, totalSessions);
+        BigDecimal averageDuration = calculateAverage(totalDuration, totalSessions);
 
         // create a map containing the activity totals for use with further calculations
-        Map<String,String> activityTotals = new HashMap<String,String>();
+        Map<String,String> activityTotals = new HashMap<>();
         activityTotals.put("distance", String.valueOf(totalDistance));
         activityTotals.put("duration", String.valueOf(totalDuration));
 
         return buildActivityAverage(activity, String.valueOf(totalSessions), averageDistance, averageDuration, activityTotals);
     }
 
-    /**
-     * Calculates the total distance travelled per activity by the user
-     *
-     * @param totalDistance
-     * @param distance
-     * @return
-     */
-    private BigDecimal addDistanceToTotal(BigDecimal totalDistance, String distance) {
-        return totalDistance.add(new BigDecimal(distance));
+
+    private BigDecimal addValue(BigDecimal total, String value) {
+        return total.add(new BigDecimal(value));
     }
 
     /**
-     * Calculates the total duration completed per activity by the user
+     * calculate the total average by dividing by the total number of activity sessions
      *
-     * @param totalDuration
-     * @param duration
+     * @param total
+     * @param totalSessions
      * @return
      */
-    private BigDecimal addDurationToTotal(BigDecimal totalDuration, String duration) {
-        return totalDuration.add(new BigDecimal(duration));
+    private BigDecimal calculateAverage(BigDecimal total, BigDecimal totalSessions) {
+        return total.divide(totalSessions, RoundingMode.HALF_UP);
     }
 
     /**
@@ -151,7 +143,6 @@ public class CalculateActivityAverages  {
                 String.valueOf(averageDuration), activityTotals);
     }
 
-
     /**
      *
      * @param gymUser
@@ -159,7 +150,7 @@ public class CalculateActivityAverages  {
      */
     public Map<String, BigDecimal> calculateAvgDurationPercentages(GymUser gymUser) {
 
-        Map<String, BigDecimal> durations = new HashMap<String, BigDecimal>();
+        Map<String, BigDecimal> durations = new HashMap<>();
 
         List<ActivityAverage> averages = calculateActivityAverages(gymUser);
         for(ActivityAverage avg : averages) {

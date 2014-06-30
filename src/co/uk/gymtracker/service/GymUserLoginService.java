@@ -29,7 +29,7 @@ public class GymUserLoginService extends AbstractGymService implements UserDetai
         GymUser gymUser = dao.findGymUser(username);
 
         if(gymUser == null) {
-            throw new GymUserNotFoundException("User[ " + gymUser.getUsername() + " ] not found.");
+            throw new GymUserNotFoundException("User[ " + (gymUser != null ? gymUser.getUsername() : null) + " ] not found.");
         }
 
         Collection<? extends GrantedAuthority> authorities;

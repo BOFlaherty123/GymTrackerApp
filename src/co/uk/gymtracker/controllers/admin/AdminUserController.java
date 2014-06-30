@@ -82,7 +82,6 @@ public class AdminUserController extends AbstractGymController {
         return mav;
     }
 
-
     /**
      * Display a list of users to modify
      *
