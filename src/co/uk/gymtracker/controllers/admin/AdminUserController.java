@@ -2,6 +2,7 @@ package co.uk.gymtracker.controllers.admin;
 
 import co.uk.gymtracker.controllers.AbstractGymController;
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.audit.Audit;
 import co.uk.gymtracker.model.form.GymUserSearch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
@@ -36,12 +37,8 @@ public class AdminUserController extends AbstractGymController {
     @RequestMapping(value="/createUser", method = RequestMethod.GET)
     public ModelAndView executeEntryPage(ModelAndView mav) {
 
-        logger.entry();
-
         mav.setViewName("admin/createUser");
         mav.addObject(new GymUser());
-
-        logger.exit();
 
         return mav;
     }
@@ -57,11 +54,11 @@ public class AdminUserController extends AbstractGymController {
     public ModelAndView createNewUser(@Valid GymUser gymUser, Errors errors) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-        logger.entry(gymUser);
-
         Slf4JStopWatch stopWatch = createStopWatchInstance();
 
         ModelAndView mav = new ModelAndView();
+
+        Audit auditRecord = createAudit(this.getClass().getName(), methodName, getLoggedInUser(), gymUser.toString());
 
         if(errors.hasErrors()) {
             mav.setViewName("admin/createUser");
@@ -74,10 +71,12 @@ public class AdminUserController extends AbstractGymController {
 
         mav.setViewName("redirect:/admin/dashboard");
 
+        // save audit record to db
+        auditRecord.setTimeElapsed(String.valueOf(stopWatch.getElapsedTime()));
+        auditDao.saveAuditRecordByUsername(auditRecord);
+
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
-
-        logger.exit();
 
         return mav;
     }
@@ -90,15 +89,11 @@ public class AdminUserController extends AbstractGymController {
     @RequestMapping(value="/editUser")
     public ModelAndView editUser() {
 
-        logger.entry();
-
         ModelAndView mav = new ModelAndView("admin/editUser");
         mav.addObject(new GymUserSearch());
 
         List<GymUser> gymUsers = userDao.findAllGymUsers();
         mav.addObject(gymUsers);
-
-        logger.exit();
 
         return mav;
     }
@@ -113,8 +108,6 @@ public class AdminUserController extends AbstractGymController {
     @RequestMapping(value="/user/search")
     public ModelAndView findUserByUsername(@Valid GymUserSearch gymUserSearch, ModelAndView mav, Errors error) {
 
-        logger.entry(gymUserSearch);
-
         mav.setViewName("admin/editUser");
 
         if(error.hasErrors()) {
@@ -125,8 +118,6 @@ public class AdminUserController extends AbstractGymController {
 
             logger.info(format("searchUsers returned [" + searchUsers + "]"));
         }
-
-        logger.exit();
 
         return mav;
     }
@@ -140,8 +131,6 @@ public class AdminUserController extends AbstractGymController {
     @RequestMapping(value="/deleteUser/{username}")
     public ModelAndView deleteUser(@PathVariable("username") String username) {
 
-        logger.entry(username);
-
         ModelAndView mav = new ModelAndView("redirect:/admin/editUser");
 
         // delete the user by id
@@ -149,8 +138,6 @@ public class AdminUserController extends AbstractGymController {
 
         // retrieve all active users
         mav.addObject(userDao.findAllGymUsers());
-
-        logger.exit();
 
         return mav;
     }

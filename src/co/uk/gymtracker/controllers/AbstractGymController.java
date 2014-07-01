@@ -1,10 +1,13 @@
 package co.uk.gymtracker.controllers;
 
+import co.uk.gymtracker.dao.AuditTrailDao;
 import co.uk.gymtracker.dao.GymUserDao;
 import co.uk.gymtracker.exceptions.GymUserNotFoundException;
 import co.uk.gymtracker.logging.PerformanceLogging;
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.audit.Audit;
 import co.uk.gymtracker.service.GymDataInputService;
+import org.joda.time.DateTime;
 import org.perf4j.StopWatch;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.slf4j.ext.XLogger;
@@ -28,20 +31,23 @@ import java.util.List;
 public abstract class AbstractGymController {
 
     @Autowired
-    public GymUserDao userDao;
+    protected GymUserDao userDao;
 
     @Autowired
-    public GymDataInputService gymDataInputService;
+    protected GymDataInputService gymDataInputService;
 
     @Autowired
-    public PerformanceLogging performanceLogging;
+    protected PerformanceLogging performanceLogging;
+
+    @Autowired
+    protected AuditTrailDao auditDao;
 
     protected final XLogger logger = XLoggerFactory.getXLogger(AbstractGymController.class
             .getName());
 
     public abstract ModelAndView executeEntryPage(ModelAndView mav);
 
-    GymUser getLoggedInUser() {
+    protected GymUser getLoggedInUser() {
         SecurityContext ctx = SecurityContextHolder.getContext();
 
         GymUser gymUser =  userDao.findGymUser(ctx.getAuthentication().getName());
@@ -61,6 +67,21 @@ public abstract class AbstractGymController {
 
     protected void runPerformanceLogging(String className, String methodName, StopWatch watch) {
         performanceLogging.isMethodProcessingBelowThreshold(className, methodName, watch);
+    }
+
+    protected Audit createAudit(String className, String methodName, GymUser user, String arguments) {
+
+        Audit auditRecord = new Audit();
+
+        auditRecord.setDate(new DateTime().toString("dd/MM/yy"));
+        auditRecord.setTime(new DateTime().toString("H:m:s"));
+        auditRecord.setClassName(className);
+        auditRecord.setMethodName(methodName);
+        auditRecord.setUserId(user.getId());
+        auditRecord.setUsername(user.getUsername());
+        auditRecord.setArguments(arguments);
+
+        return auditRecord;
     }
 
     @ModelAttribute("exercises")

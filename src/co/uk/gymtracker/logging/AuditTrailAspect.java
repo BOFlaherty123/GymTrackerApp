@@ -1,20 +1,15 @@
 package co.uk.gymtracker.logging;
 
-import co.uk.gymtracker.dao.AuditTrailDao;
-import co.uk.gymtracker.dao.GymUserDao;
-import co.uk.gymtracker.exceptions.GymUserNotFoundException;
-import co.uk.gymtracker.model.GymUser;
-import co.uk.gymtracker.model.audit.Audit;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
+import org.aspectj.lang.annotation.Before;
+import org.slf4j.ext.XLogger;
+import org.slf4j.ext.XLoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Description Here
@@ -27,33 +22,38 @@ import java.util.Date;
 @Component
 public class AuditTrailAspect {
 
-    @Autowired
-    protected GymUserDao dao;
-    @Autowired
-    protected AuditTrailDao auditDao;
+    private final XLogger logger = XLoggerFactory.getXLogger(AuditTrailAspect.class
+            .getName());
 
-    @Around("within(co.uk.gymtracker.controllers.*)")
-    public Object generateAuditBefore(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Before("within(co.uk.gymtracker.controllers.*)")
+    public void beforeTraceMethods(JoinPoint joinPoint) {
+        logger.entry("class[ " + retrieveClassName(joinPoint) + " ] method[ " + retrieveMethodName(joinPoint) + " ]" +
+                " args[ " + retrieveArguments(joinPoint) + " ]");
+    }
 
-        SecurityContext ctx = SecurityContextHolder.getContext();
-        GymUser gymUser =  dao.findGymUser(ctx.getAuthentication().getName());
+    @After("within(co.uk.gymtracker.controllers.*)")
+    public void afterTraceMethods(JoinPoint joinPoint) {
+        logger.exit("class[ " + retrieveClassName(joinPoint) + " ] method[ " + retrieveMethodName(joinPoint)  + " ]");
+    }
 
-        if(gymUser != null) {
+    @After("execution(* org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler.onAuthenticationSuccess(..))")
+    public void authenticated() {
 
-            String className = joinPoint.getStaticPart().getSignature().getDeclaringType().getName();
-            String methodName = joinPoint.getSignature().getName();
-            String arguments = Arrays.toString(joinPoint.getArgs());
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(username);
 
-            Audit audit = new Audit(new Date().toString(), className, methodName, gymUser.getId(),
-                    gymUser.getUsername(), arguments);
+    }
 
-            auditDao.saveAuditRecordByUsername(audit);
+    private String retrieveArguments(JoinPoint joinPoint) {
+        return Arrays.toString(joinPoint.getArgs());
+    }
 
-        } else {
-            throw new GymUserNotFoundException("User[ " + (gymUser != null ? gymUser.getUsername() : null) + " ] not found.");
-        }
+    private String retrieveMethodName(JoinPoint joinPoint) {
+        return joinPoint.getSignature().getName();
+    }
 
-        return joinPoint.proceed();
+    private String retrieveClassName(JoinPoint joinPoint) {
+        return joinPoint.getStaticPart().getSignature().getDeclaringType().getName();
     }
 
 }

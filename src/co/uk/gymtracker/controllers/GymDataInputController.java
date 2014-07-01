@@ -1,6 +1,7 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.audit.Audit;
 import co.uk.gymtracker.model.form.GymSessionForm;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.stereotype.Controller;
@@ -28,12 +29,8 @@ public class GymDataInputController extends AbstractGymController {
     @RequestMapping(value="/addGymSessionForm")
     public ModelAndView executeEntryPage(ModelAndView mav) {
 
-        logger.entry();
-
         mav.setViewName("addGymSession");
         mav.addObject(new GymSessionForm());
-
-        logger.exit();
 
         return mav;
     }
@@ -50,17 +47,18 @@ public class GymDataInputController extends AbstractGymController {
     public ModelAndView addGymSessionData(GymSessionForm gymSessionForm, ModelAndView mav, Errors errors) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-        logger.entry(gymSessionForm, errors);
-
         Slf4JStopWatch stopWatch = createStopWatchInstance();
+
+        // extract the GymUser from the security context
+        GymUser user = getLoggedInUser();
+
+        // create an audit record
+        Audit auditRecord = createAudit(this.getClass().getName(), methodName, user, gymSessionForm.toString());
 
         if(errors.hasErrors()) {
             mav.setViewName("addGymSession");
             return mav;
         } else {
-            // extract the GymUser from the security context
-            GymUser user = getLoggedInUser();
-
             // save user submitted gymSessionForm to the database
             gymDataInputService.buildAndSaveGymLogData(user, gymSessionForm);
 
@@ -68,12 +66,15 @@ public class GymDataInputController extends AbstractGymController {
             mav.addObject(gymDataInputService.retrieveGymLogDataByUserId(user));
         }
 
+        // save audit record to db
+        auditRecord.setTimeElapsed(String.valueOf(stopWatch.getElapsedTime()));
+        auditDao.saveAuditRecordByUsername(auditRecord);
+
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
 
-        logger.exit();
-
         return new ModelAndView("redirect:/userLog/show");
     }
+
 
 }

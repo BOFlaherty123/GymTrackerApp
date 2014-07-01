@@ -180,18 +180,20 @@
                 <table class="table table-striped table-condensed content_font_small">
                     <tr>
                         <th>Username</th>
-                        <th>Date</th>
+                        <th>Date/Time</th>
                         <th>Class Name</th>
                         <th>Method Name</th>
                         <th>Arguments</th>
+                        <th>Time Elapsed</th>
                     </tr>
                     <c:forEach var="audit" items="${auditList}">
                         <tr>
                             <td><c:out value="${audit.username}"/> </td>
-                            <td><c:out value="${audit.date}"/> </td>
+                            <td><c:out value="${audit.date}"/> <c:out value="${audit.time}"/> </td>
                             <td><c:out value="${audit.className}"/> </td>
                             <td><c:out value="${audit.methodName}"/> </td>
                             <td><c:out value="${audit.arguments}"/> </td>
+                            <td><c:out value="${audit.timeElapsed}"/> </td>
                         </tr>
                     </c:forEach>
                 </table>

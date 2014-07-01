@@ -1,6 +1,7 @@
 package co.uk.gymtracker.controllers;
 
 import co.uk.gymtracker.model.GymUser;
+import co.uk.gymtracker.model.audit.Audit;
 import co.uk.gymtracker.service.GymUserDashboardService;
 import org.perf4j.slf4j.Slf4JStopWatch;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,6 @@ public class GymUserDashboardController extends AbstractGymController {
     public ModelAndView executeEntryPage(ModelAndView mav) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-        logger.entry(mav);
-
         Slf4JStopWatch stopWatch = createStopWatchInstance();
 
         mav.setViewName("user/userDashboard");
@@ -56,8 +55,6 @@ public class GymUserDashboardController extends AbstractGymController {
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
 
-        logger.exit();
-
         return mav;
     }
 
@@ -72,11 +69,12 @@ public class GymUserDashboardController extends AbstractGymController {
     public ModelAndView updateUser(@Valid GymUser gymUser, Errors errors) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-        logger.entry(gymUser, errors);
-
         Slf4JStopWatch stopWatch = createStopWatchInstance();
 
         ModelAndView mav = new ModelAndView();
+
+        // create an audit record
+        Audit auditRecord = createAudit(this.getClass().getName(), methodName, getLoggedInUser(), gymUser.toString());
 
         if(errors.hasErrors()) {
             mav.setViewName("/user/userDashboard");
@@ -87,10 +85,12 @@ public class GymUserDashboardController extends AbstractGymController {
 
         mav.setViewName("redirect:/user/userDashboard");
 
+        // save audit record to db
+        auditRecord.setTimeElapsed(String.valueOf(stopWatch.getElapsedTime()));
+        auditDao.saveAuditRecordByUsername(auditRecord);
+
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
-
-        logger.exit();
 
         return mav;
     }
@@ -115,14 +115,10 @@ public class GymUserDashboardController extends AbstractGymController {
                                                                     @PathVariable("percentage") int percentage) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-        logger.entry(activity, percentage);
-
         Map<String, String> targetIncreases = gymUserDashboardService.processUserTargetIncreases(getLoggedInUser(), activity, percentage);
 
         // log method performance
         performanceLogging.isMethodProcessingBelowThreshold(this.getClass().getName(), methodName, new Slf4JStopWatch());
-
-        logger.exit();
 
         return targetIncreases;
     }

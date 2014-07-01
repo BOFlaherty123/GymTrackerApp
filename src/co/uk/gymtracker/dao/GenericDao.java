@@ -20,4 +20,5 @@ public abstract class GenericDao {
 
     final XLogger logger = XLoggerFactory.getXLogger(GenericDao.class
             .getName());
+
 }

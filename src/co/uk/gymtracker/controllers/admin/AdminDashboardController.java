@@ -30,8 +30,6 @@ public class AdminDashboardController extends AbstractGymController {
     @RequestMapping(value="/dashboard")
     public ModelAndView executeEntryPage(ModelAndView mav) {
 
-        logger.entry();
-
         mav.setViewName(("admin/admin"));
         mav.addObject(new PerformanceLog());
         mav.addObject(new AuditSearch());
@@ -40,35 +38,23 @@ public class AdminDashboardController extends AbstractGymController {
         displayAppPerformance(mav);
         displayAuditRecords(mav);
 
-        logger.exit();
-
         return mav;
     }
 
     private void displayAppStatistics(ModelAndView mav) {
-        logger.entry(mav);
 
         // display database statistics
         mav.addObject(appPerformanceDao.retrieveDatabaseInformation());
         mav.addObject("numberOfUsers", userDao.findAllGymUsers().size());
 
-        logger.exit();
     }
 
     private void displayAppPerformance(ModelAndView mav) {
-        logger.entry();
-
         mav.addObject(appPerformanceDao.findAllPerformanceLogs());
-
-        logger.exit();
     }
 
     private void displayAuditRecords(ModelAndView mav) {
-        logger.entry(mav);
-
         mav.addObject(auditDao.findAllAuditRecords());
-
-        logger.exit();
     }
 
     @RequestMapping(value="/performance/slow")

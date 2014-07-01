@@ -13,48 +13,77 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Audit {
 
     private String id;
-    private final String date;
-    private final String className;
-    private final String methodName;
-    private final String userId;
-    private final String username;
-    private final String arguments;
-
-    public Audit(String date, String className, String methodName, String userId, String username, String arguments) {
-        this.date = date;
-        this.className = className;
-        this.methodName = methodName;
-        this.userId = userId;
-        this.username = username;
-        this.arguments = arguments;
-    }
-
-    public String getId() {
-        return id;
-    }
+    private String date;
+    private String time;
+    private String className;
+    private String methodName;
+    private String userId;
+    private String username;
+    private String timeElapsed;
+    private String arguments;
 
     public String getDate() {
         return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getClassName() {
         return className;
     }
 
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
     public String getMethodName() {
         return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
     }
 
     public String getUserId() {
         return userId;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getTimeElapsed() {
+        return timeElapsed;
+    }
+
+    public void setTimeElapsed(String timeElapsed) {
+        this.timeElapsed = timeElapsed;
+    }
+
     public String getArguments() {
         return arguments;
+    }
+
+    public void setArguments(String arguments) {
+        this.arguments = arguments;
     }
 
     @Override
@@ -62,10 +91,12 @@ public class Audit {
         return "Audit{" +
                 "id='" + id + '\'' +
                 ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
                 ", className='" + className + '\'' +
                 ", methodName='" + methodName + '\'' +
                 ", userId='" + userId + '\'' +
                 ", username='" + username + '\'' +
+                ", timeElapsed='" + timeElapsed + '\'' +
                 ", arguments='" + arguments + '\'' +
                 '}';
     }

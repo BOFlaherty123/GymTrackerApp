@@ -36,8 +36,6 @@ public class GymUserLogController extends AbstractGymController {
     public ModelAndView executeEntryPage(ModelAndView mav) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
 
-        logger.entry(mav);
-
         // spring Convention over Configuration
         mav.setViewName("userLog");
 
@@ -57,8 +55,6 @@ public class GymUserLogController extends AbstractGymController {
 
         mav.addObject(new GymLogSearch());
 
-        logger.exit();
-
         return mav;
     }
 
@@ -72,8 +68,6 @@ public class GymUserLogController extends AbstractGymController {
     @RequestMapping(value="/search")
     public ModelAndView executeGymSessionsSearch(@Valid GymLogSearch gymLogSearch, Errors error) {
         final String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
-
-        logger.entry(gymLogSearch, error);
 
         Slf4JStopWatch stopWatch = createStopWatchInstance();
 
@@ -91,8 +85,6 @@ public class GymUserLogController extends AbstractGymController {
 
         // log method performance
         runPerformanceLogging(this.getClass().getName(), methodName, stopWatch);
-
-        logger.exit();
 
         return mav;
     }
