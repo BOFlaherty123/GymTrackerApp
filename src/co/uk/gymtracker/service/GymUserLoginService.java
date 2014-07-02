@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 /**
- * Description Here
+ * Login Service to validate a GymUser object
  *
  * @author Benjamin O'Flaherty
  * @date Created on: 28/04/14

@@ -25,6 +25,11 @@ import static java.lang.String.format;
 @Service
 public class GymUserDashboardService extends AbstractGymService {
 
+    private static final String DISTANCE = "Distance";
+    private static final String DURATION = "Duration";
+    private static final String ACTIVITY_RUNNING = "Running";
+    private static final String ACTIVITY_CYCLING = "Cycling";
+
     @Autowired
     public CalculateActivityAverages calculateAverages;
 
@@ -33,7 +38,7 @@ public class GymUserDashboardService extends AbstractGymService {
 
 
     /**
-     *
+     *  calculates and returns the averages for each exercise for a user
      *
      * @param user
      * @return
@@ -42,12 +47,21 @@ public class GymUserDashboardService extends AbstractGymService {
 
         logger.entry(user);
 
-        Map<String,String> durationAverages = new HashMap<>();
+        Map<String,String> distanceAverages = new HashMap<>();
         
         List<ActivityAverage> averages = calculateAverages.calculateActivityAverages(user);
+
         for(ActivityAverage avg : averages) {
             logger.info(format("processing averages for activity: %s.", avg.getActivity()));
-            durationAverages = processActivityAverageDistances(avg);
+
+            Map<String, String> actDistanceAvg = processActivityAverageDistances(avg);
+            String activity = avg.getActivity();
+
+            String distanceAvg = (activity.equals(ACTIVITY_RUNNING)) ? distanceAverages.put("running_avg_distance", actDistanceAvg.get(activity)) :
+                    (activity.equals(ACTIVITY_CYCLING)) ? distanceAverages.put("cycling_avg_distance", actDistanceAvg.get(activity)) :
+                            distanceAverages.put("rowing_avg_distance", actDistanceAvg.get(activity));
+
+            logger.info(format("[ %s ] added to distanceAverages", distanceAvg));
         }
 
         user.setActivityAverages(averages);
@@ -55,11 +69,11 @@ public class GymUserDashboardService extends AbstractGymService {
 
         logger.exit();
 
-        return durationAverages;
+        return distanceAverages;
     }
 
     /**
-     *
+     * calculates and returns the average distances per exercise for a user
      *
      * @param avg
      * @return
@@ -67,15 +81,12 @@ public class GymUserDashboardService extends AbstractGymService {
     private Map<String,String> processActivityAverageDistances(ActivityAverage avg) {
         String activity = avg.getActivity();
         String distance = avg.getAverageDistance();
-        logger.info(format("activity average distance: %s.", avg.getAverageDistance()));
+        logger.info(format("activity average distance: %s.", distance));
 
         Map<String, String> averages = new HashMap<>();
+        averages.put(activity, distance);
 
-        String s = (activity.equals("Running")) ? averages.put("running_avg_distance", distance) :
-                (activity.equals("Cycling")) ? averages.put("cycling_avg_distance", distance) :
-                        averages.put("rowing_avg_distance", distance);
-
-        logger.info("Activity distance added for [" + s + "]");
+        logger.info("Activity distance added for [" + activity + "]");
 
         return averages;
     }
@@ -100,7 +111,7 @@ public class GymUserDashboardService extends AbstractGymService {
     }
 
     /**
-     *
+     *  calculates and returns the user target increases for
      *
      * @param gymUser
      * @param activity
@@ -113,8 +124,8 @@ public class GymUserDashboardService extends AbstractGymService {
         TargetIncrease targetIncrease = targets.calculateTargetOnPercentageIncrease(gymUser, activity, percentage);
 
         Map<String,String> targetIncreases = new HashMap<>();
-        targetIncreases.put("distance", targetIncrease.getDistanceIncrease());
-        targetIncreases.put("duration", targetIncrease.getDurationIncrease());
+        targetIncreases.put(DISTANCE, targetIncrease.getDistanceIncrease());
+        targetIncreases.put(DURATION, targetIncrease.getDurationIncrease());
 
         return targetIncreases;
     }

@@ -7,6 +7,7 @@ import co.uk.gymtracker.model.form.AuditSearch;
 import co.uk.gymtracker.model.performance.PerformanceLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -60,6 +61,11 @@ public class AdminDashboardController extends AbstractGymController {
     @RequestMapping(value="/performance/slow")
     public void displaySlowQueries() {
         appPerformanceDao.findAllSlowQueries();
+    }
+
+    @RequestMapping(value="/findAuditRecords/{username}")
+    public void displayAuditRecordsByUsername(@PathVariable("username") String username) {
+        auditDao.findAllAuditRecordsByUserId(username);
     }
 
 }

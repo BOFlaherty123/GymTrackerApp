@@ -28,52 +28,14 @@
 
                 $('#tabs').tab();
 
-                $("#percentage_slider").slider({
-                    range: "max",
-                    min: 2.5,
-                    max: 15,
-                    step: 2.5,
-                    slide: function( event, ui ) {
-                        $("#percentageIncrease").val(ui.value);
-                    },
-                    stop: function( event, ui ) {
-
-                        var cardioExercise = $("#targetActivity").val();
-
-                        $.ajax({
-                            type: "POST",
-                            data: ui.value,
-                            contentType: 'application/json',
-                            dataType : 'json',
-                            url: "calculateTargetByPercentIncrease/" + cardioExercise + "/" + ui.value,
-                            success: function(data){
-
-                                var response = JSON.stringify(data);
-                                console.log(response);
-
-                                var obj = JSON.parse(response);
-                                console.log(obj.duration);
-                                console.log(obj.distance);
-
-                                var activityDurationIncrease = "<p>" + obj.duration + "</p>";
-                                $('#durationTargetOutput').empty();
-                                $('#durationTargetOutput').append(activityDurationIncrease);
-
-                                var activityDistanceIncrease = "<p>" + obj.distance + "</p>";
-                                $('#distanceTargetOutput').empty();
-                                $('#distanceTargetOutput').append(activityDistanceIncrease);
-                            }
-                        });
-                    }
-                });
-
-                $("#percentageIncrease").val( $("ex1").slider("value") );
-
-                // Exact average figures to be provided via an ajax GET
+                // exact average figures to be provided via an ajax GET
                 displayUserWeightLineChart(362.4, 345.9, 290.9);
 
                 processAvgDistanceChart();
                 processAvgDurationChart();
+
+                // target percentage slider setup
+                targetPercentageSlider()
 
             });
 
@@ -84,7 +46,6 @@
                 var rowing_avg = Number($('#rowing_avg_distance').val());
 
                 displayAvgDistanceLineChart(running_avg, cycling_avg, rowing_avg);
-
             }
 
             function processAvgDurationChart() {
@@ -248,7 +209,6 @@
 
             </div>
         </div>
-
 
     </body>
 

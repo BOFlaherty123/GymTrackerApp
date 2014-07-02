@@ -212,3 +212,48 @@ function displayAvgDurationLineChart(avgRunning, avgCycling, avgRowing) {
         }]
     });
 }
+
+function targetPercentageSlider() {
+
+    $("#percentage_slider").slider({
+        range: "max",
+        min: 2.5,
+        max: 15,
+        step: 2.5,
+        slide: function( event, ui ) {
+            $("#percentageIncrease").val(ui.value);
+        },
+        stop: function( event, ui ) {
+
+            var cardioExercise = $("#targetActivity").val();
+
+            $.ajax({
+                type: "POST",
+                data: ui.value,
+                contentType: 'application/json',
+                dataType : 'json',
+                url: "calculateTargetByPercentIncrease/" + cardioExercise + "/" + ui.value,
+                success: function(data){
+
+                    var response = JSON.stringify(data);
+                    console.log(response);
+
+                    var obj = JSON.parse(response);
+                    console.log(obj.duration);
+                    console.log(obj.distance);
+
+                    var activityDurationIncrease = "<p>" + obj.duration + "</p>";
+                    $('#durationTargetOutput').empty();
+                    $('#durationTargetOutput').append(activityDurationIncrease);
+
+                    var activityDistanceIncrease = "<p>" + obj.distance + "</p>";
+                    $('#distanceTargetOutput').empty();
+                    $('#distanceTargetOutput').append(activityDistanceIncrease);
+                }
+            });
+        }
+    });
+
+    $("#percentageIncrease").val( $("ex1").slider("value") );
+
+}

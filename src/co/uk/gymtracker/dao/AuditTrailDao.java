@@ -33,7 +33,7 @@ public class AuditTrailDao extends GenericDao {
      * @return
      */
     public List<Audit> findAllAuditRecordsByUserId(String userId) {
-        return mongoOperations.find(new Query(Criteria.where("userId").is(userId)), Audit.class);
+        return mongoOperations.find(new Query(Criteria.where("username").is(userId)), Audit.class);
     }
 
     /**

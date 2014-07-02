@@ -151,6 +151,8 @@ public class GymDataInputService extends AbstractGymService {
                     Field field = exercise.getClass().getDeclaredField("exercise");
                     String exerciseValue = String.valueOf(field.get(exercise));
 
+                    System.out.println("exercise value: " + exerciseValue);
+
                     if(!exerciseValue.isEmpty()) {
                         exercises.add(exercise);
                     }

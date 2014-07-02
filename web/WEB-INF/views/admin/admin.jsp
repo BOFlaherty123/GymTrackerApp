@@ -184,7 +184,7 @@
                         <th>Class Name</th>
                         <th>Method Name</th>
                         <th>Arguments</th>
-                        <th>Time Elapsed</th>
+                        <th>Elapsed Time (ms)</th>
                     </tr>
                     <c:forEach var="audit" items="${auditList}">
                         <tr>

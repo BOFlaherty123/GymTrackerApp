@@ -168,7 +168,7 @@
                         <c:forEach varStatus="i" items="${record.exerciseWeight}">
 
                             <tr>
-                                <td/>
+                                <td><c:out value="${record.exerciseWeight[i.index].exercise}"/>
                                 <td><c:out value="${record.exerciseWeight[i.index].reps}"/> </td>
                                 <td><c:out value="${record.exerciseWeight[i.index].weightLifted}"/> </td>
                                 <td/>

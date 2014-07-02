@@ -30,6 +30,8 @@ public class CalculateActivityAverages  {
 
     private static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
     private static final String ZERO_VALUE = "0";
+    private static final String DISTANCE = "Distance";
+    private static final String DURATION = "Duration";
 
     @Autowired
     public GymUserLoginService userService;
@@ -82,7 +84,6 @@ public class CalculateActivityAverages  {
                 totalDistance = addValue(totalDistance, cardioExercise.getDistance());
                 totalDuration = addValue(totalDuration, cardioExercise.getDuration());
             }
-
         }
 
         // retrieve the total number of sessions for the activity
@@ -94,12 +95,11 @@ public class CalculateActivityAverages  {
 
         // create a map containing the activity totals for use with further calculations
         Map<String,String> activityTotals = new HashMap<>();
-        activityTotals.put("distance", String.valueOf(totalDistance));
-        activityTotals.put("duration", String.valueOf(totalDuration));
+        activityTotals.put(DISTANCE, String.valueOf(totalDistance));
+        activityTotals.put(DURATION, String.valueOf(totalDuration));
 
         return buildActivityAverage(activity, String.valueOf(totalSessions), averageDistance, averageDuration, activityTotals);
     }
-
 
     private BigDecimal addValue(BigDecimal total, String value) {
         return total.add(new BigDecimal(value));
