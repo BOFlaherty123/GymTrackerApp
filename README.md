@@ -11,3 +11,4 @@ The application is written predominately in Java, using the Spring (MVC) framewo
 - Spring Security
 - AspectJ
 - Logback / Perf4J / XLogger
+- Mockito
